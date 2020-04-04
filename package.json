@@ -1,7 +1,7 @@
 {
   "name": "otus-react",
   "version": "1.0.0",
-  "description": "React learning project",
+  "description": "Otus React lessons",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,5 +19,12 @@
   "bugs": {
     "url": "https://github.com/shurupov/otus-react/issues"
   },
-  "homepage": "https://github.com/shurupov/otus-react#readme"
+  "homepage": "https://github.com/shurupov/otus-react#readme",
+  "devDependencies": {
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15"
+  }
 }
