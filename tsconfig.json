@@ -7,9 +7,5 @@
     "sourceMap": true,
     "strict": true,
     "esModuleInterop": true
-  },
-  "files": [
-    "index.tsx",
-    "sum.tsx"
-  ]
+  }
 }

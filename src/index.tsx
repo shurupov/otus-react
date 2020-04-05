@@ -1,10 +1,11 @@
-const sum = require("./sum");
+const sumModule = require("./sum");
 
 function component() {
     const element = document.createElement('div');
 
-    element.innerHTML = "Hello world!";
-    let a: number = sum(2, 3);
+    element.innerHTML = "Hello world!" +
+        "<br/>" +
+        sumModule(2, 3);
     return element;
 }
 
