@@ -1,0 +1,57 @@
+{
+  "name": "otus-react",
+  "version": "1.0.0",
+  "description": "Otus React lessons",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx webpack --mode production",
+    "lint": "npx eslint --ext .js,.jsx,.ts,.tsx --fix ./",
+    "test": "npx jest",
+    "prettify": "npx prettier . --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shurupov/otus-react.git"
+  },
+  "keywords": [
+    "otus",
+    "react"
+  ],
+  "author": "Evgeny Shurupov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shurupov/otus-react/issues"
+  },
+  "homepage": "https://github.com/shurupov/otus-react#readme",
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-typescript": "^7.9.0",
+    "@types/jest": "^25.1.4",
+    "@typescript-eslint/eslint-plugin": "^2.26.0",
+    "@typescript-eslint/parser": "^2.26.0",
+    "babel-jest": "^25.2.4",
+    "babel-loader": "^8.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-standard": "^4.0.1",
+    "html-webpack-plugin": "^4.0.3",
+    "husky": "^4.2.3",
+    "jest": "^25.2.7",
+    "prettier": "2.0.2",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.8.7"
+  }
+}
