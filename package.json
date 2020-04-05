@@ -7,7 +7,7 @@
     "build": "npx webpack --mode production",
     "lint": "npx eslint --ext .js,.jsx,.ts,.tsx --fix ./",
     "test": "npx jest",
-    "prettify": "npx prettier@2.0.2 . --write"
+    "prettify": "npx prettier . --write"
   },
   "repository": {
     "type": "git",
