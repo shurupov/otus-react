@@ -1,9 +1,9 @@
-const sumModule = require("./sum");
+require("./sum");
 
-function component() {
+function component(): Node {
   const element = document.createElement("div");
 
-  element.innerHTML = "Hello world!" + "<br/>" + sumModule(2, 3);
+  element.innerHTML = "Hello world!" + "<br/>" + sum(2, 3);
   return element;
 }
 
