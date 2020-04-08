@@ -1,21 +1,13 @@
-import {Operation} from "./TwoArgumentsOperationProcessor";
-
-export enum OneOrgOperation {
-    FACTORIAL = "!"
-}
-
-export interface OneArgumentOperationResult {
-    operation: OneOrgOperation,
-    argument: string
-}
+import {Operation} from "./Operation";
+import {ExtractedOperation} from "./ExtractedOperation";
 
 export class OneArgumentOperationProcessor {
 
-    private static availableOperations: OneOrgOperation[] = [
-        OneOrgOperation.FACTORIAL
+    private static availableOperations: Operation[] = [
+        Operation.FACTORIAL
     ];
 
-    public static extractOperation(expression: string, result: OneArgumentOperationResult): boolean {
+    public static extractOperation(expression: string, result: ExtractedOperation): boolean {
         for (let operation of this.availableOperations) {
 
             let openBrackets: number = 0;
@@ -30,8 +22,8 @@ export class OneArgumentOperationProcessor {
                 }
                 if (openBrackets == 0 && char == operation) {
                     const operationSignPosition = i;
-                    result.operation = operation as OneOrgOperation;
-                    result.argument = expression.substr(0, operationSignPosition);
+                    result.operation = operation as Operation;
+                    result.arguments[0] = expression.substr(0, operationSignPosition);
                     return true;
                 }
             }
@@ -39,9 +31,9 @@ export class OneArgumentOperationProcessor {
         return false;
     }
 
-    public static performOperation(operation: OneOrgOperation, argument: number): number {
+    public static performOperation(operation: Operation, parameters: number[]): number {
         switch (operation) {
-            case OneOrgOperation.FACTORIAL: return this.factorial(argument);
+            case Operation.FACTORIAL: return this.factorial(parameters[0]);
             default: throw new Error("Unsupported operation");
         }
     }

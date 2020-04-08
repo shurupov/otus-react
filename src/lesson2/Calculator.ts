@@ -1,10 +1,6 @@
 import {BracketsProcessor} from "./BracketsProcessor";
 import {TwoArgumentsOperationProcessor} from "./TwoArgumentsOperationProcessor";
-import {
-    OneArgumentOperationProcessor,
-    OneArgumentOperationResult,
-    OneOrgOperation
-} from "./OneArgumentOperationProcessor";
+import {OneArgumentOperationProcessor,} from "./OneArgumentOperationProcessor";
 import {ExtractedOperation} from "./ExtractedOperation";
 import {Operation} from "./Operation";
 
@@ -19,7 +15,7 @@ export class Calculator {
             );
         }
 
-        let extractedOperation: ExtractedOperation = { operation: Operation.ADDITION, arguments: []};
+        let extractedOperation: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
         if (TwoArgumentsOperationProcessor.extractOperation(expression, extractedOperation)) {
             return TwoArgumentsOperationProcessor.performOperation(
                 extractedOperation.operation,
@@ -30,11 +26,14 @@ export class Calculator {
             );
         }
 
-        let extractedOneArgOperation: OneArgumentOperationResult = { operation: OneOrgOperation.FACTORIAL, argument: ""};
+        let extractedOneArgOperation: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
         if (OneArgumentOperationProcessor.extractOperation(expression, extractedOneArgOperation)) {
             return OneArgumentOperationProcessor.performOperation(
                 extractedOneArgOperation.operation,
-                this.calculate(extractedOneArgOperation.argument)
+                [
+                    this.calculate(extractedOneArgOperation.arguments[0])
+                ]
+
             );
         }
 
