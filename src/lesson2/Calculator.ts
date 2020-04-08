@@ -22,12 +22,23 @@ export default class Calculator {
 
     public static calculate(expression: string): number {
         expression = expression.trim();
+
+        if (this.isInBrackets(expression)) {
+            return this.calculate(
+                this.openBrackets(expression)
+            );
+        }
+
         let extractedOperation: FindOperationResult = { operation: Operation.ADDITION, firstArgument: "", secondArgument: ""};
         if (this.extractOperation(expression, extractedOperation)) {
-            return this.performOperation(extractedOperation.operation, extractedOperation.firstArgument, extractedOperation.secondArgument);
-        } else {
-            return parseFloat(expression);
+            return this.performOperation(
+                extractedOperation.operation,
+                this.calculate(extractedOperation.firstArgument),
+                this.calculate(extractedOperation.secondArgument)
+            );
         }
+
+        return parseFloat(expression);
     }
 
     public static extractOperation(expression: string, result: FindOperationResult): boolean {
@@ -55,13 +66,38 @@ export default class Calculator {
         return false;
     }
 
-    public static performOperation(operation: Operation, firstArgument: string, secondArgument: string): number {
+    public static performOperation(operation: Operation, firstArgument: number, secondArgument: number): number {
         switch (operation) {
-            case Operation.ADDITION:       return this.calculate(firstArgument) + this.calculate(secondArgument);
-            case Operation.SUBTRACTION:    return this.calculate(firstArgument) - this.calculate(secondArgument);
-            case Operation.MULTIPLICATION: return this.calculate(firstArgument) * this.calculate(secondArgument);
-            case Operation.DIVISION:       return this.calculate(firstArgument) / this.calculate(secondArgument);
+            case Operation.ADDITION:       return firstArgument + secondArgument;
+            case Operation.SUBTRACTION:    return firstArgument - secondArgument;
+            case Operation.MULTIPLICATION: return firstArgument * secondArgument;
+            case Operation.DIVISION:       return firstArgument / secondArgument;
             default: throw new Error("Unsupported operation");
         }
+    }
+
+    public static openBrackets(expression: string): string {
+        return expression.substr(1, expression.length - 2);
+    }
+
+    public static isInBrackets(expression: string): boolean {
+        const containsBrackets = (expression.indexOf("(") == 0 && expression.lastIndexOf(")") == expression.length - 1);
+        if (!containsBrackets) {
+            return false;
+        }
+        let openBrackets = 0;
+        for (let i = 0; i < expression.length; i++) {
+            const char: string = expression[i];
+            if (char == "(") {
+                openBrackets++;
+            }
+            if (char == ")") {
+                openBrackets--;
+                if (openBrackets == 0 && i < expression.length - 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

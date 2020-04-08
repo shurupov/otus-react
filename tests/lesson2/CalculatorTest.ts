@@ -19,20 +19,23 @@ describe("Calculator calculate method", () => {
     it("Just number 25.001", () => {
         expect(Calculator.calculate("  25.001 ")).toEqual(25.001);
     });
+    it("Complicated expression with brackets (10 + 30) / (12 - 4)", () => {
+        expect(Calculator.calculate("(10 + 30) / (12 - 4)")).toEqual(5);
+    });
 });
 
 describe("Calculator performOperationMethod method", () => {
     it("Addition 4 + 5", () => {
-        expect(Calculator.performOperation(Operation.ADDITION, "4", "5")).toEqual(9);
+        expect(Calculator.performOperation(Operation.ADDITION, 4, 5)).toEqual(9);
     });
     it("Multiplication 8 - 6", () => {
-        expect(Calculator.performOperation(Operation.SUBTRACTION, "8", "6")).toEqual(2);
+        expect(Calculator.performOperation(Operation.SUBTRACTION, 8, 6)).toEqual(2);
     });
     it("Multiplication 8 * 6", () => {
-        expect(Calculator.performOperation(Operation.MULTIPLICATION, "8", "6")).toEqual(48);
+        expect(Calculator.performOperation(Operation.MULTIPLICATION, 8, 6)).toEqual(48);
     });
     it("Multiplication 25 / 10", () => {
-        expect(Calculator.performOperation(Operation.DIVISION, "25", "10")).toEqual(2.5);
+        expect(Calculator.performOperation(Operation.DIVISION, 25, 10)).toEqual(2.5);
     });
 });
 
@@ -83,5 +86,29 @@ describe("Calculator extractOperation method", () => {
         let found: boolean = Calculator.extractOperation("(49+51) / (32-12)", result as FindOperationResult);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: Operation.DIVISION, firstArgument: "(49+51) ", secondArgument: " (32-12)"});
+    });
+});
+
+describe("Calculator inBrackets method", () => {
+    it("Check brackets (5)", () => {
+        expect(Calculator.isInBrackets("(5)")).toEqual(true);
+    });
+    it("Check brackets (5 + 6)", () => {
+        expect(Calculator.isInBrackets("(5 + 6)")).toEqual(true);
+    });
+    it("Check brackets (5 + 6) * 7", () => {
+        expect(Calculator.isInBrackets("(5 + 6) * 7")).toEqual(false);
+    });
+    it("Check brackets (5 + 6) * (7 + 8)", () => {
+        expect(Calculator.isInBrackets("(5 + 6) * (7 + 8)")).toEqual(false);
+    });
+});
+
+describe("Calculator openBrackets method", () => {
+    it("Open brackets (5)", () => {
+        expect(Calculator.openBrackets("(5)")).toEqual("5");
+    });
+    it("Open brackets (5 + 6)", () => {
+        expect(Calculator.openBrackets("(5 + 6)")).toEqual("5 + 6");
     });
 });
