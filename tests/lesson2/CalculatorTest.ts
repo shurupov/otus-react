@@ -22,6 +22,12 @@ describe("Calculator calculate method", () => {
     it("Complicated expression with brackets (10 + 30) / (12 - 4)", () => {
         expect(Calculator.calculate("(10 + 30) / (12 - 4)")).toEqual(5);
     });
+    it("Complicated expression with brackets  (3+3)*11+5*(5+5)", () => {
+        expect(Calculator.calculate(" (3+3)*11+5*(5+5)")).toEqual(116);
+    });
+    it("Complicated expression with brackets (6+4)^4", () => {
+        expect(Calculator.calculate("(6+4)^4")).toEqual(10000);
+    });
 });
 
 describe("Calculator performOperationMethod method", () => {
@@ -36,6 +42,9 @@ describe("Calculator performOperationMethod method", () => {
     });
     it("Multiplication 25 / 10", () => {
         expect(Calculator.performOperation(Operation.DIVISION, 25, 10)).toEqual(2.5);
+    });
+    it("Multiplication 3 ^ 4", () => {
+        expect(Calculator.performOperation(Operation.POWER, 3, 4)).toEqual(81);
     });
 });
 

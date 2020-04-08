@@ -1,4 +1,5 @@
 export enum Operation {
+    POWER = "^",
     ADDITION = "+",
     SUBTRACTION = "-",
     MULTIPLICATION = "*",
@@ -14,6 +15,7 @@ export interface FindOperationResult {
 export default class Calculator {
 
     private static availableOperations: Operation[] = [
+        Operation.POWER,
         Operation.ADDITION,
         Operation.SUBTRACTION,
         Operation.MULTIPLICATION,
@@ -68,6 +70,7 @@ export default class Calculator {
 
     public static performOperation(operation: Operation, firstArgument: number, secondArgument: number): number {
         switch (operation) {
+            case Operation.POWER:          return Math.pow(firstArgument, secondArgument);
             case Operation.ADDITION:       return firstArgument + secondArgument;
             case Operation.SUBTRACTION:    return firstArgument - secondArgument;
             case Operation.MULTIPLICATION: return firstArgument * secondArgument;
