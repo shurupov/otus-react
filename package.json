@@ -10,6 +10,10 @@
     "prettify": "npx prettier . --write",
     "calc": "npx ts-node src/lesson2"
   },
+  "jest": {
+    "roots": ["tests"],
+    "testRegex": "\\.(js|jsx|ts|tsx)$"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shurupov/otus-react.git"
@@ -50,10 +54,7 @@
     "typescript": "^3.8.3",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
-  },
-  "dependencies": {
-    "@babel/polyfill": "^7.8.7",
+    "webpack-dev-server": "^3.10.3",
     "ts-node": "^8.8.2"
   }
 }
