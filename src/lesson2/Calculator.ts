@@ -23,14 +23,14 @@ export default class Calculator {
     public static calculate(expression: string): number {
         expression = expression.trim();
         let extractedOperation: FindOperationResult = { operation: Operation.ADDITION, firstArgument: "", secondArgument: ""};
-        if (this.findOperation1(expression, extractedOperation)) {
+        if (this.extractOperation(expression, extractedOperation)) {
             return this.performOperation(extractedOperation.operation, extractedOperation.firstArgument, extractedOperation.secondArgument);
         } else {
             return parseFloat(expression);
         }
     }
 
-    public static findOperation1(expression: string, result: FindOperationResult): boolean {
+    public static extractOperation(expression: string, result: FindOperationResult): boolean {
         for (let operation of this.availableOperations) {
             let operationSignPosition: number = expression.lastIndexOf(operation);
             if (operationSignPosition != -1) {

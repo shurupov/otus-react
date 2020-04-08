@@ -13,6 +13,12 @@ describe("Calculator calculate method", () => {
     it("Multiplication 25 / 10", () => {
         expect(Calculator.calculate("   25    /    10")).toEqual(2.5);
     });
+    it("Complicated expression 5*6-7/2", () => {
+        expect(Calculator.calculate("5*6-7/2")).toEqual(26.5);
+    });
+    it("Just number 25.001", () => {
+        expect(Calculator.calculate("  25.001 ")).toEqual(25.001);
+    });
 });
 
 describe("Calculator performOperationMethod method", () => {
@@ -30,39 +36,39 @@ describe("Calculator performOperationMethod method", () => {
     });
 });
 
-describe("Calculator findOperation1 method", () => {
+describe("Calculator extractOperation method", () => {
     it("Find Operation 4 + 5", () => {
         let result: FindOperationResult = { operation: Operation.ADDITION, firstArgument: "", secondArgument: ""};
-        let found: boolean = Calculator.findOperation1("4 + 5", result as FindOperationResult);
+        let found: boolean = Calculator.extractOperation("4 + 5", result as FindOperationResult);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: Operation.ADDITION, firstArgument: "4 ", secondArgument: " 5"});
     });
     it("Find Operation 4 -5", () => {
         let result: FindOperationResult = { operation: Operation.ADDITION, firstArgument: "", secondArgument: ""};
-        let found: boolean = Calculator.findOperation1("4 -5", result as FindOperationResult);
+        let found: boolean = Calculator.extractOperation("4 -5", result as FindOperationResult);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: Operation.SUBTRACTION, firstArgument: "4 ", secondArgument: "5"});
     });
     it("Find Operation 4* 5", () => {
         let result: FindOperationResult = { operation: Operation.ADDITION, firstArgument: "", secondArgument: ""};
-        let found: boolean = Calculator.findOperation1("4* 5", result as FindOperationResult);
+        let found: boolean = Calculator.extractOperation("4* 5", result as FindOperationResult);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: Operation.MULTIPLICATION, firstArgument: "4", secondArgument: " 5"});
     });
     it("Find Operation 242424", () => {
         let result: FindOperationResult = { operation: Operation.ADDITION, firstArgument: "", secondArgument: ""};
-        let found: boolean = Calculator.findOperation1("242424", result as FindOperationResult);
+        let found: boolean = Calculator.extractOperation("242424", result as FindOperationResult);
         expect(found).toEqual(false);
     });
     it("Find Operation 5*6-7", () => {
         let result: FindOperationResult = { operation: Operation.ADDITION, firstArgument: "", secondArgument: ""};
-        let found: boolean = Calculator.findOperation1("5*6-7", result as FindOperationResult);
+        let found: boolean = Calculator.extractOperation("5*6-7", result as FindOperationResult);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: Operation.SUBTRACTION, firstArgument: "5*6", secondArgument: "7"});
     });
     it("Find Operation 5*6-7/2", () => {
         let result: FindOperationResult = { operation: Operation.ADDITION, firstArgument: "", secondArgument: ""};
-        let found: boolean = Calculator.findOperation1("5*6-7/2", result as FindOperationResult);
+        let found: boolean = Calculator.extractOperation("5*6-7/2", result as FindOperationResult);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: Operation.SUBTRACTION, firstArgument: "5*6", secondArgument: "7/2"});
     });
