@@ -1,10 +1,12 @@
 import {BracketsProcessor} from "./BracketsProcessor";
-import {FindOperationResult, Operation, TwoArgumentsOperationProcessor} from "./TwoArgumentsOperationProcessor";
+import {TwoArgumentsOperationProcessor} from "./TwoArgumentsOperationProcessor";
 import {
     OneArgumentOperationProcessor,
     OneArgumentOperationResult,
     OneOrgOperation
 } from "./OneArgumentOperationProcessor";
+import {ExtractedOperation} from "./ExtractedOperation";
+import {Operation} from "./Operation";
 
 export class Calculator {
 
@@ -17,12 +19,14 @@ export class Calculator {
             );
         }
 
-        let extractedOperation: FindOperationResult = { operation: Operation.ADDITION, firstArgument: "", secondArgument: ""};
+        let extractedOperation: ExtractedOperation = { operation: Operation.ADDITION, arguments: []};
         if (TwoArgumentsOperationProcessor.extractOperation(expression, extractedOperation)) {
             return TwoArgumentsOperationProcessor.performOperation(
                 extractedOperation.operation,
-                this.calculate(extractedOperation.firstArgument),
-                this.calculate(extractedOperation.secondArgument)
+                [
+                    this.calculate(extractedOperation.arguments[0]),
+                    this.calculate(extractedOperation.arguments[1])
+                ]
             );
         }
 

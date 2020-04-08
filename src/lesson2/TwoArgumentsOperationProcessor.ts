@@ -1,16 +1,5 @@
-export enum Operation {
-    POWER = "^",
-    ADDITION = "+",
-    SUBTRACTION = "-",
-    MULTIPLICATION = "*",
-    DIVISION = "/"
-}
-
-export interface FindOperationResult {
-    operation: Operation,
-    firstArgument: string,
-    secondArgument: string
-}
+import {Operation} from "./Operation";
+import {ExtractedOperation} from "./ExtractedOperation";
 
 export class TwoArgumentsOperationProcessor {
 
@@ -22,7 +11,7 @@ export class TwoArgumentsOperationProcessor {
         Operation.DIVISION
     ];
 
-    public static extractOperation(expression: string, result: FindOperationResult): boolean {
+    public static extractOperation(expression: string, result: ExtractedOperation): boolean {
         for (let operation of this.availableOperations) {
 
             let openBrackets: number = 0;
@@ -38,8 +27,8 @@ export class TwoArgumentsOperationProcessor {
                 if (openBrackets == 0 && char == operation) {
                     const operationSignPosition = i;
                     result.operation = operation as Operation;
-                    result.firstArgument = expression.substr(0, operationSignPosition);
-                    result.secondArgument = expression.substr(operationSignPosition + 1);
+                    result.arguments[0] = expression.substr(0, operationSignPosition);
+                    result.arguments[1] = expression.substr(operationSignPosition + 1);
                     return true;
                 }
             }
@@ -47,13 +36,13 @@ export class TwoArgumentsOperationProcessor {
         return false;
     }
 
-    public static performOperation(operation: Operation, firstArgument: number, secondArgument: number): number {
+    public static performOperation(operation: Operation, parameters: number[]): number {
         switch (operation) {
-            case Operation.POWER:          return Math.pow(firstArgument, secondArgument);
-            case Operation.ADDITION:       return firstArgument + secondArgument;
-            case Operation.SUBTRACTION:    return firstArgument - secondArgument;
-            case Operation.MULTIPLICATION: return firstArgument * secondArgument;
-            case Operation.DIVISION:       return firstArgument / secondArgument;
+            case Operation.POWER:          return Math.pow(parameters[0], parameters[1]);
+            case Operation.ADDITION:       return parameters[0] + parameters[1];
+            case Operation.SUBTRACTION:    return parameters[0] - parameters[1];
+            case Operation.MULTIPLICATION: return parameters[0] * parameters[1];
+            case Operation.DIVISION:       return parameters[0] / parameters[1];
             default: throw new Error("Unsupported operation");
         }
     }
