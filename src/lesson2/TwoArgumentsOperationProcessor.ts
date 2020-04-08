@@ -22,7 +22,6 @@ export class TwoArgumentsOperationProcessor {
         Operation.DIVISION
     ];
 
-
     public static extractOperation(expression: string, result: FindOperationResult): boolean {
         for (let operation of this.availableOperations) {
 

@@ -1,5 +1,10 @@
 import {BracketsProcessor} from "./BracketsProcessor";
 import {FindOperationResult, Operation, TwoArgumentsOperationProcessor} from "./TwoArgumentsOperationProcessor";
+import {
+    OneArgumentOperationProcessor,
+    OneArgumentOperationResult,
+    OneOrgOperation
+} from "./OneArgumentOperationProcessor";
 
 export class Calculator {
 
@@ -18,6 +23,14 @@ export class Calculator {
                 extractedOperation.operation,
                 this.calculate(extractedOperation.firstArgument),
                 this.calculate(extractedOperation.secondArgument)
+            );
+        }
+
+        let extractedOneArgOperation: OneArgumentOperationResult = { operation: OneOrgOperation.FACTORIAL, argument: ""};
+        if (OneArgumentOperationProcessor.extractOperation(expression, extractedOneArgOperation)) {
+            return OneArgumentOperationProcessor.performOperation(
+                extractedOneArgOperation.operation,
+                this.calculate(extractedOneArgOperation.argument)
             );
         }
 

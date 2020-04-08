@@ -1,4 +1,5 @@
 export class BracketsProcessor {
+
     public static openBrackets(expression: string): string {
         return expression.substr(1, expression.length - 2);
     }

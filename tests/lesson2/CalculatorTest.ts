@@ -28,4 +28,13 @@ describe("Calculator calculate method", () => {
     it("Complicated expression with brackets (6+4)^4", () => {
         expect(Calculator.calculate("(6+4)^4")).toEqual(10000);
     });
+    it("Factorial 6!", () => {
+        expect(Calculator.calculate("6!")).toEqual(6*5*4*3*2);
+    });
+    it("Complicated expression (3+3)!", () => {
+        expect(Calculator.calculate("(3+3)!")).toEqual(6*5*4*3*2);
+    });
+    it("Complicated expression (2+1)!^2", () => {
+        expect(Calculator.calculate("(2+1)!^2")).toEqual(36);
+    });
 });
