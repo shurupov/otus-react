@@ -32,12 +32,24 @@ export default class Calculator {
 
     public static extractOperation(expression: string, result: FindOperationResult): boolean {
         for (let operation of this.availableOperations) {
-            let operationSignPosition: number = expression.lastIndexOf(operation);
-            if (operationSignPosition != -1) {
-                result.operation = operation as Operation;
-                result.firstArgument = expression.substr(0, operationSignPosition);
-                result.secondArgument = expression.substr(operationSignPosition + 1);
-                return true;
+
+            let openBrackets: number = 0;
+
+            for (let i = expression.length - 1; i >= 0; i--) {
+                const char: string = expression[i];
+                if (char == ")") {
+                    openBrackets++;
+                }
+                if (char == "(") {
+                    openBrackets--;
+                }
+                if (openBrackets == 0 && char == operation) {
+                    const operationSignPosition = i;
+                    result.operation = operation as Operation;
+                    result.firstArgument = expression.substr(0, operationSignPosition);
+                    result.secondArgument = expression.substr(operationSignPosition + 1);
+                    return true;
+                }
             }
         }
         return false;

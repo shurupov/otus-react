@@ -72,4 +72,16 @@ describe("Calculator extractOperation method", () => {
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: Operation.SUBTRACTION, firstArgument: "5*6", secondArgument: "7/2"});
     });
+    it("Find the first Operation 6*(42-10)+(22-1)", () => {
+        let result: FindOperationResult = { operation: Operation.ADDITION, firstArgument: "", secondArgument: ""};
+        let found: boolean = Calculator.extractOperation("6*(42-10)+(22-1)", result as FindOperationResult);
+        expect(found).toEqual(true);
+        expect(result).toEqual({ operation: Operation.ADDITION, firstArgument: "6*(42-10)", secondArgument: "(22-1)"});
+    });
+    it("Find the first Operation (49+51) / (32-12)", () => {
+        let result: FindOperationResult = { operation: Operation.ADDITION, firstArgument: "", secondArgument: ""};
+        let found: boolean = Calculator.extractOperation("(49+51) / (32-12)", result as FindOperationResult);
+        expect(found).toEqual(true);
+        expect(result).toEqual({ operation: Operation.DIVISION, firstArgument: "(49+51) ", secondArgument: " (32-12)"});
+    });
 });
