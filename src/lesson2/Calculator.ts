@@ -1,59 +1,46 @@
+export enum Operation {
+    ADDITION = "+",
+    SUBTRACTION = "-",
+    MULTIPLICATION = "*",
+    DIVISION = "/"
+}
+
+export interface FindOperationResult {
+    operation: Operation,
+    firstArgument: string,
+    secondArgument: string
+}
 
 export default class Calculator {
 
+    private static availableOperations: Operation[] = [
+        Operation.ADDITION,
+        Operation.SUBTRACTION,
+        Operation.MULTIPLICATION,
+        Operation.DIVISION
+    ];
+
     public static calculate(expression: string): number {
         expression = expression.trim();
-        if (this.containsOperation(expression)) {
-            let operation: [Operation, string, string] = this.extractOperation(expression);
-            return this.performOperation(operation[0], operation[1], operation[2]);
+        let extractedOperation: FindOperationResult = { operation: Operation.ADDITION, firstArgument: "", secondArgument: ""};
+        if (this.findOperation1(expression, extractedOperation)) {
+            return this.performOperation(extractedOperation.operation, extractedOperation.firstArgument, extractedOperation.secondArgument);
         } else {
             return parseFloat(expression);
         }
     }
 
-    public static extractOperation(expression: string): [Operation, string, string] {
-        let action : [Operation, number] = this.findAction(expression);
-
-        const operation = action[0];
-        const operationSignPosition = action[1];
-        const firstArgument = expression.substr(0, operationSignPosition);
-        const secondArgument = expression.substr(operationSignPosition + 1);
-        return [operation, firstArgument, secondArgument];
-    }
-
-    public static findAction(expression: string): [Operation, number] {
-
-        /*for (let operationKey: Operation in Object.values(Operation)) {
-
-            let operationSignPosition: number = expression.lastIndexOf(operationKey);
+    public static findOperation1(expression: string, result: FindOperationResult): boolean {
+        for (let operation of this.availableOperations) {
+            let operationSignPosition: number = expression.lastIndexOf(operation);
             if (operationSignPosition != -1) {
-                operationSignPosition = expression.lastIndexOf("-");
-                return [operationKey, operationSignPosition];
+                result.operation = operation as Operation;
+                result.firstArgument = expression.substr(0, operationSignPosition);
+                result.secondArgument = expression.substr(operationSignPosition + 1);
+                return true;
             }
-        }*/
-
-        let operationSignPosition: number = expression.lastIndexOf("+");
-        let operation: Operation = Operation.ADDITION;
-        if (operationSignPosition == -1) {
-            operationSignPosition = expression.lastIndexOf("-");
-            operation = Operation.SUBTRACTION;
         }
-        if (operationSignPosition == -1) {
-            operationSignPosition = expression.lastIndexOf("/");
-            operation = Operation.DIVISION;
-        }
-        if (operationSignPosition == -1) {
-            operationSignPosition = expression.lastIndexOf("*");
-            operation = Operation.MULTIPLICATION;
-        }
-        return [operation, operationSignPosition];
-    }
-
-    public static containsOperation(expression: string): boolean {
-        return expression.indexOf("+") != -1
-            || expression.indexOf("-") != -1
-            || expression.indexOf("*") != -1
-            || expression.indexOf("/") != -1;
+        return false;
     }
 
     public static performOperation(operation: Operation, firstArgument: string, secondArgument: string): number {
@@ -65,12 +52,4 @@ export default class Calculator {
             default: throw new Error("Unsupported operation");
         }
     }
-
-}
-
-enum Operation {
-    ADDITION = "+",
-    SUBTRACTION = "-",
-    MULTIPLICATION = "*",
-    DIVISION = "/"
 }
