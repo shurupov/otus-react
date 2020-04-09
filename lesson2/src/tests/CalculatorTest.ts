@@ -33,6 +33,12 @@ describe("Calculator calculate method", () => {
     it("Factorial 6!", () => {
         expect(calculator.calculate("6!")).toEqual(6*5*4*3*2);
     });
+    it("Factorial 6**", () => {
+        expect(calculator.calculate("6**")).toEqual(36);
+    });
+    it("Factorial (5+5)**", () => {
+        expect(calculator.calculate("(5+5)**")).toEqual(100);
+    });
     it("Complicated expression (3+3)!", () => {
         expect(calculator.calculate("(3+3)!")).toEqual(6*5*4*3*2);
     });

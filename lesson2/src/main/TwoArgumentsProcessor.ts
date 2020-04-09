@@ -11,8 +11,26 @@ export class TwoArgumentsProcessor extends AbstractOperationProcessor {
         operations.DIVISION
     ];
 
+    private forbidOperations: string[] = [
+        operations.SQUARE_INLINE
+    ];
+
     protected getAvailableOperations(): string[] {
         return this.availableOperations;
+    }
+
+    protected operationFound(expression: string, operation: string, i: number): boolean {
+        if (!super.operationFound(expression, operation, i)) {
+            return false;
+        }
+        for (let forbidOperation of this.forbidOperations) {
+            const possibleOperation1: string = expression.substr(i - forbidOperation.length + 1, forbidOperation.length);
+            const possibleOperation2: string = expression.substr(i, forbidOperation.length);
+            if (possibleOperation1 === forbidOperation || possibleOperation2 === forbidOperation ) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public extractArguments(expression: string, operation: string, operationSignPosition: number): string[] {

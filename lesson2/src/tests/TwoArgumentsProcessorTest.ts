@@ -70,4 +70,9 @@ describe("TwoArgumentsOperationProcessor extractOperation method", () => {
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: operations.DIVISION, arguments: ["(49+51) ", " (32-12)"]});
     });
+    it("55 ** 11", () => {
+        const result: ExtractedOperation = { operation: operations.UNSUPPORTED_OPERATION, arguments: []};
+        const found: boolean = processor.extractOperation("55 ** 11", result as ExtractedOperation);
+        expect(found).toEqual(false);
+    });
 });

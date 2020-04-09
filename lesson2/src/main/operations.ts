@@ -14,5 +14,6 @@ export const operations = {
     TRUNC: "trunc",
     ROUND: "round",
     BRACKETS: "()",
+    SQUARE_INLINE: "**",
     UNSUPPORTED_OPERATION: "unsupported"
 };
