@@ -25,7 +25,7 @@ export class OneArgumentProcessor extends AbstractOperationProcessor {
     }
 
     public factorial(count: number): number {
-        if (count == 1) {
+        if (count === 1) {
             return 1;
         }
         return count * this.factorial(count - 1);

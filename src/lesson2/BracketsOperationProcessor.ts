@@ -33,13 +33,13 @@ export class BracketsOperationProcessor extends AbstractOperationProcessor {
     }
 
     protected operationFound(expression: string, operation: Operation, i: number): boolean {
-        if (!super.bracketOpenedHere(expression, operation, i)) {
+        if (!this.bracketOpenedHere(expression, operation, i)) {
             return false;
         }
 
         const operationNameLength = (operation as string).length;
         const bracketToken: string = expression.substr(i - operationNameLength, operationNameLength);
-        return (bracketToken == (operation as string));
+        return (bracketToken === (operation as string));
     }
 
     extractArguments(expression: string, operation: Operation, i: number): string[] {
