@@ -3,11 +3,14 @@ import {TwoArgumentsProcessor} from "./TwoArgumentsProcessor";
 import {OneArgumentProcessor,} from "./OneArgumentProcessor";
 import {ExtractedOperation} from "./ExtractedOperation";
 import {Operation} from "./Operation";
+import {AbstractOperationProcessor} from "./AbstractOperationProcessor";
 
 export class Calculator {
 
-    private processor1: TwoArgumentsProcessor = new TwoArgumentsProcessor();
-    private processor2: OneArgumentProcessor = new OneArgumentProcessor();
+    private processors: AbstractOperationProcessor[] = [
+        new TwoArgumentsProcessor(),
+        new OneArgumentProcessor()
+    ];
 
     public calculate(expression: string): number {
         expression = expression.trim();
@@ -18,26 +21,14 @@ export class Calculator {
             );
         }
 
-        let operation1: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
-        if (this.processor1.extractOperation(expression, operation1)) {
-            return this.processor1.performOperation(
-                operation1.operation,
-                [
-                    this.calculate(operation1.arguments[0]),
-                    this.calculate(operation1.arguments[1])
-                ]
-            );
-        }
-
-        let operation2: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
-        if (this.processor2.extractOperation(expression, operation2)) {
-            return this.processor2.performOperation(
-                operation2.operation,
-                [
-                    this.calculate(operation2.arguments[0])
-                ]
-
-            );
+        for (let processor of this.processors) {
+            let operation: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
+            if (processor.extractOperation(expression, operation)) {
+                return processor.performOperation(
+                    operation.operation,
+                    operation.arguments.map((argument: string) => this.calculate(argument))
+                );
+            }
         }
 
         return parseFloat(expression);
