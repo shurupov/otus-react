@@ -1,17 +1,19 @@
 import {BracketsProcessor} from "./BracketsProcessor";
 import {TwoArgumentsProcessor} from "./TwoArgumentsProcessor";
-import {OneArgumentProcessor,} from "./OneArgumentProcessor";
+import {RightOperationProcessor,} from "./RightOperationProcessor";
 import {ExtractedOperation} from "./ExtractedOperation";
 import {operations} from "./operations";
 import {AbstractOperationProcessor} from "./AbstractOperationProcessor";
 import {BracketsOperationProcessor} from "./BracketsOperationProcessor";
+import {LeftOperationProcessor} from "./LeftOperationProcessor";
 
 export class Calculator {
 
     private processors: AbstractOperationProcessor[] = [
         new BracketsProcessor(),
         new TwoArgumentsProcessor(),
-        new OneArgumentProcessor(),
+        new LeftOperationProcessor(),
+        new RightOperationProcessor(),
         new BracketsOperationProcessor(),
     ];
 

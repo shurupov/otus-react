@@ -1,7 +1,7 @@
 import {operations} from "./operations";
 import {AbstractOperationProcessor} from "./AbstractOperationProcessor";
 
-export class OneArgumentProcessor extends AbstractOperationProcessor {
+export class RightOperationProcessor extends AbstractOperationProcessor {
 
     private availableOperations: string[] = [
         operations.FACTORIAL,

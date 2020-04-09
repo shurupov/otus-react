@@ -12,7 +12,8 @@ export class TwoArgumentsProcessor extends AbstractOperationProcessor {
     ];
 
     private forbidOperations: string[] = [
-        operations.SQUARE_INLINE
+        operations.SQUARE_INLINE,
+        operations.DOUBLE_SUBTRACTION
     ];
 
     protected getAvailableOperations(): string[] {

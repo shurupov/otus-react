@@ -1,10 +1,10 @@
-import {OneArgumentProcessor,} from "../main/OneArgumentProcessor";
+import {RightOperationProcessor,} from "../main/RightOperationProcessor";
 import {ExtractedOperation} from "../main/ExtractedOperation";
 import {operations} from "../main/operations";
 
-const processor: OneArgumentProcessor = new OneArgumentProcessor();
+const processor: RightOperationProcessor = new RightOperationProcessor();
 
-describe("OneArgumentOperationProcessor extractOperation method", () => {
+describe("RightOperationProcessor extractOperation method", () => {
     it("Find Operation 10!", () => {
         const result: ExtractedOperation = { operation: operations.UNSUPPORTED_OPERATION, arguments: []};
         const found: boolean = processor.extractOperation("10!", result);
@@ -35,7 +35,7 @@ describe("OneArgumentOperationProcessor extractOperation method", () => {
     });
 });
 
-describe("OneArgumentOperationProcessor performOperation method", () => {
+describe("RightOperationProcessor performOperation method", () => {
     it("Find 6!", () => {
         expect(processor.performOperation(operations.FACTORIAL, [6])).toEqual(6*5*4*3*2);
     });
@@ -44,7 +44,7 @@ describe("OneArgumentOperationProcessor performOperation method", () => {
     });
 });
 
-describe("OneArgumentOperationProcessor factorial method", () => {
+describe("RightOperationProcessor factorial method", () => {
     it("Find factorial of 3", () => {
         expect(processor.factorial(3)).toEqual(3*2);
     });

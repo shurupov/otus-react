@@ -54,4 +54,22 @@ describe("Calculator calculate method", () => {
     it("Complicated -7", () => {
         expect(calculator.calculate("-7")).toEqual(-7);
     });
+    it("Complicated -(2+2)", () => {
+        expect(calculator.calculate("-(2+2)")).toEqual(-4);
+    });
+    it("Complicated -(2+2)**", () => {
+        expect(calculator.calculate("-(2+2)**")).toEqual(-16);
+    });
+    it("Complicated -4**", () => {
+        expect(calculator.calculate("-4**")).toEqual(-16);
+    });
+    it("Complicated --5", () => {
+        expect(calculator.calculate("--5")).toEqual(5);
+    });
+    it("Complicated ---5", () => {
+        expect(calculator.calculate("---5")).toEqual(-5);
+    });
+    it("Complicated ---(5+5)", () => {
+        expect(calculator.calculate("---(5+5)")).toEqual(-10);
+    });
 });

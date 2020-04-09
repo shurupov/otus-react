@@ -15,5 +15,6 @@ export const operations = {
     ROUND: "round",
     BRACKETS: "()",
     SQUARE_INLINE: "**",
+    DOUBLE_SUBTRACTION: "--",
     UNSUPPORTED_OPERATION: "unsupported"
 };
