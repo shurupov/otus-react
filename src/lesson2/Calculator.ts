@@ -1,12 +1,15 @@
 import {BracketsProcessor} from "./BracketsProcessor";
-import {TwoArgumentsOperationProcessor} from "./TwoArgumentsOperationProcessor";
-import {OneArgumentOperationProcessor,} from "./OneArgumentOperationProcessor";
+import {TwoArgumentsProcessor} from "./TwoArgumentsProcessor";
+import {OneArgumentProcessor,} from "./OneArgumentProcessor";
 import {ExtractedOperation} from "./ExtractedOperation";
 import {Operation} from "./Operation";
 
 export class Calculator {
 
-    public static calculate(expression: string): number {
+    private processor1: TwoArgumentsProcessor = new TwoArgumentsProcessor();
+    private processor2: OneArgumentProcessor = new OneArgumentProcessor();
+
+    public calculate(expression: string): number {
         expression = expression.trim();
 
         if (BracketsProcessor.isInBrackets(expression)) {
@@ -15,23 +18,23 @@ export class Calculator {
             );
         }
 
-        let extractedOperation: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
-        if (TwoArgumentsOperationProcessor.extractOperation(expression, extractedOperation)) {
-            return TwoArgumentsOperationProcessor.performOperation(
-                extractedOperation.operation,
+        let operation1: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
+        if (this.processor1.extractOperation(expression, operation1)) {
+            return this.processor1.performOperation(
+                operation1.operation,
                 [
-                    this.calculate(extractedOperation.arguments[0]),
-                    this.calculate(extractedOperation.arguments[1])
+                    this.calculate(operation1.arguments[0]),
+                    this.calculate(operation1.arguments[1])
                 ]
             );
         }
 
-        let extractedOneArgOperation: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
-        if (OneArgumentOperationProcessor.extractOperation(expression, extractedOneArgOperation)) {
-            return OneArgumentOperationProcessor.performOperation(
-                extractedOneArgOperation.operation,
+        let operation2: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
+        if (this.processor2.extractOperation(expression, operation2)) {
+            return this.processor2.performOperation(
+                operation2.operation,
                 [
-                    this.calculate(extractedOneArgOperation.arguments[0])
+                    this.calculate(operation2.arguments[0])
                 ]
 
             );
