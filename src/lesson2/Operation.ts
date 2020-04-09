@@ -7,5 +7,11 @@ export enum Operation {
     FACTORIAL = "!",
     SIN = "sin",
     COS = "cos",
+    TG = "tg",
+    CTG = "ctg",
+    SQR = "sqr",
+    SQRT = "sqrt",
+    TRUNC = "trunc",
+    ROUND = "round",
     UNSUPPORTED_OPERATION = "unsuppoerted"
 }

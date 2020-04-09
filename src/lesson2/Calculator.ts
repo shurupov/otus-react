@@ -14,12 +14,14 @@ export class Calculator {
         new BracketsOperationProcessor(),
     ];
 
+    private bracketsProcessor: BracketsProcessor = new BracketsProcessor();
+
     public calculate(expression: string): number {
         expression = expression.trim();
 
-        if (BracketsProcessor.isInBrackets(expression)) {
+        if (this.bracketsProcessor.isInBrackets(expression)) {
             return this.calculate(
-                BracketsProcessor.openBrackets(expression)
+                this.bracketsProcessor.openBrackets(expression)
             );
         }
 

@@ -1,10 +1,10 @@
 export class BracketsProcessor {
 
-    public static openBrackets(expression: string): string {
+    public openBrackets(expression: string): string {
         return expression.substr(1, expression.length - 2);
     }
 
-    public static isInBrackets(expression: string): boolean {
+    public isInBrackets(expression: string): boolean {
         const containsBrackets = (expression.indexOf("(") == 0 && expression.lastIndexOf(")") == expression.length - 1);
         if (!containsBrackets) {
             return false;

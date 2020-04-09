@@ -39,4 +39,7 @@ describe("Calculator calculate method", () => {
     it("Complicated expression (2+1)!^2", () => {
         expect(calculator.calculate("(2+1)!^2")).toEqual(36);
     });
+    it("Complicated expression sqr(6)+sqrt(4)", () => {
+        expect(calculator.calculate("sqr(6)+sqrt(4)")).toEqual(38);
+    });
 });
