@@ -48,4 +48,10 @@ describe("Calculator calculate method", () => {
     it("Complicated expression sqr(6)+sqrt(4)", () => {
         expect(calculator.calculate("sqr(6)+sqrt(4)")).toEqual(38);
     });
+    it("Complicated 5 + -3", () => {
+        expect(calculator.calculate("5 + -3")).toEqual(2);
+    });
+    it("Complicated -7", () => {
+        expect(calculator.calculate("-7")).toEqual(-7);
+    });
 });

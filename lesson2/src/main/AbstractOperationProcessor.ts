@@ -17,7 +17,7 @@ export abstract class AbstractOperationProcessor {
                 if (this.bracketOpenedHere(expression, operation, i)) {
                     openBrackets--;
                 }
-                if (openBrackets === 0 && this.operationFound(expression, operation, i)) {
+                if (openBrackets === 0 && this.isOperationFound(expression, operation, i)) {
                     result.operation = operation;
                     result.arguments = this.extractArguments(expression, operation, i);
                     return true;
@@ -27,7 +27,7 @@ export abstract class AbstractOperationProcessor {
         return false;
     }
 
-    protected operationFound(expression: string, operation: string, i: number): boolean {
+    protected isOperationFound(expression: string, operation: string, i: number): boolean {
         const possibleOperation: string = expression.substr(i - operation.length + 1, operation.length);
         return possibleOperation === operation;
     }

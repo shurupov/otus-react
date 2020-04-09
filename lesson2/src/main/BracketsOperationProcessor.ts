@@ -32,7 +32,7 @@ export class BracketsOperationProcessor extends AbstractOperationProcessor {
         }
     }
 
-    protected operationFound(expression: string, operation: string, i: number): boolean {
+    protected isOperationFound(expression: string, operation: string, i: number): boolean {
         if (!this.bracketOpenedHere(expression, operation, i)) {
             return false;
         }

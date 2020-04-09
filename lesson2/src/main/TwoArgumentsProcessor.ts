@@ -19,8 +19,8 @@ export class TwoArgumentsProcessor extends AbstractOperationProcessor {
         return this.availableOperations;
     }
 
-    protected operationFound(expression: string, operation: string, i: number): boolean {
-        if (!super.operationFound(expression, operation, i)) {
+    protected isOperationFound(expression: string, operation: string, i: number): boolean {
+        if (i === 0 || !super.isOperationFound(expression, operation, i)) {
             return false;
         }
         for (let forbidOperation of this.forbidOperations) {
