@@ -6,38 +6,38 @@ const processor: BracketsOperationProcessor = new BracketsOperationProcessor();
 
 describe("BracketsOperationProcessor extractOperation method", () => {
     it("Find Operation sin(45)", () => {
-        let result: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
-        let found: boolean = processor.extractOperation("sin(45)", result);
+        const result: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
+        const found: boolean = processor.extractOperation("sin(45)", result);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: Operation.SIN, arguments: ["45"]});
     });
     it("Find Operation cos(30)", () => {
-        let result: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
-        let found: boolean = processor.extractOperation("cos(30)", result);
+        const result: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
+        const found: boolean = processor.extractOperation("cos(30)", result);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: Operation.COS, arguments: ["30"]});
     });
     it("Find Operation tg(30)", () => {
-        let result: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
-        let found: boolean = processor.extractOperation("tg(30)", result);
+        const result: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
+        const found: boolean = processor.extractOperation("tg(30)", result);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: Operation.TG, arguments: ["30"]});
     });
     it("Find Operation ctg(30)", () => {
-        let result: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
-        let found: boolean = processor.extractOperation("ctg(30)", result);
+        const result: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
+        const found: boolean = processor.extractOperation("ctg(30)", result);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: Operation.CTG, arguments: ["30"]});
     });
     it("Find Operation sqrt(30)", () => {
-        let result: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
-        let found: boolean = processor.extractOperation("sqrt(30)", result);
+        const result: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
+        const found: boolean = processor.extractOperation("sqrt(30)", result);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: Operation.SQRT, arguments: ["30"]});
     });
     it("Find Operation sqr(30)", () => {
-        let result: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
-        let found: boolean = processor.extractOperation("sqr(30)", result);
+        const result: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
+        const found: boolean = processor.extractOperation("sqr(30)", result);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: Operation.SQR, arguments: ["30"]});
     });

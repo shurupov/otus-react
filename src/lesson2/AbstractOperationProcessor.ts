@@ -6,9 +6,9 @@ export abstract class AbstractOperationProcessor {
     protected abstract getAvailableOperations(): Operation[];
 
     public extractOperation(expression: string, result: ExtractedOperation): boolean {
-        for (let operation of this.getAvailableOperations()) {
+        for (const operation of this.getAvailableOperations()) {
 
-            let openBrackets: number = 0;
+            let openBrackets = 0;
 
             for (let i = expression.length - 1; i >= 0; i--) {
                 const char: string = expression[i];
@@ -28,12 +28,12 @@ export abstract class AbstractOperationProcessor {
         return false;
     }
 
-    protected operationFound(expression: string, operation: Operation, i: number) {
+    protected operationFound(expression: string, operation: Operation, i: number): boolean {
         const char: string = expression[i];
         return char == operation;
     }
 
-    protected bracketOpenedHere(expression: string, operation: Operation, i: number) {
+    protected bracketOpenedHere(expression: string, operation: Operation, i: number): boolean {
         const char: string = expression[i];
         return (char == "(");
     }

@@ -25,8 +25,8 @@ export class Calculator {
             );
         }
 
-        for (let processor of this.processors) {
-            let operation: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
+        for (const processor of this.processors) {
+            const operation: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
             if (processor.extractOperation(expression, operation)) {
                 return processor.performOperation(
                     operation.operation,

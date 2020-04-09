@@ -19,7 +19,7 @@ export class OneArgumentProcessor extends AbstractOperationProcessor {
     }
 
     public extractArguments(expression: string, operation: Operation, operationSignPosition: number): string[] {
-        let result: string[] = [];
+        const result: string[] = [];
         result[0] = expression.substr(0, operationSignPosition);
         return result;
     }

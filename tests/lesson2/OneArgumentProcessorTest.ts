@@ -6,25 +6,25 @@ const processor: OneArgumentProcessor = new OneArgumentProcessor();
 
 describe("OneArgumentOperationProcessor extractOperation method", () => {
     it("Find Operation 10!", () => {
-        let result: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
-        let found: boolean = processor.extractOperation("10!", result);
+        const result: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
+        const found: boolean = processor.extractOperation("10!", result);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: Operation.FACTORIAL, arguments: ["10"]});
     });
     it("Find Operation (5 + 6)!", () => {
-        let result: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
-        let found: boolean = processor.extractOperation("(5 + 6)!", result);
+        const result: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
+        const found: boolean = processor.extractOperation("(5 + 6)!", result);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: Operation.FACTORIAL, arguments: ["(5 + 6)"]});
     });
     it("Find Operation 10", () => {
-        let result: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
-        let found: boolean = processor.extractOperation("10", result);
+        const result: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
+        const found: boolean = processor.extractOperation("10", result);
         expect(found).toEqual(false);
     });
     it("Find Operation (5 + 6)", () => {
-        let result: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
-        let found: boolean = processor.extractOperation("(5 + 6)", result);
+        const result: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
+        const found: boolean = processor.extractOperation("(5 + 6)", result);
         expect(found).toEqual(false);
     });
 });

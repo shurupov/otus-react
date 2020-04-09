@@ -37,19 +37,19 @@ export class BracketsOperationProcessor extends AbstractOperationProcessor {
             return false;
         }
 
-        let operationNameLength = (operation as string).length;
+        const operationNameLength = (operation as string).length;
         const bracketToken: string = expression.substr(i - operationNameLength, operationNameLength);
         return (bracketToken == (operation as string));
     }
 
     extractArguments(expression: string, operation: Operation, i: number): string[] {
-        let closeBracketPosition = expression.indexOf(")", i + 1);
-        let result: string[] = [];
+        const closeBracketPosition = expression.indexOf(")", i + 1);
+        const result: string[] = [];
         result[0] = expression.substr(i + 1, closeBracketPosition - i - 1);
         return result;
     }
 
-    protected degreesToRadians(degrees: number) {
+    protected degreesToRadians(degrees: number): number {
         return degrees * Math.PI / 180;
     }
 
