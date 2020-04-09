@@ -15,12 +15,12 @@ export abstract class AbstractOperationProcessor {
                 if (char == ")") {
                     openBrackets++;
                 }
-                if (char == "(") {
+                if (this.bracketOpenedHere(expression, operation, i)) {
                     openBrackets--;
                 }
-                if (openBrackets == 0 && char == operation) {
+                if (openBrackets == 0 && this.operationFound(expression, operation, i)) {
                     result.operation = operation as Operation;
-                    result.arguments = this.extractArguments(expression, i);
+                    result.arguments = this.extractArguments(expression, operation, i);
                     return true;
                 }
             }
@@ -28,7 +28,17 @@ export abstract class AbstractOperationProcessor {
         return false;
     }
 
-    public abstract extractArguments(expression: string, operationSignPosition: number): string[];
+    protected operationFound(expression: string, operation: Operation, i: number) {
+        const char: string = expression[i];
+        return char == operation;
+    }
+
+    protected bracketOpenedHere(expression: string, operation: Operation, i: number) {
+        const char: string = expression[i];
+        return (char == "(");
+    }
+
+    public abstract extractArguments(expression: string, operation: Operation, operationSignPosition: number): string[];
 
     public abstract performOperation(operation: Operation, parameters: number[]): number;
 

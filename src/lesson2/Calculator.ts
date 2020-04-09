@@ -4,12 +4,14 @@ import {OneArgumentProcessor,} from "./OneArgumentProcessor";
 import {ExtractedOperation} from "./ExtractedOperation";
 import {Operation} from "./Operation";
 import {AbstractOperationProcessor} from "./AbstractOperationProcessor";
+import {BracketsOperationProcessor} from "./BracketsOperationProcessor";
 
 export class Calculator {
 
     private processors: AbstractOperationProcessor[] = [
         new TwoArgumentsProcessor(),
-        new OneArgumentProcessor()
+        new OneArgumentProcessor(),
+        new BracketsOperationProcessor(),
     ];
 
     public calculate(expression: string): number {

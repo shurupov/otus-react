@@ -11,17 +11,17 @@ export class OneArgumentProcessor extends AbstractOperationProcessor {
         return this.availableOperations;
     }
 
-    public extractArguments(expression: string, operationSignPosition: number): string[] {
-        let result: string[] = [];
-        result[0] = expression.substr(0, operationSignPosition);
-        return result;
-    }
-
     public performOperation(operation: Operation, parameters: number[]): number {
         switch (operation) {
             case Operation.FACTORIAL: return this.factorial(parameters[0]);
             default: throw new Error("Unsupported operation");
         }
+    }
+
+    public extractArguments(expression: string, operation: Operation, operationSignPosition: number): string[] {
+        let result: string[] = [];
+        result[0] = expression.substr(0, operationSignPosition);
+        return result;
     }
 
     public factorial(count: number): number {

@@ -15,7 +15,7 @@ export class TwoArgumentsProcessor extends AbstractOperationProcessor {
         return this.availableOperations;
     }
 
-    public extractArguments(expression: string, operationSignPosition: number): string[] {
+    public extractArguments(expression: string, operation: Operation, operationSignPosition: number): string[] {
         let result: string[] = [];
         result[0] = expression.substr(0, operationSignPosition);
         result[1] = expression.substr(operationSignPosition + 1);

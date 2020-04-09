@@ -5,5 +5,7 @@ export enum Operation {
     MULTIPLICATION = "*",
     DIVISION = "/",
     FACTORIAL = "!",
+    SIN = "sin",
+    COS = "cos",
     UNSUPPORTED_OPERATION = "unsuppoerted"
 }
