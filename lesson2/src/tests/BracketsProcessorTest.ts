@@ -1,8 +1,10 @@
 import {BracketsProcessor} from "../main/BracketsProcessor";
+import {ExtractedOperation} from "../main/ExtractedOperation";
+import {operations} from "../main/operations";
 
 const processor: BracketsProcessor = new BracketsProcessor();
 
-describe("Calculator inBrackets method", () => {
+describe("BracketsProcessor inBrackets method", () => {
     it("Check brackets (5)", () => {
         expect(processor.isInBrackets("(5)")).toEqual(true);
     });
@@ -17,11 +19,42 @@ describe("Calculator inBrackets method", () => {
     });
 });
 
-describe("Calculator openBrackets method", () => {
+describe("BracketsProcessor openBrackets method", () => {
     it("Open brackets (5)", () => {
         expect(processor.openBrackets("(5)")).toEqual("5");
     });
     it("Open brackets (5 + 6)", () => {
         expect(processor.openBrackets("(5 + 6)")).toEqual("5 + 6");
+    });
+});
+
+describe("BracketsProcessor extractOperation method", () => {
+    it("Find Operation (10)", () => {
+        const result: ExtractedOperation = { operation: operations.UNSUPPORTED_OPERATION, arguments: []};
+        const found: boolean = processor.extractOperation("(10)", result);
+        expect(found).toEqual(true);
+        expect(result).toEqual({ operation: operations.BRACKETS, arguments: ["10"]});
+    });
+    it("Find Operation (5 + 6)", () => {
+        const result: ExtractedOperation = { operation: operations.UNSUPPORTED_OPERATION, arguments: []};
+        const found: boolean = processor.extractOperation("(5 + 6)", result);
+        expect(found).toEqual(true);
+        expect(result).toEqual({ operation: operations.BRACKETS, arguments: ["5 + 6"]});
+    });
+    it("Find Operation 11", () => {
+        const result: ExtractedOperation = { operation: operations.UNSUPPORTED_OPERATION, arguments: []};
+        const found: boolean = processor.extractOperation("11", result);
+        expect(found).toEqual(false);
+    });
+    it("Find Operation sin(5 + 6)", () => {
+        const result: ExtractedOperation = { operation: operations.UNSUPPORTED_OPERATION, arguments: []};
+        const found: boolean = processor.extractOperation("sin(5 + 6)", result);
+        expect(found).toEqual(false);
+    });
+});
+
+describe("BracketsProcessor performOperation method", () => {
+    it("Find (22)", () => {
+        expect(processor.performOperation(operations.BRACKETS, [22])).toEqual(22);
     });
 });

@@ -13,5 +13,6 @@ export const operations = {
     SQRT: "sqrt",
     TRUNC: "trunc",
     ROUND: "round",
+    BRACKETS: "()",
     UNSUPPORTED_OPERATION: "unsupported"
 };
