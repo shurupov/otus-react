@@ -1,4 +1,4 @@
-import {BracketsProcessor} from "../../src/lesson2/BracketsProcessor";
+import {BracketsProcessor} from "../main/BracketsProcessor";
 
 const processor: BracketsProcessor = new BracketsProcessor();
 

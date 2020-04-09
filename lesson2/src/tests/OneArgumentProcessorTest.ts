@@ -1,6 +1,6 @@
-import {OneArgumentProcessor,} from "../../src/lesson2/OneArgumentProcessor";
-import {ExtractedOperation} from "../../src/lesson2/ExtractedOperation";
-import {operations} from "../../src/lesson2/operations";
+import {OneArgumentProcessor,} from "../main/OneArgumentProcessor";
+import {ExtractedOperation} from "../main/ExtractedOperation";
+import {operations} from "../main/operations";
 
 const processor: OneArgumentProcessor = new OneArgumentProcessor();
 

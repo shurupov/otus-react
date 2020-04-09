@@ -1,6 +1,6 @@
-import {BracketsOperationProcessor} from "../../src/lesson2/BracketsOperationProcessor";
-import {ExtractedOperation} from "../../src/lesson2/ExtractedOperation";
-import {operations} from "../../src/lesson2/operations";
+import {BracketsOperationProcessor} from "../main/BracketsOperationProcessor";
+import {ExtractedOperation} from "../main/ExtractedOperation";
+import {operations} from "../main/operations";
 
 const processor: BracketsOperationProcessor = new BracketsOperationProcessor();
 

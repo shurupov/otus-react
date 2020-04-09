@@ -1,4 +1,4 @@
-import {Calculator} from "../../src/lesson2/Calculator";
+import {Calculator} from "../main/Calculator";
 
 const calculator: Calculator = new Calculator();
 
