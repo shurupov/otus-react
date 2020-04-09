@@ -28,8 +28,8 @@ export abstract class AbstractOperationProcessor {
     }
 
     protected operationFound(expression: string, operation: string, i: number): boolean {
-        const char: string = expression[i];
-        return char === operation;
+        const possibleOperation: string = expression.substr(i - operation.length + 1, operation.length);
+        return possibleOperation === operation;
     }
 
     protected bracketOpenedHere(expression: string, operation: string, i: number): boolean {

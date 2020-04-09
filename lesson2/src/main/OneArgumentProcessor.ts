@@ -20,11 +20,6 @@ export class OneArgumentProcessor extends AbstractOperationProcessor {
         }
     }
 
-    protected operationFound(expression: string, operation: string, i: number): boolean {
-        const possibleOperation: string = expression.substr(i - operation.length + 1, operation.length);
-        return possibleOperation === operation;
-    }
-
     public extractArguments(expression: string, operation: string, operationSignPosition: number): string[] {
         const result: string[] = [];
         result[0] = expression.substr(0, operationSignPosition - operation.length + 1);
