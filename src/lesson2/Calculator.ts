@@ -2,7 +2,7 @@ import {BracketsProcessor} from "./BracketsProcessor";
 import {TwoArgumentsProcessor} from "./TwoArgumentsProcessor";
 import {OneArgumentProcessor,} from "./OneArgumentProcessor";
 import {ExtractedOperation} from "./ExtractedOperation";
-import {Operation} from "./Operation";
+import {operations} from "./operations";
 import {AbstractOperationProcessor} from "./AbstractOperationProcessor";
 import {BracketsOperationProcessor} from "./BracketsOperationProcessor";
 
@@ -26,7 +26,7 @@ export class Calculator {
         }
 
         for (const processor of this.processors) {
-            const operation: ExtractedOperation = { operation: Operation.UNSUPPORTED_OPERATION, arguments: []};
+            const operation: ExtractedOperation = { operation: operations.UNSUPPORTED_OPERATION, arguments: []};
             if (processor.extractOperation(expression, operation)) {
                 return processor.performOperation(
                     operation.operation,

@@ -1,24 +1,24 @@
-import {Operation} from "./Operation";
+import {operations} from "./operations";
 import {AbstractOperationProcessor} from "./AbstractOperationProcessor";
 
 export class OneArgumentProcessor extends AbstractOperationProcessor {
 
-    private availableOperations: Operation[] = [
-        Operation.FACTORIAL
+    private availableOperations: string[] = [
+        operations.FACTORIAL
     ];
 
-    protected getAvailableOperations(): Operation[] {
+    protected getAvailableOperations(): string[] {
         return this.availableOperations;
     }
 
-    public performOperation(operation: Operation, parameters: number[]): number {
+    public performOperation(operation: string, parameters: number[]): number {
         switch (operation) {
-            case Operation.FACTORIAL: return this.factorial(parameters[0]);
+            case operations.FACTORIAL: return this.factorial(parameters[0]);
             default: throw new Error("Unsupported operation");
         }
     }
 
-    public extractArguments(expression: string, operation: Operation, operationSignPosition: number): string[] {
+    public extractArguments(expression: string, operation: string, operationSignPosition: number): string[] {
         const result: string[] = [];
         result[0] = expression.substr(0, operationSignPosition);
         return result;

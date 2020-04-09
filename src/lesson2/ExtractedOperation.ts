@@ -1,6 +1,4 @@
-import {Operation} from "./Operation";
-
 export interface ExtractedOperation {
-    operation: Operation,
+    operation: string,
     arguments: string[]
 }

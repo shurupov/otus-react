@@ -1,48 +1,48 @@
 import {AbstractOperationProcessor} from "./AbstractOperationProcessor";
-import {Operation} from "./Operation";
+import {operations} from "./operations";
 
 export class BracketsOperationProcessor extends AbstractOperationProcessor {
 
-    private availableOperations: Operation[] = [
-        Operation.SIN,
-        Operation.COS,
-        Operation.CTG,
-        Operation.TG,
-        Operation.SQRT,
-        Operation.SQR,
-        Operation.TRUNC,
-        Operation.ROUND,
+    private availableOperations: string[] = [
+        operations.SIN,
+        operations.COS,
+        operations.CTG,
+        operations.TG,
+        operations.SQRT,
+        operations.SQR,
+        operations.TRUNC,
+        operations.ROUND,
     ];
 
-    protected getAvailableOperations(): Operation[] {
+    protected getAvailableOperations(): string[] {
         return this.availableOperations;
     }
 
-    performOperation(operation: Operation, parameters: number[]): number {
+    performOperation(operation: string, parameters: number[]): number {
         switch (operation) {
-            case Operation.SIN:  return Math.sin( this.degreesToRadians(parameters[0]) );
-            case Operation.COS:  return Math.cos( this.degreesToRadians(parameters[0]) );
-            case Operation.TG:   return Math.tan( this.degreesToRadians(parameters[0]) );
-            case Operation.CTG:  return 1 / Math.tan( this.degreesToRadians(parameters[0]) );
-            case Operation.SQR:  return parameters[0] * parameters[0];
-            case Operation.SQRT: return Math.sqrt(parameters[0]);
-            case Operation.TRUNC: return Math.trunc(parameters[0]);
-            case Operation.ROUND: return Math.round(parameters[0]);
+            case operations.SIN:  return Math.sin( this.degreesToRadians(parameters[0]) );
+            case operations.COS:  return Math.cos( this.degreesToRadians(parameters[0]) );
+            case operations.TG:   return Math.tan( this.degreesToRadians(parameters[0]) );
+            case operations.CTG:  return 1 / Math.tan( this.degreesToRadians(parameters[0]) );
+            case operations.SQR:  return parameters[0] * parameters[0];
+            case operations.SQRT: return Math.sqrt(parameters[0]);
+            case operations.TRUNC: return Math.trunc(parameters[0]);
+            case operations.ROUND: return Math.round(parameters[0]);
             default: throw new Error("Unsupported operation");
         }
     }
 
-    protected operationFound(expression: string, operation: Operation, i: number): boolean {
+    protected operationFound(expression: string, operation: string, i: number): boolean {
         if (!this.bracketOpenedHere(expression, operation, i)) {
             return false;
         }
 
-        const operationNameLength = (operation as string).length;
+        const operationNameLength = operation.length;
         const bracketToken: string = expression.substr(i - operationNameLength, operationNameLength);
-        return (bracketToken === (operation as string));
+        return (bracketToken === operation);
     }
 
-    extractArguments(expression: string, operation: Operation, i: number): string[] {
+    extractArguments(expression: string, operation: string, i: number): string[] {
         const closeBracketPosition = expression.indexOf(")", i + 1);
         const result: string[] = [];
         result[0] = expression.substr(i + 1, closeBracketPosition - i - 1);

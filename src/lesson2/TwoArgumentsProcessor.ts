@@ -1,34 +1,34 @@
-import {Operation} from "./Operation";
+import {operations} from "./operations";
 import {AbstractOperationProcessor} from "./AbstractOperationProcessor";
 
 export class TwoArgumentsProcessor extends AbstractOperationProcessor {
 
-    private availableOperations: Operation[] = [
-        Operation.POWER,
-        Operation.ADDITION,
-        Operation.SUBTRACTION,
-        Operation.MULTIPLICATION,
-        Operation.DIVISION
+    private availableOperations: string[] = [
+        operations.POWER,
+        operations.ADDITION,
+        operations.SUBTRACTION,
+        operations.MULTIPLICATION,
+        operations.DIVISION
     ];
 
-    protected getAvailableOperations(): Operation[] {
+    protected getAvailableOperations(): string[] {
         return this.availableOperations;
     }
 
-    public extractArguments(expression: string, operation: Operation, operationSignPosition: number): string[] {
+    public extractArguments(expression: string, operation: string, operationSignPosition: number): string[] {
         const result: string[] = [];
         result[0] = expression.substr(0, operationSignPosition);
         result[1] = expression.substr(operationSignPosition + 1);
         return result;
     }
 
-    public performOperation(operation: Operation, parameters: number[]): number {
+    public performOperation(operation: string, parameters: number[]): number {
         switch (operation) {
-            case Operation.POWER:          return Math.pow(parameters[0], parameters[1]);
-            case Operation.ADDITION:       return parameters[0] + parameters[1];
-            case Operation.SUBTRACTION:    return parameters[0] - parameters[1];
-            case Operation.MULTIPLICATION: return parameters[0] * parameters[1];
-            case Operation.DIVISION:       return parameters[0] / parameters[1];
+            case operations.POWER:          return Math.pow(parameters[0], parameters[1]);
+            case operations.ADDITION:       return parameters[0] + parameters[1];
+            case operations.SUBTRACTION:    return parameters[0] - parameters[1];
+            case operations.MULTIPLICATION: return parameters[0] * parameters[1];
+            case operations.DIVISION:       return parameters[0] / parameters[1];
             default: throw new Error("Unsupported operation");
         }
     }

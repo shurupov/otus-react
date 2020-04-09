@@ -1,9 +1,8 @@
-import {Operation} from "./Operation";
 import {ExtractedOperation} from "./ExtractedOperation";
 
 export abstract class AbstractOperationProcessor {
 
-    protected abstract getAvailableOperations(): Operation[];
+    protected abstract getAvailableOperations(): string[];
 
     public extractOperation(expression: string, result: ExtractedOperation): boolean {
         for (const operation of this.getAvailableOperations()) {
@@ -19,7 +18,7 @@ export abstract class AbstractOperationProcessor {
                     openBrackets--;
                 }
                 if (openBrackets === 0 && this.operationFound(expression, operation, i)) {
-                    result.operation = operation as Operation;
+                    result.operation = operation;
                     result.arguments = this.extractArguments(expression, operation, i);
                     return true;
                 }
@@ -28,18 +27,18 @@ export abstract class AbstractOperationProcessor {
         return false;
     }
 
-    protected operationFound(expression: string, operation: Operation, i: number): boolean {
+    protected operationFound(expression: string, operation: string, i: number): boolean {
         const char: string = expression[i];
         return char === operation;
     }
 
-    protected bracketOpenedHere(expression: string, operation: Operation, i: number): boolean {
+    protected bracketOpenedHere(expression: string, operation: string, i: number): boolean {
         const char: string = expression[i];
         return (char === "(");
     }
 
-    public abstract extractArguments(expression: string, operation: Operation, operationSignPosition: number): string[];
+    public abstract extractArguments(expression: string, operation: string, operationSignPosition: number): string[];
 
-    public abstract performOperation(operation: Operation, parameters: number[]): number;
+    public abstract performOperation(operation: string, parameters: number[]): number;
 
 }
