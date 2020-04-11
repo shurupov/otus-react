@@ -1,26 +1,14 @@
 import {operations} from "./operations";
-import {AbstractOperationProcessor} from "./AbstractOperationProcessor";
-import {ExtractedOperation} from "./ExtractedOperation";
+import {OneArgumentOperationProcessor} from "./OneArgumentOperationProcessor";
 
-export class RightOperationProcessor extends AbstractOperationProcessor {
+export class RightOperationProcessor extends OneArgumentOperationProcessor {
 
     protected availableOperations: string[] = [
         operations.FACTORIAL,
         operations.SQUARE_INLINE
     ];
 
-    public extractOperation(expression: string, result: ExtractedOperation): boolean {
-        for (const operation of this.availableOperations) {
-            if (this.isOperationFound(expression, operation, 0)) {
-                result.operation = operation;
-                result.arguments = this.extractArguments(expression, operation, 0);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    protected isOperationFound(expression: string, operation: string, i: number /*i is unused parameter*/): boolean {
+    protected isOperationFound(expression: string, operation: string): boolean {
         return expression.substr(expression.length - operation.length, operation.length) === operation;
     }
 
@@ -32,7 +20,7 @@ export class RightOperationProcessor extends AbstractOperationProcessor {
         }
     }
 
-    public extractArguments(expression: string, operation: string, operationSignPosition: number /* third parameter is unused */): string[] {
+    public extractArguments(expression: string, operation: string): string[] {
         const result: string[] = [];
         result[0] = expression.substr(0, expression.length - operation.length);
         return result;

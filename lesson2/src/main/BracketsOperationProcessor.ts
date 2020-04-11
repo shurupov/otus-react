@@ -1,9 +1,9 @@
 
 import {operations} from "./operations";
 import {ExtractedOperation} from "./ExtractedOperation";
-import {RightOperationProcessor} from "./RightOperationProcessor";
+import {OneArgumentOperationProcessor} from "./OneArgumentOperationProcessor";
 
-export class BracketsOperationProcessor extends RightOperationProcessor {
+export class BracketsOperationProcessor extends OneArgumentOperationProcessor {
 
     protected availableOperations: string[] = [
         operations.SIN,
@@ -37,11 +37,11 @@ export class BracketsOperationProcessor extends RightOperationProcessor {
         }
     }
 
-    protected isOperationFound(expression: string, operation: string, i: number/* i is unused parameter*/): boolean {
+    protected isOperationFound(expression: string, operation: string): boolean {
         return (expression.substr(0, operation.length + 1) === operation + "(");
     }
 
-    extractArguments(expression: string, operation: string, i: number/*i - unused parameter*/): string[] {
+    extractArguments(expression: string, operation: string): string[] {
         const result: string[] = [];
         result[0] = expression.substr(operation.length + 1, expression.length - operation.length - 2);
         return result;

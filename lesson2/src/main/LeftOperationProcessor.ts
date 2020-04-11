@@ -1,17 +1,17 @@
-import {RightOperationProcessor} from "./RightOperationProcessor";
 import {operations} from "./operations";
+import {OneArgumentOperationProcessor} from "./OneArgumentOperationProcessor";
 
-export class LeftOperationProcessor extends RightOperationProcessor{
+export class LeftOperationProcessor extends OneArgumentOperationProcessor {
 
     protected availableOperations: string[] = [
         operations.SUBTRACTION
     ];
 
-    protected isOperationFound(expression: string, operation: string, i: number /*i - unused parameter*/): boolean {
+    protected isOperationFound(expression: string, operation: string): boolean {
         return expression.substr(0, operation.length) === operation;
     }
 
-    public extractArguments(expression: string, operation: string, operationSignPosition: number /*third parameter is unused*/): string[] {
+    public extractArguments(expression: string, operation: string): string[] {
         const result: string[] = [];
         result[0] = expression.substr(operation.length);
         return result;
