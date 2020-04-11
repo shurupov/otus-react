@@ -1,15 +1,31 @@
 import {operations} from "./operations";
 import {AbstractOperationProcessor} from "./AbstractOperationProcessor";
+import {ExtractedOperation} from "./ExtractedOperation";
 
 export class RightOperationProcessor extends AbstractOperationProcessor {
 
-    private availableOperations: string[] = [
+    protected availableOperations: string[] = [
         operations.FACTORIAL,
         operations.SQUARE_INLINE
     ];
 
     protected getAvailableOperations(): string[] {
         return this.availableOperations;
+    }
+
+    public extractOperation(expression: string, result: ExtractedOperation): boolean {
+        for (const operation of this.getAvailableOperations()) {
+            if (this.isOperationFound(expression, operation, 0)) {
+                result.operation = operation;
+                result.arguments = this.extractArguments(expression, operation, 0);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected isOperationFound(expression: string, operation: string, i: number /*i is unused parameter*/): boolean {
+        return expression.substr(expression.length - operation.length, operation.length) === operation;
     }
 
     public performOperation(operation: string, parameters: number[]): number {
@@ -20,9 +36,9 @@ export class RightOperationProcessor extends AbstractOperationProcessor {
         }
     }
 
-    public extractArguments(expression: string, operation: string, operationSignPosition: number): string[] {
+    public extractArguments(expression: string, operation: string, operationSignPosition: number /* third parameter is unused */): string[] {
         const result: string[] = [];
-        result[0] = expression.substr(0, operationSignPosition - operation.length + 1);
+        result[0] = expression.substr(0, expression.length - operation.length);
         return result;
     }
 

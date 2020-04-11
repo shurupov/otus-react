@@ -11,14 +11,13 @@ export class LeftOperationProcessor extends RightOperationProcessor{
         return this.operators;
     }
 
-
-    protected isOperationFound(expression: string, operation: string, i: number): boolean {
-        return i == 0 && super.isOperationFound(expression, operation, i);
+    protected isOperationFound(expression: string, operation: string, i: number /*i - unused parameter*/): boolean {
+        return expression.substr(0, operation.length) === operation;
     }
 
-    public extractArguments(expression: string, operation: string, operationSignPosition: number): string[] {
+    public extractArguments(expression: string, operation: string, operationSignPosition: number /*third parameter is unused*/): string[] {
         const result: string[] = [];
-        result[0] = expression.substr(operationSignPosition + 1);
+        result[0] = expression.substr(operation.length);
         return result;
     }
 

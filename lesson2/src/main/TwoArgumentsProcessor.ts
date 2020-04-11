@@ -1,5 +1,6 @@
 import {operations} from "./operations";
 import {AbstractOperationProcessor} from "./AbstractOperationProcessor";
+import {ExtractedOperation} from "./ExtractedOperation";
 
 export class TwoArgumentsProcessor extends AbstractOperationProcessor {
 
@@ -18,6 +19,29 @@ export class TwoArgumentsProcessor extends AbstractOperationProcessor {
 
     protected getAvailableOperations(): string[] {
         return this.availableOperations;
+    }
+
+    public extractOperation(expression: string, result: ExtractedOperation): boolean {
+        for (const operation of this.getAvailableOperations()) {
+
+            let openBrackets = 0;
+
+            for (let i = expression.length - 1; i >= 0; i--) {
+                const char: string = expression[i];
+                if (char === ")") {
+                    openBrackets++;
+                }
+                if (this.bracketOpenedHere(expression, operation, i)) {
+                    openBrackets--;
+                }
+                if (openBrackets === 0 && this.isOperationFound(expression, operation, i)) {
+                    result.operation = operation;
+                    result.arguments = this.extractArguments(expression, operation, i);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     protected isOperationFound(expression: string, operation: string, i: number): boolean {

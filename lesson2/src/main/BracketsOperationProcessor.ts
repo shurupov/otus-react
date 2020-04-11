@@ -1,10 +1,11 @@
-import {AbstractOperationProcessor} from "./AbstractOperationProcessor";
+
 import {operations} from "./operations";
 import {ExtractedOperation} from "./ExtractedOperation";
+import {RightOperationProcessor} from "./RightOperationProcessor";
 
-export class BracketsOperationProcessor extends AbstractOperationProcessor {
+export class BracketsOperationProcessor extends RightOperationProcessor {
 
-    private availableOperations: string[] = [
+    protected availableOperations: string[] = [
         operations.SIN,
         operations.COS,
         operations.CTG,
@@ -23,14 +24,7 @@ export class BracketsOperationProcessor extends AbstractOperationProcessor {
         if (expression[expression.length - 1] !== ")") {
             return false;
         }
-        for (const operation of this.getAvailableOperations()) {
-            if (this.isOperationFound(expression, operation, 0)) {
-                result.operation = operation;
-                result.arguments = this.extractArguments(expression, operation, 0);
-                return true;
-            }
-        }
-        return false;
+        return super.extractOperation(expression, result);
     }
 
     performOperation(operation: string, parameters: number[]): number {
