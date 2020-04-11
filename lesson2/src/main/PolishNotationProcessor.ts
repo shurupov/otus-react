@@ -29,7 +29,7 @@ export class PolishNotationProcessor {
         let operation: string;
 
         for (const availableOperation of this.availableOperations) {
-            if (expressionContainer.expression.substr(position - availableOperation.length + 1) === availableOperation) {
+            if (expression.substr(position - availableOperation.length + 1, availableOperation.length) === availableOperation) {
                 operation = availableOperation;
                 expressionContainer.expression = expression.substr(0, position - operation.length + 1);
                 const argument2: number = this.calc(expressionContainer);
