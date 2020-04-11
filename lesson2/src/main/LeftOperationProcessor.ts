@@ -3,13 +3,9 @@ import {operations} from "./operations";
 
 export class LeftOperationProcessor extends RightOperationProcessor{
 
-    private operators: string[] = [
+    protected availableOperations: string[] = [
         operations.SUBTRACTION
     ];
-
-    protected getAvailableOperations(): string[] {
-        return this.operators;
-    }
 
     protected isOperationFound(expression: string, operation: string, i: number /*i - unused parameter*/): boolean {
         return expression.substr(0, operation.length) === operation;

@@ -16,10 +16,6 @@ export class BracketsOperationProcessor extends RightOperationProcessor {
         operations.ROUND,
     ];
 
-    protected getAvailableOperations(): string[] {
-        return this.availableOperations;
-    }
-
     extractOperation(expression: string, result: ExtractedOperation): boolean {
         if (expression[expression.length - 1] !== ")") {
             return false;

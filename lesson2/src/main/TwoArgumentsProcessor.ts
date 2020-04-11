@@ -4,7 +4,7 @@ import {ExtractedOperation} from "./ExtractedOperation";
 
 export class TwoArgumentsProcessor extends AbstractOperationProcessor {
 
-    private availableOperations: string[] = [
+    protected availableOperations: string[] = [
         operations.POWER,
         operations.ADDITION,
         operations.SUBTRACTION,
@@ -17,12 +17,8 @@ export class TwoArgumentsProcessor extends AbstractOperationProcessor {
         operations.DOUBLE_SUBTRACTION
     ];
 
-    protected getAvailableOperations(): string[] {
-        return this.availableOperations;
-    }
-
     public extractOperation(expression: string, result: ExtractedOperation): boolean {
-        for (const operation of this.getAvailableOperations()) {
+        for (const operation of this.availableOperations) {
 
             let openBrackets = 0;
 
@@ -31,7 +27,7 @@ export class TwoArgumentsProcessor extends AbstractOperationProcessor {
                 if (char === ")") {
                     openBrackets++;
                 }
-                if (this.bracketOpenedHere(expression, operation, i)) {
+                if (char === "(") {
                     openBrackets--;
                 }
                 if (openBrackets === 0 && this.isOperationFound(expression, operation, i)) {
@@ -45,7 +41,10 @@ export class TwoArgumentsProcessor extends AbstractOperationProcessor {
     }
 
     protected isOperationFound(expression: string, operation: string, i: number): boolean {
-        if (i === 0 || !super.isOperationFound(expression, operation, i)) {
+        if (i === 0) {
+            return false;
+        }
+        if (expression.substr(i - operation.length + 1, operation.length) !== operation) {
             return false;
         }
         for (let forbidOperation of this.forbidOperations) {

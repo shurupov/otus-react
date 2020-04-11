@@ -9,12 +9,8 @@ export class RightOperationProcessor extends AbstractOperationProcessor {
         operations.SQUARE_INLINE
     ];
 
-    protected getAvailableOperations(): string[] {
-        return this.availableOperations;
-    }
-
     public extractOperation(expression: string, result: ExtractedOperation): boolean {
-        for (const operation of this.getAvailableOperations()) {
+        for (const operation of this.availableOperations) {
             if (this.isOperationFound(expression, operation, 0)) {
                 result.operation = operation;
                 result.arguments = this.extractArguments(expression, operation, 0);

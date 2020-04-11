@@ -4,13 +4,9 @@ import {ExtractedOperation} from "./ExtractedOperation";
 
 export class BracketsProcessor extends AbstractOperationProcessor{
 
-    private availableOperations: string[] = [
+    protected availableOperations: string[] = [
         operations.BRACKETS
     ];
-
-    protected getAvailableOperations(): string[] {
-        return this.availableOperations;
-    }
 
     public openBrackets(expression: string): string {
         return expression.substr(1, expression.length - 2);
@@ -44,10 +40,6 @@ export class BracketsProcessor extends AbstractOperationProcessor{
             return true;
         }
         return false;
-    }
-
-    extractArguments(expression: string, operation: string, operationSignPosition: number): string[] {
-        return [];
     }
 
     performOperation(operation: string, parameters: number[]): number {
