@@ -7,7 +7,7 @@ describe("PolishNotationProcessor calcExpression method", () => {
         expect(processor.calcExpression("4 5 +")).toEqual(9);
     });
     it("Calculate 10 2 / 5 +", () => {
-        expect(processor.calcExpression("4 5 +")).toEqual(9);
+        expect(processor.calcExpression("10 2 / 5 +")).toEqual(10);
     });
     it("Calculate 10 2 / 5 6 * +", () => {
         expect(processor.calcExpression("10 2 / 5 6 * +")).toEqual(35);
