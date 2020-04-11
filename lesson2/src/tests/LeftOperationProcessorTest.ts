@@ -13,7 +13,7 @@ describe("LeftOperationProcessor extractOperation method", () => {
     });
     it("Find Operation -10**", () => {
         const result: ExtractedOperation = { operation: operations.UNSUPPORTED_OPERATION, arguments: []};
-        const found: boolean = processor.extractOperation("10**", result);
+        const found: boolean = processor.extractOperation("-10**", result);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: operations.SUBTRACTION, arguments: ["10**"]});
     });

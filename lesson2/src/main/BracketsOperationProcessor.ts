@@ -1,5 +1,6 @@
 import {AbstractOperationProcessor} from "./AbstractOperationProcessor";
 import {operations} from "./operations";
+import {ExtractedOperation} from "./ExtractedOperation";
 
 export class BracketsOperationProcessor extends AbstractOperationProcessor {
 
@@ -18,6 +19,20 @@ export class BracketsOperationProcessor extends AbstractOperationProcessor {
         return this.availableOperations;
     }
 
+    extractOperation(expression: string, result: ExtractedOperation): boolean {
+        if (expression[expression.length - 1] !== ")") {
+            return false;
+        }
+        for (const operation of this.getAvailableOperations()) {
+            if (this.isOperationFound(expression, operation, 0)) {
+                result.operation = operation;
+                result.arguments = this.extractArguments(expression, operation, 0);
+                return true;
+            }
+        }
+        return false;
+    }
+
     performOperation(operation: string, parameters: number[]): number {
         switch (operation) {
             case operations.SIN:  return Math.sin( this.degreesToRadians(parameters[0]) );
@@ -32,20 +47,13 @@ export class BracketsOperationProcessor extends AbstractOperationProcessor {
         }
     }
 
-    protected isOperationFound(expression: string, operation: string, i: number): boolean {
-        if (!this.bracketOpenedHere(expression, operation, i)) {
-            return false;
-        }
-
-        const operationNameLength = operation.length;
-        const bracketToken: string = expression.substr(i - operationNameLength, operationNameLength);
-        return (bracketToken === operation);
+    protected isOperationFound(expression: string, operation: string, i: number/* i is unused parameter*/): boolean {
+        return (expression.substr(0, operation.length + 1) === operation + "(");
     }
 
-    extractArguments(expression: string, operation: string, i: number): string[] {
-        const closeBracketPosition = expression.indexOf(")", i + 1);
+    extractArguments(expression: string, operation: string, i: number/*i - unused parameter*/): string[] {
         const result: string[] = [];
-        result[0] = expression.substr(i + 1, closeBracketPosition - i - 1);
+        result[0] = expression.substr(operation.length + 1, expression.length - operation.length - 2);
         return result;
     }
 
