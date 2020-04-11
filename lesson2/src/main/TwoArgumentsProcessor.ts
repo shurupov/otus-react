@@ -47,7 +47,7 @@ export class TwoArgumentsProcessor extends AbstractOperationProcessor {
         if (expression.substr(i - operation.length + 1, operation.length) !== operation) {
             return false;
         }
-        for (let forbidOperation of this.forbidOperations) {
+        for (const forbidOperation of this.forbidOperations) {
             const possibleOperation1: string = expression.substr(i - forbidOperation.length + 1, forbidOperation.length);
             const possibleOperation2: string = expression.substr(i, forbidOperation.length);
             if (possibleOperation1 === forbidOperation || possibleOperation2 === forbidOperation ) {
