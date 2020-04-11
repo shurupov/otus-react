@@ -45,6 +45,7 @@ export class ReversePolishNotationCalculator {
         for (const availableOperation of this.availableOperations) {
             if (expression.substr(position - availableOperation.length + 1, availableOperation.length) === availableOperation) {
                 operation = availableOperation;
+                //console.log("Found operation: " + operation);
                 expressionContainer.expression = expression.substr(0, position - operation.length + 1);
                 return this.performOperation(expressionContainer, operation);
             }
@@ -62,18 +63,25 @@ export class ReversePolishNotationCalculator {
 
         expressionContainer.expression = expression.substr(0, startPosition);
 
+        //console.log("Found number: " + resultString);
+
         return parseFloat(resultString);
     }
     
-    public performOperation(expressionContainer: ExpressionContainer, operation: string) {
+    public performOperation(expressionContainer: ExpressionContainer, operation: string): number {
         if (this.twoArgumentsOperations.includes(operation)) {
             const argument2: number = this.calc(expressionContainer);
             const argument1: number = this.calc(expressionContainer);
-            return this.performTwoArgumentsOperation(operation, argument1, argument2);
+            const result: number = this.performTwoArgumentsOperation(operation, argument1, argument2);
+            //console.log("Calculated " + argument1 + " " + argument2 + " " + operation + " = " + result);
+            return result;
         }
         if (this.oneArgumentOperations.includes(operation)) {
             const argument: number = this.calc(expressionContainer);
             return this.performOneArgumentOperation(operation, argument);
+            const result: number = this.performOneArgumentOperation(operation, argument);
+            //console.log("Calculated " + argument + operation + " = " + result);
+            return result;
         }
         throw new Error("Unsupported operation");
     }
@@ -85,23 +93,23 @@ export class ReversePolishNotationCalculator {
             case operations.SUBTRACTION:    return argument1 - argument2;
             case operations.MULTIPLICATION: return argument1 * argument2;
             case operations.DIVISION:       return argument1 / argument2;
-            default: throw new Error("Unsupported operation");
+            default:                        throw new Error("Unsupported operation");
         }
     }
 
     public performOneArgumentOperation(operation: string, argument: number): number {
         switch (operation) {
-            case operations.FACTORIAL: return this.factorial(argument);
+            case operations.FACTORIAL:     return this.factorial(argument);
             case operations.SQUARE_INLINE: return argument * argument;
-            case operations.SIN:  return Math.sin( this.degreesToRadians(argument) );
-            case operations.COS:  return Math.cos( this.degreesToRadians(argument) );
-            case operations.TG:   return Math.tan( this.degreesToRadians(argument) );
-            case operations.CTG:  return 1 / Math.tan( this.degreesToRadians(argument) );
-            case operations.SQR:  return argument * argument;
-            case operations.SQRT: return Math.sqrt(argument);
-            case operations.TRUNC: return Math.trunc(argument);
-            case operations.ROUND: return Math.round(argument);
-            default: throw new Error("Unsupported operation");
+            case operations.SIN:           return Math.sin( this.degreesToRadians(argument) );
+            case operations.COS:           return Math.cos( this.degreesToRadians(argument) );
+            case operations.TG:            return Math.tan( this.degreesToRadians(argument) );
+            case operations.CTG:           return 1 / Math.tan( this.degreesToRadians(argument) );
+            case operations.SQR:           return argument * argument;
+            case operations.SQRT:          return Math.sqrt(argument);
+            case operations.TRUNC:         return Math.trunc(argument);
+            case operations.ROUND:         return Math.round(argument);
+            default:                       throw new Error("Unsupported operation");
         }
     }
 
