@@ -8,7 +8,8 @@
     "lint": "npx eslint --ext .js,.jsx,.ts,.tsx --fix ./",
     "test": "npx jest",
     "prettify": "npx prettier . --write",
-    "calc": "npx ts-node lesson2/src/main"
+    "calc": "npx ts-node lesson2/src/main/simpleCalculator.ts",
+    "polish": "npx ts-node lesson2/src/main/polishNotation.ts"
   },
   "jest": {
     "roots": ["lesson2/src/tests"],
