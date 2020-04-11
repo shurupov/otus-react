@@ -1,6 +1,6 @@
-import {PolishNotationCalculator} from "../main/PolishNotationCalculator";
+import {ReversePolishNotationCalculator} from "../main/ReversePolishNotationCalculator";
 
-const processor: PolishNotationCalculator = new PolishNotationCalculator();
+const processor: ReversePolishNotationCalculator = new ReversePolishNotationCalculator();
 
 describe("PolishNotationProcessor calcExpression method", () => {
     it("Calculate 4 5 +", () => {

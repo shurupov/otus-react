@@ -4,7 +4,7 @@ interface ExpressionContainer {
     expression: string
 }
 
-export class PolishNotationCalculator {
+export class ReversePolishNotationCalculator {
 
     private twoArgumentsOperations: string[] = [
         operations.POWER,
