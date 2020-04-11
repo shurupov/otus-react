@@ -69,17 +69,17 @@ export class ReversePolishNotationCalculator {
     }
     
     public performOperation(expressionContainer: ExpressionContainer, operation: string): number {
+        let result: number;
         if (this.twoArgumentsOperations.includes(operation)) {
             const argument2: number = this.calc(expressionContainer);
             const argument1: number = this.calc(expressionContainer);
-            const result: number = this.performTwoArgumentsOperation(operation, argument1, argument2);
+            result = this.performTwoArgumentsOperation(operation, argument1, argument2);
             //console.log("Calculated " + argument1 + " " + argument2 + " " + operation + " = " + result);
             return result;
         }
         if (this.oneArgumentOperations.includes(operation)) {
             const argument: number = this.calc(expressionContainer);
-            return this.performOneArgumentOperation(operation, argument);
-            const result: number = this.performOneArgumentOperation(operation, argument);
+            result = this.performOneArgumentOperation(operation, argument);
             //console.log("Calculated " + argument + operation + " = " + result);
             return result;
         }
