@@ -16,11 +16,11 @@ export class BracketsOperationProcessor extends OneArgumentOperationProcessor {
         operations.ROUND,
     ];
 
-    extractOperation(expression: string, result: ExtractedOperation): boolean {
+    isOperationExtracted(expression: string, result: ExtractedOperation): boolean {
         if (expression[expression.length - 1] !== ")") {
             return false;
         }
-        return super.extractOperation(expression, result);
+        return super.isOperationExtracted(expression, result);
     }
 
     performOperation(operation: string, parameters: number[]): number {

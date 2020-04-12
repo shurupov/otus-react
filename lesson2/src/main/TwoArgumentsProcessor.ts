@@ -17,7 +17,7 @@ export class TwoArgumentsProcessor extends AbstractOperationProcessor {
         operations.DOUBLE_SUBTRACTION
     ];
 
-    public extractOperation(expression: string, result: ExtractedOperation): boolean {
+    public isOperationExtracted(expression: string, result: ExtractedOperation): boolean {
         for (const operation of this.availableOperations) {
 
             let openBrackets = 0;

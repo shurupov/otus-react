@@ -23,56 +23,51 @@ describe("TwoArgumentsOperationProcessor performOperationMethod method", () => {
 });
 
 describe("TwoArgumentsOperationProcessor extractOperation method", () => {
+
+    let result: ExtractedOperation;
+    beforeEach(() => { result = { operation: operations.UNSUPPORTED_OPERATION, arguments: []}; });
+
     it("Find Operation 4 + 5", () => {
-        const result: ExtractedOperation = { operation: operations.UNSUPPORTED_OPERATION, arguments: []};
-        const found: boolean = processor.extractOperation("4 + 5", result as ExtractedOperation);
+        const found: boolean = processor.isOperationExtracted("4 + 5", result as ExtractedOperation);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: operations.ADDITION, arguments: ["4 ", " 5"]});
     });
     it("Find Operation 4 -5", () => {
-        const result: ExtractedOperation = { operation: operations.UNSUPPORTED_OPERATION, arguments: []};
-        const found: boolean = processor.extractOperation("4 -5", result as ExtractedOperation);
+        const found: boolean = processor.isOperationExtracted("4 -5", result as ExtractedOperation);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: operations.SUBTRACTION, arguments: ["4 ", "5"]});
     });
     it("Find Operation 4* 5", () => {
-        const result: ExtractedOperation = { operation: operations.UNSUPPORTED_OPERATION, arguments: []};
-        const found: boolean = processor.extractOperation("4* 5", result as ExtractedOperation);
+        const found: boolean = processor.isOperationExtracted("4* 5", result as ExtractedOperation);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: operations.MULTIPLICATION, arguments: ["4", " 5"]});
     });
     it("Find Operation 242424", () => {
-        const result: ExtractedOperation = { operation: operations.UNSUPPORTED_OPERATION, arguments: []};
-        const found: boolean = processor.extractOperation("242424", result as ExtractedOperation);
+        const found: boolean = processor.isOperationExtracted("242424", result as ExtractedOperation);
         expect(found).toEqual(false);
     });
     it("Find Operation 5*6-7", () => {
-        const result: ExtractedOperation = { operation: operations.UNSUPPORTED_OPERATION, arguments: []};
-        const found: boolean = processor.extractOperation("5*6-7", result as ExtractedOperation);
+        const found: boolean = processor.isOperationExtracted("5*6-7", result as ExtractedOperation);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: operations.SUBTRACTION, arguments: ["5*6", "7"]});
     });
     it("Find Operation 5*6-7/2", () => {
-        const result: ExtractedOperation = { operation: operations.UNSUPPORTED_OPERATION, arguments: []};
-        const found: boolean = processor.extractOperation("5*6-7/2", result as ExtractedOperation);
+        const found: boolean = processor.isOperationExtracted("5*6-7/2", result as ExtractedOperation);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: operations.SUBTRACTION, arguments: ["5*6", "7/2"]});
     });
     it("Find the first Operation 6*(42-10)+(22-1)", () => {
-        const result: ExtractedOperation = { operation: operations.UNSUPPORTED_OPERATION, arguments: []};
-        const found: boolean = processor.extractOperation("6*(42-10)+(22-1)", result as ExtractedOperation);
+        const found: boolean = processor.isOperationExtracted("6*(42-10)+(22-1)", result as ExtractedOperation);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: operations.ADDITION, arguments: ["6*(42-10)", "(22-1)"]});
     });
     it("Find the first Operation (49+51) / (32-12)", () => {
-        const result: ExtractedOperation = { operation: operations.UNSUPPORTED_OPERATION, arguments: []};
-        const found: boolean = processor.extractOperation("(49+51) / (32-12)", result as ExtractedOperation);
+        const found: boolean = processor.isOperationExtracted("(49+51) / (32-12)", result as ExtractedOperation);
         expect(found).toEqual(true);
         expect(result).toEqual({ operation: operations.DIVISION, arguments: ["(49+51) ", " (32-12)"]});
     });
     it("55 ** 11", () => {
-        const result: ExtractedOperation = { operation: operations.UNSUPPORTED_OPERATION, arguments: []};
-        const found: boolean = processor.extractOperation("55 ** 11", result as ExtractedOperation);
+        const found: boolean = processor.isOperationExtracted("55 ** 11", result as ExtractedOperation);
         expect(found).toEqual(false);
     });
 });

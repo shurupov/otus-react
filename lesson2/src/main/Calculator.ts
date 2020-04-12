@@ -23,7 +23,7 @@ export class Calculator {
 
         for (const processor of this.processors) {
             const operation: ExtractedOperation = { operation: operations.UNSUPPORTED_OPERATION, arguments: []};
-            if (processor.extractOperation(expression, operation)) {
+            if (processor.isOperationExtracted(expression, operation)) {
                 const calculatedArguments: number[] = operation.arguments.map((argument: string) => this.calculate(argument));
                 //console.log(operation.operation, calculatedArguments);
                 return processor.performOperation(

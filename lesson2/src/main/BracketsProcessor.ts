@@ -33,7 +33,7 @@ export class BracketsProcessor extends AbstractOperationProcessor{
         return true;
     }
 
-    public extractOperation(expression: string, result: ExtractedOperation): boolean {
+    public isOperationExtracted(expression: string, result: ExtractedOperation): boolean {
         if (this.isInBrackets(expression)) {
             result.operation = operations.BRACKETS;
             result.arguments[0] = this.openBrackets(expression);
