@@ -3,7 +3,7 @@ import {ExtractedOperation} from "./ExtractedOperation";
 
 export abstract class OneArgumentOperationProcessor extends AbstractOperationProcessor {
 
-    public extractOperation(expression: string, result: ExtractedOperation): boolean {
+    public isOperationExtracted(expression: string, result: ExtractedOperation): boolean {
         for (const operation of this.availableOperations) {
             if (this.isOperationFound(expression, operation)) {
                 result.operation = operation;
