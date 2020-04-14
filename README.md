@@ -69,3 +69,12 @@ Result: 4
 [Pull request](https://github.com/shurupov/otus-react/pull/2)
 
 [Presentation](https://docs.google.com/presentation/d/1ACOGg-BgKrcnLool6gFzT3G3w1oProH_2O4PjCiz2w8/edit?usp=sharing)
+
+
+## Lesson 3:
+Basic react configuration
+* @babel/preset-react
+* Storybook
+* Jest config
+[Pull request](https://github.com/shurupov/otus-react/pull/3)
+[Presentation](https://drive.google.com/open?id=10qgUTWj5aMG4WxcNk9UV8_xMHdnE5GRH7I7_Z8w0P7M)

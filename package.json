@@ -4,13 +4,17 @@
   "description": "Otus React lessons",
   "main": "lesson3/src/main/index.tsx",
   "scripts": {
-    "build": "npx webpack --mode development",
-    "lint": "npx eslint --ext .js,.jsx,.ts,.tsx --fix ./",
-    "test": "npx jest",
-    "prettify": "npx prettier . --write",
     "calc": "npx ts-node lesson2/src/main/simpleCalculator.ts",
     "polish": "npx ts-node lesson2/src/main/polishNotation.ts",
     "start": "npx webpack-dev-server --mode development --open --hot",
+    "prettify": "npx prettier . --write",
+    "build": "npx webpack --mode development",
+    "lint": "npx eslint --ext .js,.jsx,.ts,.tsx --fix ./",
+    "test": "npx jest",
+    "loki:update": "npm run build-storybook && npx loki update --requireReference --reactUri file:./storybook-static",
+    "loki:approve": "npx loki approve",
+    "test:loki": "npm run build-storybook && npx loki --requireReference --reactUri file:./storybook-static",
+    "check": "npm run lint && npm test && npm run test:loki",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
@@ -51,6 +55,7 @@
     "@typescript-eslint/parser": "^2.26.0",
     "babel-jest": "^25.2.4",
     "babel-loader": "^8.1.0",
+    "enzyme": "^3.11.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-config-standard": "^14.1.1",
@@ -72,7 +77,25 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "@storybook/addon-storysource": "^5.3.18",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "loki": "^0.20.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
+  },
+  "loki": {
+    "configurations": {
+      "chrome.laptop": {
+        "target": "chrome.app",
+        "width": 1366,
+        "height": 768,
+        "deviceScaleFactor": 1,
+        "mobile": false
+      },
+      "chrome.iphone7": {
+        "target": "chrome.app",
+        "preset": "iPhone 7"
+      }
+    }
   }
 }
