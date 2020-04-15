@@ -2,17 +2,26 @@
   "name": "otus-react",
   "version": "1.0.0",
   "description": "Otus React lessons",
-  "main": "lesson1/src/main/index.js",
+  "main": "lesson3/src/main/index.tsx",
   "scripts": {
-    "build": "npx webpack --mode production",
+    "calc": "npx ts-node lesson2/src/main/simpleCalculator.ts",
+    "polish": "npx ts-node lesson2/src/main/polishNotation.ts",
+    "start": "npx webpack-dev-server --mode development --open --hot",
+    "prettify": "npx prettier . --write",
+    "build": "npx webpack --mode development",
     "lint": "npx eslint --ext .js,.jsx,.ts,.tsx --fix ./",
     "test": "npx jest",
-    "prettify": "npx prettier . --write",
-    "calc": "npx ts-node lesson2/src/main/simpleCalculator.ts",
-    "polish": "npx ts-node lesson2/src/main/polishNotation.ts"
+    "loki:update": "npm run build-storybook && npx loki update --requireReference --reactUri file:./storybook-static",
+    "loki:approve": "npx loki approve",
+    "test:loki": "npm run build-storybook && npx loki --requireReference --reactUri file:./storybook-static",
+    "check": "npm run lint && npm test && npm run test:loki",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "jest": {
-    "roots": ["lesson2/src/tests"],
+    "roots": [
+      "lesson2/src/tests"
+    ],
     "testRegex": "\\.(js|jsx|ts|tsx)$"
   },
   "repository": {
@@ -32,12 +41,21 @@
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.0",
+    "@babel/preset-react": "^7.9.4",
     "@babel/preset-typescript": "^7.9.0",
+    "@storybook/addon-actions": "^5.3.18",
+    "@storybook/addon-knobs": "^5.3.18",
+    "@storybook/addon-links": "^5.3.18",
+    "@storybook/addons": "^5.3.18",
+    "@storybook/react": "^5.3.18",
     "@types/jest": "^25.1.4",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.6",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
     "babel-jest": "^25.2.4",
     "babel-loader": "^8.1.0",
+    "enzyme": "^3.11.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-config-standard": "^14.1.1",
@@ -52,10 +70,32 @@
     "husky": "^4.2.3",
     "jest": "^25.2.7",
     "prettier": "2.0.2",
+    "ts-node": "^8.8.2",
     "typescript": "^3.8.3",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3",
-    "ts-node": "^8.8.2"
+    "webpack-dev-server": "^3.10.3"
+  },
+  "dependencies": {
+    "@storybook/addon-storysource": "^5.3.18",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "loki": "^0.20.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "loki": {
+    "configurations": {
+      "chrome.laptop": {
+        "target": "chrome.app",
+        "width": 1366,
+        "height": 768,
+        "deviceScaleFactor": 1,
+        "mobile": false
+      },
+      "chrome.iphone7": {
+        "target": "chrome.app",
+        "preset": "iPhone 7"
+      }
+    }
   }
 }

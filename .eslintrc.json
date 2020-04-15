@@ -9,17 +9,40 @@
     "eslint-config-prettier",
     "prettier",
     "prettier/@typescript-eslint",
-    "prettier/babel",
-    "prettier/react"
+    "plugin:prettier/recommended",
+    "plugin:react/recommended"
   ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "react/prop-types": 0
+  },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "sourceType": "module",
+    "parser": "babel-eslint",
     "ecmaFeatures": {
       "jsx": true
     },
     "ecmaVersion": 2018
   },
   "plugins": ["@typescript-eslint", "babel", "standard"],
-  "rules": {}
+  "overrides": [
+    {
+      "files": ["webpack.config.js"],
+      "rules": {
+        "@typescript-eslint/no-var-requires": ["off"]
+      }
+    }
+  ]
 }

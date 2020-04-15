@@ -51,7 +51,7 @@ export class ReversePolishNotationCalculator {
             }
         }
 
-        let numberLength: number = 0;
+        let numberLength = 0;
         let startPosition: number = position - numberLength;
         let resultString: string = expression.substr(startPosition, numberLength);
 
