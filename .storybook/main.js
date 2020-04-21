@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const custom = require('../webpack.config.js');
 
 module.exports = {
-  stories: ['../stories/**/*.stories.jsx'],
+  stories: ['../lesson4/**/*.stories.tsx'],
   addons: [
     '@storybook/addon-actions',
     '@storybook/addon-links',
