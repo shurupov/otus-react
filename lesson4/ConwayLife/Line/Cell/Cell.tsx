@@ -3,6 +3,7 @@ import React, {CSSProperties} from "react";
 interface CellProps {
     coloured: boolean,
     size: number
+    onClick: Function
 }
 
 export class Cell extends React.Component<CellProps, any>{
@@ -16,6 +17,6 @@ export class Cell extends React.Component<CellProps, any>{
             marginTop: 1,
             float: "left"
         };
-        return <div style={style}/>
+        return <div onClick={() => this.props.onClick()} style={style}/>
     }
 }

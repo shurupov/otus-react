@@ -90,7 +90,7 @@ export class ConwayLife extends React.Component<ConwayLifeProps, ConwayLifeState
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
         return <>
-            {this.state.cells.map(l => <Line cells={l} cellSize={this.cellSize} />)}
+            {this.state.cells.map((l, i) => <Line cells={l} cellSize={this.cellSize}  onClick={(j: number) => console.log(`(${j}, ${i})`)}/>)}
         </>;
     }
 }
