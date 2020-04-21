@@ -7,8 +7,8 @@ interface CellProps {
 
 export class Cell extends React.Component<CellProps, any>{
 
-    private coloured: boolean;
-    private size: number;
+    private readonly coloured: boolean;
+    private readonly size: number;
 
     constructor(props: CellProps) {
         super(props);
