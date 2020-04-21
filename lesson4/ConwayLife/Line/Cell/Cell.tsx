@@ -2,7 +2,7 @@ import React, {CSSProperties} from "react";
 
 interface CellProps {
     coloured: boolean,
-    size: number
+    size: number,
     onClick: Function
 }
 
