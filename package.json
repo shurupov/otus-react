@@ -2,7 +2,7 @@
   "name": "otus-react",
   "version": "1.0.0",
   "description": "Otus React lessons",
-  "main": "lesson3/src/main/index.tsx",
+  "main": "lesson4/index.tsx",
   "scripts": {
     "calc": "npx ts-node lesson2/src/main/simpleCalculator.ts",
     "polish": "npx ts-node lesson2/src/main/polishNotation.ts",
