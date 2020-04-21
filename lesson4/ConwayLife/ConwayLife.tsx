@@ -62,24 +62,19 @@ export class ConwayLife extends React.Component<ConwayLifeProps, ConwayLifeState
     public getNextGeneration(oldField: Array<Array<boolean>>, i: number, j: number): boolean {
         let currentCellLife = oldField[i][j];
         let countOfNearLives = 0;
-        let aroundCells: Array<boolean> = [];
-        for (let i1 = (i === 0 ? i : i - 1); i1 <= ((i === this.fieldHeight - 1) ? i : i + 1); i1++) {
-            for (let j1 = (j === 0 ? j : j - 1); j1 <= ((j === this.fieldWidth - 1) ? j : j + 1); j1++) {
+        for (let i1 = (i === 0 ? i : i - 1); i1 <= ((i === oldField.length - 1) ? i : i + 1); i1++) {
+            for (let j1 = (j === 0 ? j : j - 1); j1 <= ((j === oldField[i1].length - 1) ? j : j + 1); j1++) {
                 if (i1 === i && j1 === j) {
                     continue;
                 }
-                aroundCells.push(oldField[i1][j1]);
-                console.log(i1, j1, oldField[i1][j1]);
                 if (oldField[i1][j1]) {
                     countOfNearLives++;
                 }
             }
         }
 
-        console.log("around cells", aroundCells, countOfNearLives);
-
         if (currentCellLife) {
-            if (countOfNearLives in [2,3]) {
+            if (countOfNearLives > 1 && countOfNearLives < 4) {
                 return true;
             } else {
                 return false;
