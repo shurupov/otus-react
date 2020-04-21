@@ -23,10 +23,11 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
+    hot: true
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./lesson4/index.html",
+      template: "./lesson4/index.html"
     }),
   ],
 };

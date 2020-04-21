@@ -27,12 +27,70 @@ export class ConwayLife extends React.Component<ConwayLifeProps, ConwayLifeState
         for (let i = 0; i < this.fieldHeight; i++) {
             cells[i] = [];
             for (let j = 0; j < this.fieldWidth; j++) {
-                cells[i][j] = Math.random() > 0.5;
+                cells[i][j] = Math.random() > 0.7;
             }
         }
         this.state = {
             cells: cells
         };
+        this.process.bind(this);
+        this.tick.bind(this);
+        this.getNextGeneration.bind(this);
+
+        setInterval(() => { this.tick(); }, 100);
+    }
+
+    public tick() {
+        this.setState((state) => {
+            return {
+                cells: this.process(state.cells)
+            }
+        });
+    }
+
+    process(oldField: Array<Array<boolean>>): Array<Array<boolean>> {
+        let newField: Array<Array<boolean>> = [];
+        for (let i = 0; i < this.fieldHeight; i++) {
+            newField[i] = [];
+            for (let j = 0; j < this.fieldWidth; j++) {
+                newField[i][j] = this.getNextGeneration(oldField, i, j);
+            }
+        }
+        return newField;
+    }
+
+    public getNextGeneration(oldField: Array<Array<boolean>>, i: number, j: number): boolean {
+        let currentCellLife = oldField[i][j];
+        let countOfNearLives = 0;
+        let aroundCells: Array<boolean> = [];
+        for (let i1 = (i === 0 ? i : i - 1); i1 <= ((i === this.fieldHeight - 1) ? i : i + 1); i1++) {
+            for (let j1 = (j === 0 ? j : j - 1); j1 <= ((j === this.fieldWidth - 1) ? j : j + 1); j1++) {
+                if (i1 === i && j1 === j) {
+                    continue;
+                }
+                aroundCells.push(oldField[i1][j1]);
+                console.log(i1, j1, oldField[i1][j1]);
+                if (oldField[i1][j1]) {
+                    countOfNearLives++;
+                }
+            }
+        }
+
+        console.log("around cells", aroundCells, countOfNearLives);
+
+        if (currentCellLife) {
+            if (countOfNearLives in [2,3]) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            if (countOfNearLives === 3) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {

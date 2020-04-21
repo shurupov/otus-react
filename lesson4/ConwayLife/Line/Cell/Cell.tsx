@@ -1,4 +1,4 @@
-import React from "react";
+import React, {CSSProperties} from "react";
 
 interface CellProps {
     coloured: boolean,
@@ -7,31 +7,15 @@ interface CellProps {
 
 export class Cell extends React.Component<CellProps, any>{
 
-    private readonly coloured: boolean;
-    private readonly size: number;
-
-    constructor(props: CellProps) {
-        super(props);
-        this.coloured = props.coloured;
-        this.size = props.size;
-    }
-
-    private getBackgroundColor(): string {
-        if (this.coloured) {
-            return "#000000";
-        } else {
-            return "#ffffff";
-        }
-    }
-
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
-        return <div style={{
-            width: this.size,
-            height: this.size,
-            backgroundColor: this.getBackgroundColor(),
+        const style: CSSProperties = {
+            width: this.props.size,
+            height: this.props.size,
+            backgroundColor: this.props.coloured ? "#000000" : "#ffffff",
             marginRight: 1,
             marginTop: 1,
             float: "left"
-        }}/>
+        };
+        return <div style={style}/>
     }
 }
