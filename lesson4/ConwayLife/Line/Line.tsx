@@ -10,10 +10,10 @@ interface LineProps {
 export class Line extends React.Component<LineProps, any> {
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
-        return <div style={{
+        return <div className="line" style={{
             clear: "both"
         }}>
-            { this.props.cells.map((c, j) => <Cell coloured={c} size={this.props.cellSize} onClick={() => this.props.onClick(j)}/>) }
+            { this.props.cells.map((c, j) => <Cell key={j.toString()} coloured={c} size={this.props.cellSize} onClick={() => this.props.onClick(j)}/>) }
         </div>;
     }
 }
