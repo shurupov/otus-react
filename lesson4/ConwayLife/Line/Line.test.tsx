@@ -1,7 +1,6 @@
 import {mount} from "enzyme";
 import React from "react";
 import {Line} from "./Line";
-import {Cell} from "./Cell/Cell";
 
 describe("Line", () => {
     it("Render", () => {
@@ -17,7 +16,6 @@ describe("Line", () => {
     it("click", () => {
         const onClick = jest.fn();
         const wrapper = mount(<Line cells={[true, false]} cellSize={10} onClick={onClick} />);
-        wrapper.simulate("click");
         wrapper.find(".cell").first().simulate("click");
         expect(onClick).toHaveBeenCalled();
     });
