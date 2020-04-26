@@ -29,6 +29,23 @@ describe("ConwayLife", () => {
         expect(conwayLife.getNextGeneration(oldField, 3,3)).toEqual(false);
     });
 
+    it("process", () => {
+        const conwayLife: ConwayLife = new ConwayLife({cellSize: 10, fieldWidth: 4, fieldHeight: 4, onClick: () =>{}}); // <ConwayLife cellSize={10} fieldWidth={5} fieldHeight={5}/>;
+        const oldField: Array<Array<boolean>> = [
+            [false, true, false, true],
+            [false, true, false, true],
+            [true, false, true, false],
+            [true, false, true, false]
+        ];
+        const newField: Array<Array<boolean>> = [
+            [false, false, false, false],
+            [true, true, false, true],
+            [true, false, true, true],
+            [false, false, false, false]
+        ];
+        expect(conwayLife.process(oldField)).toStrictEqual(newField);
+    });
+
     it("render", () => {
         const f = (x: number, y: number) => console.log(`(${x}, ${y})`);
         let wrapper = mount(<ConwayLife fieldWidth={10} fieldHeight={10} cellSize={10} onClick={f}/>);

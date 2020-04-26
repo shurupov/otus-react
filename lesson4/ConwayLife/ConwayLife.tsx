@@ -14,6 +14,8 @@ interface ConwayLifeState {
 
 export class ConwayLife extends React.Component<ConwayLifeProps, ConwayLifeState> {
 
+    private intervalId: NodeJS.Timeout | any;
+
     private readonly fieldWidth: number;
     private readonly fieldHeight: number;
     private readonly cellSize: number;
@@ -37,8 +39,14 @@ export class ConwayLife extends React.Component<ConwayLifeProps, ConwayLifeState
         this.process.bind(this);
         this.tick.bind(this);
         this.getNextGeneration.bind(this);
+    }
 
-        setInterval(() => { this.tick(); }, 100);
+    componentDidMount(): void {
+        this.intervalId = setInterval(() => { this.tick(); }, 350);
+    }
+
+    componentWillUnmount(): void {
+        clearInterval(this.intervalId);
     }
 
     public tick() {
