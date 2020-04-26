@@ -16,6 +16,7 @@ export class Cell extends React.Component<CellProps, CellState>{
 
     private lastColor: number;
     private readonly topColorValue: number;
+    private readonly lastStepNumber: number;
 
     constructor(props: CellProps) {
         super(props);
@@ -27,14 +28,15 @@ export class Cell extends React.Component<CellProps, CellState>{
         this.tick.bind(this);
 
         this.topColorValue = 255;
+        this.lastStepNumber = 4;
     }
 
     getColor(): string {
         if (this.state.animated) {
             if (!this.props.coloured) {
-                this.lastColor = 255 * (this.state.step / 4);
+                this.lastColor = this.topColorValue * (this.state.step / this.lastStepNumber);
             } else {
-                this.lastColor = 255 - 255 * (this.state.step / 4)
+                this.lastColor = this.topColorValue * (1 - (this.state.step / this.lastStepNumber));
             }
         }
         return `rgb(${this.lastColor},${this.lastColor},${this.lastColor})`;
@@ -69,8 +71,8 @@ export class Cell extends React.Component<CellProps, CellState>{
             });
         } else if (this.state.animated) {
             this.setState({
-                step: this.state.step >= 5 - 1 ? 0 : this.state.step + 1,
-                animated: this.state.step < 5 - 1
+                step: this.state.step < this.lastStepNumber ? this.state.step + 1 : 0,
+                animated: this.state.step < this.lastStepNumber
             })
         }
     }
