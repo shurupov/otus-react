@@ -5,7 +5,8 @@ interface ConwayLifeProps {
     fieldWidth: number;
     fieldHeight: number,
     cellSize: number,
-    onClick: Function
+    onClick: Function,
+    cellAnimationDelay: number
 }
 
 interface ConwayLifeState {
@@ -99,7 +100,13 @@ export class ConwayLife extends React.Component<ConwayLifeProps, ConwayLifeState
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
         return <div className="conway-life">
-            {this.state.cells.map((l, i) => <Line key={i.toString()} cells={l} cellSize={this.cellSize}  onClick={(j: number) => this.props.onClick(j, i)}/>)}
+            {this.state.cells.map((l, i) => <Line
+                key={i.toString()}
+                cells={l}
+                cellSize={this.cellSize}
+                onClick={(j: number) => this.props.onClick(j, i)}
+                cellAnimationDelay={this.props.cellAnimationDelay}
+            />)}
         </div>;
     }
 }

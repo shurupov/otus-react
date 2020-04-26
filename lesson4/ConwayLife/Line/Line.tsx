@@ -4,7 +4,8 @@ import {Cell} from "./Cell/Cell";
 interface LineProps {
     cells: Array<boolean>,
     cellSize: number,
-    onClick: Function
+    onClick: Function,
+    cellAnimationDelay: number
 }
 
 export class Line extends React.Component<LineProps, any> {
@@ -13,7 +14,13 @@ export class Line extends React.Component<LineProps, any> {
         return <div className="line" style={{
             clear: "both"
         }}>
-            { this.props.cells.map((c, j) => <Cell key={j.toString()} coloured={c} size={this.props.cellSize} onClick={() => this.props.onClick(j)}/>) }
+            { this.props.cells.map((c, j) => <Cell
+                key={j.toString()}
+                coloured={c}
+                size={this.props.cellSize}
+                onClick={() => this.props.onClick(j)}
+                animationDelay={this.props.cellAnimationDelay}
+            />) }
         </div>;
     }
 }

@@ -3,7 +3,8 @@ import React, {CSSProperties} from "react";
 interface CellProps {
     coloured: boolean,
     size: number,
-    onClick: Function
+    onClick: Function,
+    animationDelay: number
 }
 
 interface CellState {
@@ -14,16 +15,18 @@ interface CellState {
 export class Cell extends React.Component<CellProps, CellState>{
 
     private lastColor: number;
+    private readonly topColorValue: number;
 
     constructor(props: CellProps) {
         super(props);
-        console.log(props);
         this.state = {
             step: 0,
             animated: true
         };
         this.lastColor = !props.coloured ? 0 : 255;
         this.tick.bind(this);
+
+        this.topColorValue = 255;
     }
 
     getColor(): string {
@@ -51,7 +54,7 @@ export class Cell extends React.Component<CellProps, CellState>{
     }
 
     componentDidUpdate(prevProps: Readonly<CellProps>, prevState: Readonly<CellState>, snapshot?: any): void {
-        setTimeout(() => { this.tick(false, prevProps) }, 100);
+        setTimeout(() => { this.tick(false, prevProps) }, this.props.animationDelay);
     }
 
     componentDidMount(): void {
@@ -59,9 +62,7 @@ export class Cell extends React.Component<CellProps, CellState>{
     }
 
     tick(justMounted: boolean, prevProps: Readonly<CellProps>) {
-        console.log("prevProps", prevProps);
         if (justMounted || prevProps.coloured != this.props.coloured) {
-            console.log("colour is changed");
             this.setState({
                 step: 1,
                 animated: true
