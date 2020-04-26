@@ -12,9 +12,4 @@ function f() {
     console.log("clicked");
 }
 
-export const colouredCell = () => <Cell coloured={true} size={50} onClick={f} animationDelay={100}/>;
-export const emptyCell = () => <Cell coloured={false} size={50} onClick={f} animationDelay={100}/>;
-export const bigColouredCell = () => <Cell coloured={true} size={70} onClick={f} animationDelay={100}/>;
-export const bigEmptyCell = () => <Cell coloured={false} size={100} onClick={f} animationDelay={100}/>;
 export const customCell = () => <Cell coloured={boolean("coloured", true)} size={number("size", 100)} onClick={f} animationDelay={number("animationDelay", 100)}/>;
-export const customCell2 = () => <Cell coloured={boolean("coloured", false)} size={number("size", 100)} onClick={f} animationDelay={number("animationDelay", 100)}/>;

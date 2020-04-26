@@ -17,29 +17,33 @@ export class ConwayLife extends React.Component<ConwayLifeProps, ConwayLifeState
 
     private intervalId: NodeJS.Timeout | any;
 
-    private readonly fieldWidth: number;
-    private readonly fieldHeight: number;
-    private readonly cellSize: number;
-
     constructor(props: ConwayLifeProps) {
         super(props);
-        this.fieldWidth = props.fieldWidth;
-        this.fieldHeight = props.fieldHeight;
-        this.cellSize = props.cellSize;
-
-        let cells: Array<Array<boolean>> = [];
-        for (let i = 0; i < this.fieldHeight; i++) {
-            cells[i] = [];
-            for (let j = 0; j < this.fieldWidth; j++) {
-                cells[i][j] = Math.random() > 0.7;
-            }
-        }
         this.state = {
-            cells: cells
+            cells: this.initField()
         };
         this.process.bind(this);
         this.tick.bind(this);
         this.getNextGeneration.bind(this);
+    }
+
+    initField(): Array<Array<boolean>> {
+        let cells: Array<Array<boolean>> = [];
+        for (let i = 0; i < this.props.fieldHeight; i++) {
+            cells[i] = [];
+            for (let j = 0; j < this.props.fieldWidth; j++) {
+                cells[i][j] = Math.random() > 0.7;
+            }
+        }
+        return cells;
+    }
+
+    getSnapshotBeforeUpdate(prevProps: Readonly<ConwayLifeProps>, prevState: Readonly<ConwayLifeState>): any | null {
+        if (prevProps.fieldHeight !== this.props.fieldHeight || prevProps.fieldWidth !== this.props.fieldWidth) {
+            this.setState({
+                cells: this.initField()
+            });
+        }
     }
 
     componentDidMount(): void {
@@ -60,9 +64,9 @@ export class ConwayLife extends React.Component<ConwayLifeProps, ConwayLifeState
 
     process(oldField: Array<Array<boolean>>): Array<Array<boolean>> {
         let newField: Array<Array<boolean>> = [];
-        for (let i = 0; i < this.fieldHeight; i++) {
+        for (let i = 0; i < this.props.fieldHeight; i++) {
             newField[i] = [];
-            for (let j = 0; j < this.fieldWidth; j++) {
+            for (let j = 0; j < this.props.fieldWidth; j++) {
                 newField[i][j] = this.getNextGeneration(oldField, i, j);
             }
         }
@@ -103,7 +107,7 @@ export class ConwayLife extends React.Component<ConwayLifeProps, ConwayLifeState
             {this.state.cells.map((l, i) => <Line
                 key={i.toString()}
                 cells={l}
-                cellSize={this.cellSize}
+                cellSize={this.props.cellSize}
                 onClick={(j: number) => this.props.onClick(j, i)}
                 cellAnimationDelay={this.props.cellAnimationDelay}
             />)}
