@@ -42,7 +42,7 @@ export class ConwayLife extends React.Component<ConwayLifeProps, ConwayLifeState
     }
 
     componentDidMount(): void {
-        this.intervalId = setInterval(() => { this.tick(); }, 350);
+        this.intervalId = setInterval(() => { this.tick(); }, 500);
     }
 
     componentWillUnmount(): void {
