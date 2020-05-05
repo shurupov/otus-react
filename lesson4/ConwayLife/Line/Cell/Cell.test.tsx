@@ -4,7 +4,7 @@ import {Cell} from "./Cell";
 
 describe("Cell", () => {
     it("Render", () => {
-        const wrapper = mount(<Cell coloured={true} onClick={() => console.log("clicked")} size={10}/>);
+        const wrapper = mount(<Cell coloured={true} onClick={() => console.log("clicked")} size={10} animationDelay={50}/>);
         expect(wrapper.props().coloured).toBe(true);
         expect(wrapper.props().size).toBe(10);
         expect(wrapper.getDOMNode().tagName.toLowerCase()).toBe("div");
@@ -16,7 +16,7 @@ describe("Cell", () => {
     });
     it("click", () => {
         const onClick = jest.fn();
-        const wrapper = mount(<Cell coloured={true} onClick={onClick} size={10}/>);
+        const wrapper = mount(<Cell coloured={true} onClick={onClick} size={10} animationDelay={50}/>);
         wrapper.simulate("click");
         expect(onClick).toHaveBeenCalled();
     });

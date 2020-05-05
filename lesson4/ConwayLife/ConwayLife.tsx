@@ -5,7 +5,8 @@ interface ConwayLifeProps {
     fieldWidth: number;
     fieldHeight: number,
     cellSize: number,
-    onClick: Function
+    onClick: Function,
+    cellAnimationDelay: number
 }
 
 interface ConwayLifeState {
@@ -14,31 +15,43 @@ interface ConwayLifeState {
 
 export class ConwayLife extends React.Component<ConwayLifeProps, ConwayLifeState> {
 
-    private readonly fieldWidth: number;
-    private readonly fieldHeight: number;
-    private readonly cellSize: number;
+    private intervalId: NodeJS.Timeout | any;
 
     constructor(props: ConwayLifeProps) {
         super(props);
-        this.fieldWidth = props.fieldWidth;
-        this.fieldHeight = props.fieldHeight;
-        this.cellSize = props.cellSize;
-
-        let cells: Array<Array<boolean>> = [];
-        for (let i = 0; i < this.fieldHeight; i++) {
-            cells[i] = [];
-            for (let j = 0; j < this.fieldWidth; j++) {
-                cells[i][j] = Math.random() > 0.7;
-            }
-        }
         this.state = {
-            cells: cells
+            cells: this.initField()
         };
         this.process.bind(this);
         this.tick.bind(this);
         this.getNextGeneration.bind(this);
+    }
 
-        setInterval(() => { this.tick(); }, 100);
+    initField(): Array<Array<boolean>> {
+        let cells: Array<Array<boolean>> = [];
+        for (let i = 0; i < this.props.fieldHeight; i++) {
+            cells[i] = [];
+            for (let j = 0; j < this.props.fieldWidth; j++) {
+                cells[i][j] = Math.random() > 0.7;
+            }
+        }
+        return cells;
+    }
+
+    getSnapshotBeforeUpdate(prevProps: Readonly<ConwayLifeProps>, prevState: Readonly<ConwayLifeState>): any | null {
+        if (prevProps.fieldHeight !== this.props.fieldHeight || prevProps.fieldWidth !== this.props.fieldWidth) {
+            this.setState({
+                cells: this.initField()
+            });
+        }
+    }
+
+    componentDidMount(): void {
+        this.intervalId = setInterval(() => { this.tick(); }, 500);
+    }
+
+    componentWillUnmount(): void {
+        clearInterval(this.intervalId);
     }
 
     public tick() {
@@ -51,9 +64,9 @@ export class ConwayLife extends React.Component<ConwayLifeProps, ConwayLifeState
 
     process(oldField: Array<Array<boolean>>): Array<Array<boolean>> {
         let newField: Array<Array<boolean>> = [];
-        for (let i = 0; i < this.fieldHeight; i++) {
+        for (let i = 0; i < this.props.fieldHeight; i++) {
             newField[i] = [];
-            for (let j = 0; j < this.fieldWidth; j++) {
+            for (let j = 0; j < this.props.fieldWidth; j++) {
                 newField[i][j] = this.getNextGeneration(oldField, i, j);
             }
         }
@@ -91,7 +104,13 @@ export class ConwayLife extends React.Component<ConwayLifeProps, ConwayLifeState
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
         return <div className="conway-life">
-            {this.state.cells.map((l, i) => <Line key={i.toString()} cells={l} cellSize={this.cellSize}  onClick={(j: number) => this.props.onClick(j, i)}/>)}
+            {this.state.cells.map((l, i) => <Line
+                key={i.toString()}
+                cells={l}
+                cellSize={this.props.cellSize}
+                onClick={(j: number) => this.props.onClick(j, i)}
+                cellAnimationDelay={this.props.cellAnimationDelay}
+            />)}
         </div>;
     }
 }
