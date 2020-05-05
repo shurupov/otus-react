@@ -1,5 +1,6 @@
 import React from "react";
 import { ConwayLife } from "./ConwayLife/ConwayLife";
+import { ControlsForm } from "./Controls/ControlsForm";
 
 export class App extends React.Component {
   render() {
@@ -7,13 +8,18 @@ export class App extends React.Component {
 
     return (
       <>
-        <ConwayLife
-          cellSize={10}
-          fieldWidth={30}
-          fieldHeight={30}
-          onClick={f}
-          cellAnimationDelay={300}
-        />
+        <div>
+          <ConwayLife
+            cellSize={10}
+            fieldWidth={30}
+            fieldHeight={30}
+            onClick={f}
+            animationDelay={500}
+          />
+        </div>
+        <div>
+          <ControlsForm onChange={() => true} />
+        </div>
       </>
     );
   }

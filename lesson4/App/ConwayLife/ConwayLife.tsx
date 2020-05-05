@@ -124,7 +124,12 @@ export class ConwayLife extends React.Component<
     | null
     | undefined {
     return (
-      <div className="conway-life">
+      <div
+        className="conway-life"
+        style={{
+          clear: "both",
+        }}
+      >
         {this.state.cells.map((l, i) => (
           <Line
             key={i.toString()}
