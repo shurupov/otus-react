@@ -16,11 +16,9 @@ describe("Cell", () => {
     expect(wrapper.props().size).toBe(10);
     expect(wrapper.getDOMNode().tagName.toLowerCase()).toBe("div");
     expect(wrapper.getDOMNode().attributes.length).toBe(2);
-    expect(wrapper.getDOMNode().getAttribute("style")).not.toBeNull();
-    // @ts-ignore
-    expect(wrapper.getDOMNode().getAttribute("style").length).toBeGreaterThan(
-      0
-    );
+    const style = wrapper.getDOMNode().getAttribute("style");
+    expect(style).not.toBeNull();
+    expect(style !== null && style.length).toBeGreaterThan(0);
     expect(wrapper.getDOMNode().className).toBe("cell");
   });
   it("click", () => {

@@ -8,9 +8,9 @@ interface LineProps {
   cellAnimationDelay: number;
 }
 
-export class Line extends React.Component<LineProps, any> {
+export class Line extends React.Component<LineProps> {
   render():
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    | React.ReactElement
     | string
     | number
     | {}

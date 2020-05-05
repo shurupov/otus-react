@@ -44,7 +44,7 @@ export class Cell extends React.Component<CellProps, CellState> {
   }
 
   render():
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    | React.ReactElement
     | string
     | number
     | {}
@@ -71,11 +71,7 @@ export class Cell extends React.Component<CellProps, CellState> {
     );
   }
 
-  componentDidUpdate(
-    prevProps: Readonly<CellProps>,
-    prevState: Readonly<CellState>,
-    snapshot?: any
-  ): void {
+  componentDidUpdate(prevProps: Readonly<CellProps>): void {
     setTimeout(() => {
       this.tick(false, prevProps);
     }, this.props.animationDelay);

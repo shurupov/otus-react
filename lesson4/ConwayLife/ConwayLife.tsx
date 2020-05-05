@@ -17,7 +17,7 @@ export class ConwayLife extends React.Component<
   ConwayLifeProps,
   ConwayLifeState
 > {
-  private intervalId: NodeJS.Timeout | any;
+  private intervalId: NodeJS.Timeout | undefined;
 
   constructor(props: ConwayLifeProps) {
     super(props);
@@ -40,10 +40,7 @@ export class ConwayLife extends React.Component<
     return cells;
   }
 
-  getSnapshotBeforeUpdate(
-    prevProps: Readonly<ConwayLifeProps>,
-    prevState: Readonly<ConwayLifeState>
-  ): any | null {
+  getSnapshotBeforeUpdate(prevProps: Readonly<ConwayLifeProps>): void {
     if (
       prevProps.fieldHeight !== this.props.fieldHeight ||
       prevProps.fieldWidth !== this.props.fieldWidth
@@ -61,7 +58,9 @@ export class ConwayLife extends React.Component<
   }
 
   componentWillUnmount(): void {
-    clearInterval(this.intervalId);
+    if (this.intervalId !== undefined) {
+      clearInterval(this.intervalId);
+    }
   }
 
   public tick() {
@@ -110,22 +109,12 @@ export class ConwayLife extends React.Component<
     }
 
     if (currentCellLife) {
-      if (countOfNearLives > 1 && countOfNearLives < 4) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      if (countOfNearLives === 3) {
-        return true;
-      } else {
-        return false;
-      }
-    }
+      return countOfNearLives > 1 && countOfNearLives < 4;
+    } else return countOfNearLives === 3;
   }
 
   render():
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    | React.ReactElement
     | string
     | number
     | {}

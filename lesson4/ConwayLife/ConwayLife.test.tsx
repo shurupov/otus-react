@@ -8,7 +8,7 @@ describe("ConwayLife", () => {
       cellSize: 10,
       fieldWidth: 4,
       fieldHeight: 4,
-      onClick: () => {},
+      onClick: () => console.log("getNextGeneration"),
       cellAnimationDelay: 50,
     }); // <ConwayLife cellSize={10} fieldWidth={5} fieldHeight={5}/>;
     const oldField: Array<Array<boolean>> = [
@@ -40,7 +40,7 @@ describe("ConwayLife", () => {
       cellSize: 10,
       fieldWidth: 4,
       fieldHeight: 4,
-      onClick: () => {},
+      onClick: () => console.log("process"),
       cellAnimationDelay: 50,
     }); // <ConwayLife cellSize={10} fieldWidth={5} fieldHeight={5}/>;
     const oldField: Array<Array<boolean>> = [

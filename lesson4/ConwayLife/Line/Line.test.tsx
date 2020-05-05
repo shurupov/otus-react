@@ -21,7 +21,7 @@ describe("Line", () => {
       <Line
         cells={cells1}
         cellSize={10}
-        onClick={() => {}}
+        onClick={() => console.log("test1")}
         cellAnimationDelay={50}
       />
     );
@@ -32,7 +32,7 @@ describe("Line", () => {
       <Line
         cells={cells2}
         cellSize={10}
-        onClick={() => {}}
+        onClick={() => console.log("test2")}
         cellAnimationDelay={50}
       />
     );
