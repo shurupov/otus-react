@@ -1,4 +1,4 @@
 export interface ExtractedOperation {
-    operation: string,
-    arguments: string[]
+  operation: string;
+  arguments: string[];
 }

@@ -1,22 +1,25 @@
 # Otus React Lessons
 
 ## Lesson 1:
+
 Basic configuration for the project on the master branch. What configurations you can find:
-* Babel
-* Webpack
-* Typescript
-* Eslint
-* Jest
-* Precommit hooks / husky
+
+- Babel
+- Webpack
+- Typescript
+- Eslint
+- Jest
+- Precommit hooks / husky
 
 [Pull request](https://github.com/shurupov/otus-react/pull/2)
 
 [Presentation](https://drive.google.com/open?id=1uCyasL97go3mQU28Rg7gWPkSpRU--6EUU9bQb9pEbg0)
 
 ## Lesson 2:
+
 Math calculator with basic arithmetic operations without eval
 
-```npm run calc```
+`npm run calc`
 
 Then you can calc math operations
 
@@ -47,7 +50,7 @@ Result: -10
 
 Math calculator for [reverse polish notation](https://en.wikipedia.org/wiki/Reverse_Polish_notation) expression
 
-```npm run polish```
+`npm run polish`
 
 Examples:
 
@@ -70,12 +73,13 @@ Result: 4
 
 [Presentation](https://docs.google.com/presentation/d/1ACOGg-BgKrcnLool6gFzT3G3w1oProH_2O4PjCiz2w8/edit?usp=sharing)
 
-
 ## Lesson 3:
+
 Basic react configuration
-* @babel/preset-react
-* Storybook
-* Jest config
+
+- @babel/preset-react
+- Storybook
+- Jest config
 
 [Pull request](https://github.com/shurupov/otus-react/pull/3)
 

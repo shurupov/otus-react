@@ -1,1 +1,1 @@
-import 'loki/configure-react';
+import "loki/configure-react";

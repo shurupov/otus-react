@@ -1,3 +1,3 @@
 export interface ResultContainer {
-    result: number
+  result: number;
 }
