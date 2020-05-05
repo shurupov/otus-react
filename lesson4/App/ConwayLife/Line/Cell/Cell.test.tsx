@@ -7,7 +7,7 @@ describe("Cell", () => {
     const wrapper = mount(
       <Cell
         coloured={true}
-        onClick={() => console.log("clicked")}
+        onClick={() => true}
         size={10}
         animationDelay={50}
       />

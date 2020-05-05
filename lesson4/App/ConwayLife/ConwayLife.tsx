@@ -6,7 +6,7 @@ interface ConwayLifeProps {
   fieldHeight: number;
   cellSize: number;
   onClick: Function;
-  cellAnimationDelay: number;
+  animationDelay: number;
 }
 
 interface ConwayLifeState {
@@ -40,7 +40,7 @@ export class ConwayLife extends React.Component<
     return cells;
   }
 
-  getSnapshotBeforeUpdate(prevProps: Readonly<ConwayLifeProps>): void {
+  componentDidUpdate(prevProps: Readonly<ConwayLifeProps>): void {
     if (
       prevProps.fieldHeight !== this.props.fieldHeight ||
       prevProps.fieldWidth !== this.props.fieldWidth
@@ -54,7 +54,7 @@ export class ConwayLife extends React.Component<
   componentDidMount(): void {
     this.intervalId = setInterval(() => {
       this.tick();
-    }, 500);
+    }, this.props.animationDelay);
   }
 
   componentWillUnmount(): void {
@@ -131,7 +131,7 @@ export class ConwayLife extends React.Component<
             cells={l}
             cellSize={this.props.cellSize}
             onClick={(j: number) => this.props.onClick(j, i)}
-            cellAnimationDelay={this.props.cellAnimationDelay}
+            cellAnimationDelay={this.props.animationDelay}
           />
         ))}
       </div>

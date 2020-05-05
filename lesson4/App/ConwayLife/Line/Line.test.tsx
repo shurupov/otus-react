@@ -32,7 +32,7 @@ describe("Line", () => {
       <Line
         cells={cells2}
         cellSize={10}
-        onClick={() => console.log("test2")}
+        onClick={() => true}
         cellAnimationDelay={50}
       />
     );

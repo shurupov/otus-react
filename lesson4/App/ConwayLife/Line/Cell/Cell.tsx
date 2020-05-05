@@ -53,7 +53,6 @@ export class Cell extends React.Component<CellProps, CellState> {
     | boolean
     | null
     | undefined {
-    console.log(this.state);
     const style: CSSProperties = {
       width: this.props.size,
       height: this.props.size,
