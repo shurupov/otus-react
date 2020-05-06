@@ -1,8 +1,18 @@
 import React from "react";
 import { ConwayLife } from "./ConwayLife/ConwayLife";
-import { ControlsForm } from "./Controls/ControlsForm";
+import { ControlsForm, ControlsState } from "./ControlsForm/ControlsForm";
 
-export class App extends React.Component {
+export class App extends React.Component<{}, ControlsState> {
+  constructor(props: {}) {
+    super(props);
+    this.state = {
+      cellSize: 10,
+      fieldWidth: 30,
+      fieldHeight: 30,
+      animationDelay: 500,
+    };
+  }
+
   render() {
     const f = (x: number, y: number) => console.log(`(${x}, ${y})`);
 
@@ -10,15 +20,18 @@ export class App extends React.Component {
       <>
         <div>
           <ConwayLife
-            cellSize={10}
-            fieldWidth={30}
-            fieldHeight={30}
+            cellSize={this.state.cellSize}
+            fieldWidth={this.state.fieldWidth}
+            fieldHeight={this.state.fieldHeight}
             onClick={f}
-            animationDelay={500}
+            animationDelay={this.state.animationDelay}
+            alivePart={0.7}
           />
         </div>
         <div>
-          <ControlsForm onChange={() => true} />
+          <ControlsForm
+            onChange={(state: ControlsState) => this.setState(state)}
+          />
         </div>
       </>
     );

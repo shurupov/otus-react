@@ -7,6 +7,7 @@ interface ConwayLifeProps {
   cellSize: number;
   onClick: Function;
   animationDelay: number;
+  alivePart: number;
 }
 
 interface ConwayLifeState {
@@ -17,7 +18,7 @@ export class ConwayLife extends React.Component<
   ConwayLifeProps,
   ConwayLifeState
 > {
-  private intervalId: NodeJS.Timeout | undefined;
+  private timeoutId: NodeJS.Timeout | undefined;
 
   constructor(props: ConwayLifeProps) {
     super(props);
@@ -52,14 +53,12 @@ export class ConwayLife extends React.Component<
   }
 
   componentDidMount(): void {
-    this.intervalId = setInterval(() => {
-      this.tick();
-    }, this.props.animationDelay);
+    this.tick();
   }
 
   componentWillUnmount(): void {
-    if (this.intervalId !== undefined) {
-      clearInterval(this.intervalId);
+    if (this.timeoutId !== undefined) {
+      clearTimeout(this.timeoutId);
     }
   }
 
@@ -69,6 +68,9 @@ export class ConwayLife extends React.Component<
         cells: this.process(state.cells),
       };
     });
+    this.timeoutId = setTimeout(() => {
+      this.tick();
+    }, this.props.animationDelay);
   }
 
   process(oldField: Array<Array<boolean>>): Array<Array<boolean>> {
