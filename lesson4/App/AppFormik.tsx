@@ -1,8 +1,9 @@
+import { ControlsState } from "./ControlsForm/ControlsForm";
 import React from "react";
 import { ConwayLife } from "./ConwayLife/ConwayLife";
-import { ControlsForm, ControlsState } from "./ControlsForm/ControlsForm";
+import { ControlsFormik } from "./ControlsForm/ControlsFormik";
 
-export class App extends React.Component<{}, ControlsState> {
+export class AppFormik extends React.Component<{}, ControlsState> {
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -30,7 +31,7 @@ export class App extends React.Component<{}, ControlsState> {
           />
         </div>
         <div>
-          <ControlsForm
+          <ControlsFormik
             onChange={(state: ControlsState) => this.setState(state)}
           />
         </div>

@@ -16,6 +16,7 @@ export class Cell extends React.Component<CellProps, CellState> {
   private lastColor: number;
   private readonly topColorValue: number;
   private readonly lastStepNumber: number;
+  private timeoutId: NodeJS.Timeout | undefined;
 
   constructor(props: CellProps) {
     super(props);
@@ -71,9 +72,15 @@ export class Cell extends React.Component<CellProps, CellState> {
   }
 
   componentDidUpdate(prevProps: Readonly<CellProps>): void {
-    setTimeout(() => {
+    this.timeoutId = setTimeout(() => {
       this.tick(false, prevProps);
     }, this.props.animationDelay);
+  }
+
+  componentWillUnmount() {
+    if (this.timeoutId !== undefined) {
+      clearTimeout(this.timeoutId);
+    }
   }
 
   componentDidMount(): void {

@@ -1,11 +1,11 @@
-import { App } from "./App";
 import React from "react";
 import { withKnobs } from "@storybook/addon-knobs";
+import { AppFormik } from "./AppFormik";
 
 export default {
   title: "Conway Life with simple controls",
-  component: App,
+  component: AppFormik,
   decorators: [withKnobs],
 };
 
-export const app = () => <App />;
+export const appFormik = () => <AppFormik />;

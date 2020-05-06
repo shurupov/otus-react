@@ -85,6 +85,7 @@
   },
   "dependencies": {
     "@storybook/addon-storysource": "^5.3.18",
+    "formik": "^2.1.4",
     "loki": "^0.20.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"

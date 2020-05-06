@@ -1,6 +1,6 @@
 import React from "react";
 
-interface ControlsProps {
+export interface ControlsProps {
   onChange: Function;
 }
 
@@ -9,7 +9,7 @@ export interface ControlsState {
   fieldHeight: number;
   cellSize: number;
   animationDelay: number;
-  alivePart: number;
+  alivePercent: number;
 }
 
 export class ControlsForm extends React.Component<
@@ -23,7 +23,7 @@ export class ControlsForm extends React.Component<
       fieldHeight: 30,
       cellSize: 10,
       animationDelay: 2000,
-      alivePart: 0.3,
+      alivePercent: 30,
     };
 
     this.widthChange = this.widthChange.bind(this);
@@ -74,7 +74,7 @@ export class ControlsForm extends React.Component<
     const target = event.target as HTMLFormElement;
     this.setState({
       ...this.state,
-      alivePart: parseFloat(target.value),
+      alivePercent: parseFloat(target.value),
     });
   }
 
@@ -128,15 +128,15 @@ export class ControlsForm extends React.Component<
         </label>
         <br />
         <label>
-          Доля живых клеток:
+          Процент живых клеток:
           <input
             type="number"
-            value={this.state.alivePart.toString()}
+            value={this.state.alivePercent.toString()}
             onChange={this.alivePartChange}
           />
         </label>
         <br />
-        <input type="submit" value="Отправить" />
+        <input type="submit" value="Обновить" />
       </form>
     );
   }

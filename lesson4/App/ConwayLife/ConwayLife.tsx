@@ -7,7 +7,7 @@ interface ConwayLifeProps {
   cellSize: number;
   onClick: Function;
   animationDelay: number;
-  alivePart: number;
+  alivePercent: number;
 }
 
 interface ConwayLifeState {
@@ -35,7 +35,7 @@ export class ConwayLife extends React.Component<
     for (let i = 0; i < this.props.fieldHeight; i++) {
       cells[i] = [];
       for (let j = 0; j < this.props.fieldWidth; j++) {
-        cells[i][j] = Math.random() < this.props.alivePart;
+        cells[i][j] = Math.random() < this.props.alivePercent / 100;
       }
     }
     return cells;
@@ -45,7 +45,7 @@ export class ConwayLife extends React.Component<
     if (
       prevProps.fieldHeight !== this.props.fieldHeight ||
       prevProps.fieldWidth !== this.props.fieldWidth ||
-      prevProps.alivePart !== this.props.alivePart
+      prevProps.alivePercent !== this.props.alivePercent
     ) {
       this.setState({
         cells: this.initField(),
