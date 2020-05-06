@@ -35,7 +35,7 @@ export class ConwayLife extends React.Component<
     for (let i = 0; i < this.props.fieldHeight; i++) {
       cells[i] = [];
       for (let j = 0; j < this.props.fieldWidth; j++) {
-        cells[i][j] = Math.random() > 0.7;
+        cells[i][j] = Math.random() < this.props.alivePart;
       }
     }
     return cells;
@@ -44,7 +44,8 @@ export class ConwayLife extends React.Component<
   componentDidUpdate(prevProps: Readonly<ConwayLifeProps>): void {
     if (
       prevProps.fieldHeight !== this.props.fieldHeight ||
-      prevProps.fieldWidth !== this.props.fieldWidth
+      prevProps.fieldWidth !== this.props.fieldWidth ||
+      prevProps.alivePart !== this.props.alivePart
     ) {
       this.setState({
         cells: this.initField(),

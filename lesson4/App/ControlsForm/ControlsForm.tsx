@@ -9,6 +9,7 @@ export interface ControlsState {
   fieldHeight: number;
   cellSize: number;
   animationDelay: number;
+  alivePart: number;
 }
 
 export class ControlsForm extends React.Component<
@@ -22,6 +23,7 @@ export class ControlsForm extends React.Component<
       fieldHeight: 30,
       cellSize: 10,
       animationDelay: 2000,
+      alivePart: 0.3,
     };
 
     this.widthChange = this.widthChange.bind(this);
@@ -29,6 +31,7 @@ export class ControlsForm extends React.Component<
     this.cellSizeChange = this.cellSizeChange.bind(this);
     this.delayChange = this.delayChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.alivePartChange = this.alivePartChange.bind(this);
   }
 
   componentDidMount() {
@@ -64,6 +67,14 @@ export class ControlsForm extends React.Component<
     this.setState({
       ...this.state,
       animationDelay: parseFloat(target.value),
+    });
+  }
+
+  alivePartChange(event: React.ChangeEvent) {
+    const target = event.target as HTMLFormElement;
+    this.setState({
+      ...this.state,
+      alivePart: parseFloat(target.value),
     });
   }
 
@@ -115,8 +126,17 @@ export class ControlsForm extends React.Component<
             onChange={this.delayChange}
           />
         </label>
-        <input type="submit" value="Отправить" />
         <br />
+        <label>
+          Доля живых клеток:
+          <input
+            type="number"
+            value={this.state.alivePart.toString()}
+            onChange={this.alivePartChange}
+          />
+        </label>
+        <br />
+        <input type="submit" value="Отправить" />
       </form>
     );
   }

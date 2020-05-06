@@ -10,6 +10,7 @@ export class App extends React.Component<{}, ControlsState> {
       fieldWidth: 30,
       fieldHeight: 30,
       animationDelay: 500,
+      alivePart: 0.3,
     };
   }
 
@@ -25,7 +26,7 @@ export class App extends React.Component<{}, ControlsState> {
             fieldHeight={this.state.fieldHeight}
             onClick={f}
             animationDelay={this.state.animationDelay}
-            alivePart={0.7}
+            alivePart={this.state.alivePart}
           />
         </div>
         <div>
