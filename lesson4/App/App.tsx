@@ -18,7 +18,7 @@ export class App extends React.Component<{}, ControlsState> {
         </div>
         <div>
           <ControlsForm
-            onChange={(state: ControlsState) => this.setState(state)}
+            onSubmit={(state: ControlsState) => this.setState(state)}
           />
         </div>
       </>

@@ -1,7 +1,8 @@
 import React from "react";
+import { css, jsx } from "@emotion/core";
 
 export interface ControlsProps {
-  onChange: Function;
+  onSubmit: Function;
 }
 
 export interface ControlsState {
@@ -30,7 +31,7 @@ export class ControlsForm extends React.Component<
   }
 
   componentDidMount() {
-    this.props.onChange(this.state);
+    this.props.onSubmit(this.state);
   }
 
   handleChange = (fieldName: string) => (event: React.FormEvent) => {
@@ -57,7 +58,7 @@ export class ControlsForm extends React.Component<
 
   handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    this.props.onChange(this.state);
+    this.props.onSubmit(this.state);
   };
 
   render() {
@@ -68,6 +69,7 @@ export class ControlsForm extends React.Component<
           clear: "both",
         }}
       >
+        <br />
         <label>
           По горизонтали:
           <input

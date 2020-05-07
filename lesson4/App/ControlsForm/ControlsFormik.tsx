@@ -15,7 +15,7 @@ export class ControlsFormik extends React.Component<
     return (
       <Formik
         initialValues={this.state}
-        onSubmit={(values) => this.props.onChange(values)}
+        onSubmit={(values) => this.props.onSubmit(values)}
       >
         <Form>
           <br />

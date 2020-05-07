@@ -25,7 +25,7 @@ export class AppFormik extends React.Component<{}, ControlsState> {
         </div>
         <div>
           <ControlsFormik
-            onChange={(state: ControlsState) => this.setState(state)}
+            onSubmit={(state: ControlsState) => this.setState(state)}
           />
         </div>
       </>
