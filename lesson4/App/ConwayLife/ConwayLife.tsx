@@ -6,7 +6,8 @@ interface ConwayLifeProps {
   fieldHeight: number;
   cellSize: number;
   onClick: Function;
-  cellAnimationDelay: number;
+  animationDelay: number;
+  alivePercent: number;
 }
 
 interface ConwayLifeState {
@@ -17,7 +18,7 @@ export class ConwayLife extends React.Component<
   ConwayLifeProps,
   ConwayLifeState
 > {
-  private intervalId: NodeJS.Timeout | undefined;
+  private timeoutId: NodeJS.Timeout | undefined;
 
   constructor(props: ConwayLifeProps) {
     super(props);
@@ -34,16 +35,17 @@ export class ConwayLife extends React.Component<
     for (let i = 0; i < this.props.fieldHeight; i++) {
       cells[i] = [];
       for (let j = 0; j < this.props.fieldWidth; j++) {
-        cells[i][j] = Math.random() > 0.7;
+        cells[i][j] = Math.random() < this.props.alivePercent / 100;
       }
     }
     return cells;
   }
 
-  getSnapshotBeforeUpdate(prevProps: Readonly<ConwayLifeProps>): void {
+  componentDidUpdate(prevProps: Readonly<ConwayLifeProps>): void {
     if (
       prevProps.fieldHeight !== this.props.fieldHeight ||
-      prevProps.fieldWidth !== this.props.fieldWidth
+      prevProps.fieldWidth !== this.props.fieldWidth ||
+      prevProps.alivePercent !== this.props.alivePercent
     ) {
       this.setState({
         cells: this.initField(),
@@ -52,14 +54,16 @@ export class ConwayLife extends React.Component<
   }
 
   componentDidMount(): void {
-    this.intervalId = setInterval(() => {
-      this.tick();
-    }, 500);
+    this.tick();
   }
 
   componentWillUnmount(): void {
-    if (this.intervalId !== undefined) {
-      clearInterval(this.intervalId);
+    this.clearTimeout();
+  }
+
+  private clearTimeout(): void {
+    if (this.timeoutId !== undefined) {
+      clearTimeout(this.timeoutId);
     }
   }
 
@@ -69,6 +73,10 @@ export class ConwayLife extends React.Component<
         cells: this.process(state.cells),
       };
     });
+    this.clearTimeout();
+    this.timeoutId = setTimeout(() => {
+      this.tick();
+    }, this.props.animationDelay);
   }
 
   process(oldField: Array<Array<boolean>>): Array<Array<boolean>> {
@@ -124,14 +132,19 @@ export class ConwayLife extends React.Component<
     | null
     | undefined {
     return (
-      <div className="conway-life">
+      <div
+        className="conway-life"
+        style={{
+          clear: "both",
+        }}
+      >
         {this.state.cells.map((l, i) => (
           <Line
             key={i.toString()}
             cells={l}
             cellSize={this.props.cellSize}
             onClick={(j: number) => this.props.onClick(j, i)}
-            cellAnimationDelay={this.props.cellAnimationDelay}
+            cellAnimationDelay={this.props.animationDelay}
           />
         ))}
       </div>
