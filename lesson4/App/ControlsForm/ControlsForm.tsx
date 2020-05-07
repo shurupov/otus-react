@@ -16,15 +16,17 @@ export class ControlsForm extends React.Component<
   ControlsProps,
   ControlsState
 > {
+  public static readonly defaultState: ControlsState = {
+    fieldWidth: 30,
+    fieldHeight: 30,
+    cellSize: 10,
+    animationDelay: 2000,
+    alivePercent: 30,
+  };
+
   constructor(props: ControlsProps) {
     super(props);
-    this.state = {
-      fieldWidth: 30,
-      fieldHeight: 30,
-      cellSize: 10,
-      animationDelay: 2000,
-      alivePercent: 30,
-    };
+    this.state = ControlsForm.defaultState;
 
     this.widthChange = this.widthChange.bind(this);
     this.heightChange = this.heightChange.bind(this);
@@ -41,7 +43,6 @@ export class ControlsForm extends React.Component<
   widthChange(event: React.ChangeEvent) {
     const target = event.target as HTMLFormElement;
     this.setState({
-      ...this.state,
       fieldWidth: parseFloat(target.value),
     });
   }
@@ -49,7 +50,6 @@ export class ControlsForm extends React.Component<
   heightChange(event: React.ChangeEvent) {
     const target = event.target as HTMLFormElement;
     this.setState({
-      ...this.state,
       fieldHeight: parseFloat(target.value),
     });
   }
@@ -57,7 +57,6 @@ export class ControlsForm extends React.Component<
   cellSizeChange(event: React.ChangeEvent) {
     const target = event.target as HTMLFormElement;
     this.setState({
-      ...this.state,
       cellSize: parseFloat(target.value),
     });
   }
@@ -65,7 +64,6 @@ export class ControlsForm extends React.Component<
   delayChange(event: React.ChangeEvent) {
     const target = event.target as HTMLFormElement;
     this.setState({
-      ...this.state,
       animationDelay: parseFloat(target.value),
     });
   }

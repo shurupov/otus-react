@@ -1,4 +1,4 @@
-import { ControlsProps, ControlsState } from "./ControlsForm";
+import { ControlsForm, ControlsProps, ControlsState } from "./ControlsForm";
 import React from "react";
 import { Field, Form, Formik } from "formik";
 
@@ -8,13 +8,7 @@ export class ControlsFormik extends React.Component<
 > {
   constructor(props: ControlsProps) {
     super(props);
-    this.state = {
-      fieldWidth: 30,
-      fieldHeight: 30,
-      cellSize: 10,
-      animationDelay: 2000,
-      alivePercent: 30,
-    };
+    this.state = ControlsForm.defaultState;
   }
 
   render() {

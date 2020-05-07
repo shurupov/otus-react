@@ -7,27 +7,14 @@ const f = (x: number, y: number) => console.log(`(${x}, ${y})`);
 export class App extends React.Component<{}, ControlsState> {
   constructor(props: {}) {
     super(props);
-    this.state = {
-      cellSize: 10,
-      fieldWidth: 30,
-      fieldHeight: 30,
-      animationDelay: 500,
-      alivePercent: 30,
-    };
+    this.state = ControlsForm.defaultState;
   }
 
   render() {
     return (
       <>
         <div>
-          <ConwayLife
-            cellSize={this.state.cellSize}
-            fieldWidth={this.state.fieldWidth}
-            fieldHeight={this.state.fieldHeight}
-            onClick={f}
-            animationDelay={this.state.animationDelay}
-            alivePercent={this.state.alivePercent}
-          />
+          <ConwayLife {...this.state} onClick={f} />
         </div>
         <div>
           <ControlsForm
