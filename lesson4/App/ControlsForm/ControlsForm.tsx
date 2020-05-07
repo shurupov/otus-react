@@ -27,59 +27,38 @@ export class ControlsForm extends React.Component<
   constructor(props: ControlsProps) {
     super(props);
     this.state = ControlsForm.defaultState;
-
-    this.widthChange = this.widthChange.bind(this);
-    this.heightChange = this.heightChange.bind(this);
-    this.cellSizeChange = this.cellSizeChange.bind(this);
-    this.delayChange = this.delayChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.alivePartChange = this.alivePartChange.bind(this);
   }
 
   componentDidMount() {
     this.props.onChange(this.state);
   }
 
-  widthChange(event: React.ChangeEvent) {
+  handleChange = (fieldName: string) => (event: React.FormEvent) => {
     const target = event.target as HTMLFormElement;
-    this.setState({
-      fieldWidth: parseFloat(target.value),
-    });
-  }
+    const value: number = parseFloat(target.value);
+    switch (fieldName) {
+      case "width":
+        this.setState({ fieldWidth: value });
+        break;
+      case "height":
+        this.setState({ fieldHeight: value });
+        break;
+      case "cellSize":
+        this.setState({ cellSize: value });
+        break;
+      case "animationDelay":
+        this.setState({ animationDelay: value });
+        break;
+      case "alivePercent":
+        this.setState({ alivePercent: value });
+        break;
+    }
+  };
 
-  heightChange(event: React.ChangeEvent) {
-    const target = event.target as HTMLFormElement;
-    this.setState({
-      fieldHeight: parseFloat(target.value),
-    });
-  }
-
-  cellSizeChange(event: React.ChangeEvent) {
-    const target = event.target as HTMLFormElement;
-    this.setState({
-      cellSize: parseFloat(target.value),
-    });
-  }
-
-  delayChange(event: React.ChangeEvent) {
-    const target = event.target as HTMLFormElement;
-    this.setState({
-      animationDelay: parseFloat(target.value),
-    });
-  }
-
-  alivePartChange(event: React.ChangeEvent) {
-    const target = event.target as HTMLFormElement;
-    this.setState({
-      ...this.state,
-      alivePercent: parseFloat(target.value),
-    });
-  }
-
-  handleSubmit(event: React.FormEvent) {
+  handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     this.props.onChange(this.state);
-  }
+  };
 
   render() {
     return (
@@ -94,7 +73,7 @@ export class ControlsForm extends React.Component<
           <input
             type="number"
             value={this.state.fieldWidth.toString()}
-            onChange={this.widthChange}
+            onChange={this.handleChange("width")}
           />
         </label>
         <br />
@@ -103,7 +82,7 @@ export class ControlsForm extends React.Component<
           <input
             type="number"
             value={this.state.fieldHeight.toString()}
-            onChange={this.heightChange}
+            onChange={this.handleChange("height")}
           />
         </label>
         <br />
@@ -112,7 +91,7 @@ export class ControlsForm extends React.Component<
           <input
             type="number"
             value={this.state.cellSize.toString()}
-            onChange={this.cellSizeChange}
+            onChange={this.handleChange("cellSize")}
           />
         </label>
         <br />
@@ -121,7 +100,7 @@ export class ControlsForm extends React.Component<
           <input
             type="number"
             value={this.state.animationDelay.toString()}
-            onChange={this.delayChange}
+            onChange={this.handleChange("animationDelay")}
           />
         </label>
         <br />
@@ -130,7 +109,7 @@ export class ControlsForm extends React.Component<
           <input
             type="number"
             value={this.state.alivePercent.toString()}
-            onChange={this.alivePartChange}
+            onChange={this.handleChange("alivePercent")}
           />
         </label>
         <br />
