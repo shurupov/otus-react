@@ -72,15 +72,20 @@ export class Cell extends React.Component<CellProps, CellState> {
   }
 
   componentDidUpdate(prevProps: Readonly<CellProps>): void {
+    this.clearTimeout();
     this.timeoutId = setTimeout(() => {
       this.tick(false, prevProps);
     }, this.props.animationDelay);
   }
 
-  componentWillUnmount() {
+  private clearTimeout(): void {
     if (this.timeoutId !== undefined) {
       clearTimeout(this.timeoutId);
     }
+  }
+
+  componentWillUnmount() {
+    this.clearTimeout();
   }
 
   componentDidMount(): void {

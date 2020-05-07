@@ -58,6 +58,10 @@ export class ConwayLife extends React.Component<
   }
 
   componentWillUnmount(): void {
+    this.clearTimeout();
+  }
+
+  private clearTimeout(): void {
     if (this.timeoutId !== undefined) {
       clearTimeout(this.timeoutId);
     }
@@ -69,6 +73,7 @@ export class ConwayLife extends React.Component<
         cells: this.process(state.cells),
       };
     });
+    this.clearTimeout();
     this.timeoutId = setTimeout(() => {
       this.tick();
     }, this.props.animationDelay);
