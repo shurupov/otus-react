@@ -19,5 +19,6 @@ export const customCell = () => (
     onClick={f}
     step={number("step", 0)}
     animated={boolean("animated", false)}
+    stepsCount={4}
   />
 );

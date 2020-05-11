@@ -2,14 +2,14 @@ import React, { CSSProperties } from "react";
 
 interface CellProps {
   alive: boolean;
+  step: number;
+  animated: boolean;
   size: number;
   onClick: Function;
   stepsCount: number;
-  step: number;
-  animated: boolean;
 }
-
-interface CellState {
+export interface PoorCellProps {
+  alive: boolean;
   step: number;
   animated: boolean;
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import {CellProps, Line} from "./Line/Line";
+import { Cell, PoorCellProps } from "./Cell/Cell";
 
 interface ConwayLifeProps {
   fieldWidth: number;
@@ -7,11 +7,12 @@ interface ConwayLifeProps {
   cellSize: number;
   onClick: Function;
   animationDelay: number;
+  animationStepsCount: number;
   alivePercent: number;
 }
 
 interface ConwayLifeState {
-  cells: Array<Array<CellProps>>;
+  cells: Array<Array<PoorCellProps>>;
 }
 
 export class ConwayLife extends React.Component<
@@ -24,8 +25,8 @@ export class ConwayLife extends React.Component<
     cells: this.initField(),
   };
 
-  initField(): Array<Array<CellProps>> {
-    const cells: Array<Array<CellProps>> = [];
+  initField(): Array<Array<PoorCellProps>> {
+    const cells: Array<Array<PoorCellProps>> = [];
     for (let i = 0; i < this.props.fieldHeight; i++) {
       cells[i] = [];
       for (let j = 0; j < this.props.fieldWidth; j++) {
@@ -77,17 +78,17 @@ export class ConwayLife extends React.Component<
     }, this.props.animationDelay);
   };
 
-  process = (oldField: Array<Array<CellProps>>) => {
-    const newField: Array<Array<CellProps>> = [];
+  process = (oldField: Array<Array<PoorCellProps>>) => {
+    const newField: Array<Array<PoorCellProps>> = [];
     for (let i = 0; i < this.props.fieldHeight; i++) {
       newField[i] = [];
       for (let j = 0; j < this.props.fieldWidth; j++) {
         const newFieldAlive: boolean = this.getNextGeneration(oldField, i, j);
-        const oldFieldCell: CellProps = oldField[i][j];
+        const oldFieldCell: PoorCellProps = oldField[i][j];
         newField[i][j] = {
           alive: newFieldAlive,
           step: newFieldAlive !== oldFieldCell.alive || !oldFieldCell.animated ?  0 : oldFieldCell.step + 1,
-          animated: newFieldAlive !== oldFieldCell.alive || (oldFieldCell.animated || oldFieldCell.step < 4),
+          animated: newFieldAlive !== oldFieldCell.alive || (oldFieldCell.animated || oldFieldCell.step < this.props.animationStepsCount),
         };
       }
     }
@@ -95,7 +96,7 @@ export class ConwayLife extends React.Component<
   };
 
   getNextGeneration = (
-    oldField: Array<Array<CellProps>>,
+    oldField: Array<Array<PoorCellProps>>,
     i: number,
     j: number
   ): boolean => {
@@ -143,13 +144,22 @@ export class ConwayLife extends React.Component<
         }}
       >
         {this.state.cells.map((l, i) => (
-          <Line
-            key={i.toString()}
-            cells={l}
-            cellSize={this.props.cellSize}
-            onClick={(j: number) => this.props.onClick(j, i)}
-            cellAnimationDelay={this.props.animationDelay}
-          />
+          <div
+            className="line"
+            style={{
+              clear: "both",
+            }}
+          >
+            {l.map((c, j) => (
+              <Cell
+                key={j.toString()}
+                {...c}
+                size={this.props.cellSize}
+                onClick={() => this.props.onClick(j)}
+                stepsCount={this.props.animationStepsCount}
+              />
+            ))}
+          </div>
         ))}
       </div>
     );
