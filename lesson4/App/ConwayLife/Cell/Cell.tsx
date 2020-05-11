@@ -1,4 +1,5 @@
-import React, { CSSProperties } from "react";
+import { jsx, css } from "@emotion/core";
+import React from "react";
 
 interface CellProps {
   alive: boolean;
@@ -48,19 +49,26 @@ export class Cell extends React.Component<CellProps> {
     | boolean
     | null
     | undefined {
-    const style: CSSProperties = {
+    /*const style: CSSProperties = {
       width: this.props.size,
       height: this.props.size,
       backgroundColor: this.getColor(),
       marginRight: 1,
       marginTop: 1,
       float: "left",
-    };
+    };*/
     return (
       <div
+        css={{
+          width: this.props.size,
+          height: this.props.size,
+          backgroundColor: this.getColor(),
+          marginRight: 1,
+          marginTop: 1,
+          float: "left",
+        }}
         className="cell"
         onClick={() => this.props.onClick()}
-        style={style}
       />
     );
   }
