@@ -14,19 +14,18 @@ interface CellState {
 
 export class Cell extends React.Component<CellProps, CellState> {
   private lastColor: number;
-  private readonly topColorValue: number;
-  private readonly lastStepNumber: number;
+  private readonly topColorValue: number = 255;
+  private readonly lastStepNumber: number = 4;
   private timeoutId: NodeJS.Timeout | undefined;
+
+  state = {
+    step: 0,
+    animated: true,
+  };
 
   constructor(props: CellProps) {
     super(props);
-    this.state = {
-      step: 0,
-      animated: true,
-    };
     this.lastColor = !props.coloured ? 0 : 255;
-    this.topColorValue = 255;
-    this.lastStepNumber = 4;
   }
 
   getColor(): string {

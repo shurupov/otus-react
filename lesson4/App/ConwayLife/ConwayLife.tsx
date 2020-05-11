@@ -20,12 +20,9 @@ export class ConwayLife extends React.Component<
 > {
   private timeoutId: NodeJS.Timeout | undefined;
 
-  constructor(props: ConwayLifeProps) {
-    super(props);
-    this.state = {
-      cells: this.initField(),
-    };
-  }
+  state = {
+    cells: this.initField(),
+  };
 
   initField(): Array<Array<boolean>> {
     const cells: Array<Array<boolean>> = [];
