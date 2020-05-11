@@ -26,10 +26,7 @@ export class ControlsForm extends React.Component<
     animationStepsCount: 4,
   };
 
-  constructor(props: ControlsProps) {
-    super(props);
-    this.state = ControlsForm.defaultState;
-  }
+  state = ControlsForm.defaultState;
 
   componentDidMount() {
     this.props.onSubmit(this.state);

@@ -6,10 +6,7 @@ export class ControlsFormik extends React.Component<
   ControlsProps,
   ControlsState
 > {
-  constructor(props: ControlsProps) {
-    super(props);
-    this.state = ControlsForm.defaultState;
-  }
+  state = ControlsForm.defaultState;
 
   render() {
     return (

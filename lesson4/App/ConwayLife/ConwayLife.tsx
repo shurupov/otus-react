@@ -87,8 +87,14 @@ export class ConwayLife extends React.Component<
         const oldFieldCell: PoorCellProps = oldField[i][j];
         newField[i][j] = {
           alive: newFieldAlive,
-          step: newFieldAlive !== oldFieldCell.alive || !oldFieldCell.animated ?  0 : oldFieldCell.step + 1,
-          animated: newFieldAlive !== oldFieldCell.alive || (oldFieldCell.animated || oldFieldCell.step < this.props.animationStepsCount),
+          step:
+            newFieldAlive !== oldFieldCell.alive || !oldFieldCell.animated
+              ? 0
+              : oldFieldCell.step + 1,
+          animated:
+            newFieldAlive !== oldFieldCell.alive ||
+            oldFieldCell.animated ||
+            oldFieldCell.step < this.props.animationStepsCount,
         };
       }
     }
