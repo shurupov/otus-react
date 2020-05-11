@@ -25,9 +25,6 @@ export class ConwayLife extends React.Component<
     this.state = {
       cells: this.initField(),
     };
-    this.process.bind(this);
-    this.tick.bind(this);
-    this.getNextGeneration.bind(this);
   }
 
   initField(): Array<Array<boolean>> {
@@ -67,7 +64,7 @@ export class ConwayLife extends React.Component<
     }
   }
 
-  public tick() {
+  tick = () => {
     this.setState((state) => {
       return {
         cells: this.process(state.cells),
@@ -77,9 +74,9 @@ export class ConwayLife extends React.Component<
     this.timeoutId = setTimeout(() => {
       this.tick();
     }, this.props.animationDelay);
-  }
+  };
 
-  process(oldField: Array<Array<boolean>>): Array<Array<boolean>> {
+  process = (oldField: Array<Array<boolean>>) => {
     const newField: Array<Array<boolean>> = [];
     for (let i = 0; i < this.props.fieldHeight; i++) {
       newField[i] = [];
@@ -88,13 +85,13 @@ export class ConwayLife extends React.Component<
       }
     }
     return newField;
-  }
+  };
 
-  public getNextGeneration(
+  getNextGeneration = (
     oldField: Array<Array<boolean>>,
     i: number,
     j: number
-  ): boolean {
+  ) => {
     const currentCellLife = oldField[i][j];
     let countOfNearLives = 0;
     for (
@@ -119,7 +116,7 @@ export class ConwayLife extends React.Component<
     if (currentCellLife) {
       return countOfNearLives > 1 && countOfNearLives < 4;
     } else return countOfNearLives === 3;
-  }
+  };
 
   render():
     | React.ReactElement

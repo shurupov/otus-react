@@ -25,8 +25,6 @@ export class Cell extends React.Component<CellProps, CellState> {
       animated: true,
     };
     this.lastColor = !props.coloured ? 0 : 255;
-    this.tick.bind(this);
-
     this.topColorValue = 255;
     this.lastStepNumber = 4;
   }
@@ -92,7 +90,7 @@ export class Cell extends React.Component<CellProps, CellState> {
     this.tick(true, this.props);
   }
 
-  tick(justMounted: boolean, prevProps: Readonly<CellProps>) {
+  tick = (justMounted: boolean, prevProps: Readonly<CellProps>) => {
     if (justMounted || prevProps.coloured != this.props.coloured) {
       this.setState({
         step: 1,
@@ -104,5 +102,5 @@ export class Cell extends React.Component<CellProps, CellState> {
         animated: this.state.step < this.lastStepNumber,
       });
     }
-  }
+  };
 }
