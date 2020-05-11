@@ -1,4 +1,4 @@
-import { ControlsForm, ControlsState } from "./ControlsForm/ControlsForm";
+import { ControlsState } from "./ControlsForm/ControlsForm";
 import React from "react";
 import { ConwayLife } from "./ConwayLife/ConwayLife";
 import { ControlsFormik } from "./ControlsForm/ControlsFormik";
@@ -10,10 +10,11 @@ export class AppFormik extends React.Component<{}, ControlsState> {
     super(props);
     this.state = {
       cellSize: 10,
-      fieldWidth: 30,
-      fieldHeight: 30,
-      animationDelay: 500,
+      fieldWidth: 100,
+      fieldHeight: 80,
+      animationDelay: 70,
       alivePercent: 30,
+      animationStepsCount: 4,
     };
   }
 

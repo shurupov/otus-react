@@ -44,6 +44,11 @@ export class ControlsFormik extends React.Component<
             <Field type="number" name="alivePercent" />
           </label>
           <br />
+          <label>
+            Количество шагов анимации:
+            <Field type="number" name="animationStepsCount" />
+          </label>
+          <br />
           <button type="submit">Обновить</button>
         </Form>
       </Formik>
