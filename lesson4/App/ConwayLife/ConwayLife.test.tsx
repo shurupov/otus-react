@@ -1,6 +1,31 @@
 import { ConwayLife } from "./ConwayLife";
 import React from "react";
 import { mount } from "enzyme";
+import { PoorCellProps } from "./Cell/Cell";
+
+function booleanToPoorCell(alive: boolean): PoorCellProps {
+  return {
+    alive: alive,
+    animated: false,
+    step: 0,
+  };
+}
+
+function booleanArrayToPoorCells(
+  booleanField: Array<Array<boolean>>
+): Array<Array<PoorCellProps>> {
+  return booleanField.map((ba) => ba.map((b) => booleanToPoorCell(b)));
+}
+
+function poorCellToBoolean(cell: PoorCellProps): boolean {
+  return cell.alive;
+}
+
+function poorCellArrayToBooleans(
+  cells: Array<Array<PoorCellProps>>
+): Array<Array<boolean>> {
+  return cells.map((ca) => ca.map((c) => poorCellToBoolean(c)));
+}
 
 describe("ConwayLife", () => {
   it("getNextGeneration", () => {
@@ -11,14 +36,14 @@ describe("ConwayLife", () => {
       onClick: () => true,
       animationDelay: 50,
       alivePercent: 30,
-      animationStepsCount: 4
+      animationStepsCount: 4,
     }); // <ConwayLife cellSize={10} fieldWidth={5} fieldHeight={5}/>;
-    const oldField: Array<Array<boolean>> = [
+    const oldField: Array<Array<PoorCellProps>> = booleanArrayToPoorCells([
       [false, true, false, true],
       [false, true, false, true],
       [true, false, true, false],
       [true, false, true, false],
-    ];
+    ]);
     expect(conwayLife.getNextGeneration(oldField, 0, 0)).toEqual(false);
     expect(conwayLife.getNextGeneration(oldField, 0, 1)).toEqual(false);
     expect(conwayLife.getNextGeneration(oldField, 0, 2)).toEqual(false);
@@ -45,6 +70,7 @@ describe("ConwayLife", () => {
       onClick: () => true,
       animationDelay: 50,
       alivePercent: 30,
+      animationStepsCount: 4,
     }); // <ConwayLife cellSize={10} fieldWidth={5} fieldHeight={5}/>;
     const oldField: Array<Array<boolean>> = [
       [false, true, false, true],
@@ -58,7 +84,11 @@ describe("ConwayLife", () => {
       [true, false, true, true],
       [false, false, false, false],
     ];
-    expect(conwayLife.process(oldField)).toStrictEqual(newField);
+    expect(
+      poorCellArrayToBooleans(
+        conwayLife.process(booleanArrayToPoorCells(oldField))
+      )
+    ).toStrictEqual(newField);
   });
 
   it("render", () => {
@@ -71,6 +101,7 @@ describe("ConwayLife", () => {
         onClick={f}
         animationDelay={50}
         alivePercent={30}
+        animationStepsCount={4}
       />
     );
     expect(wrapper.find(".line").length).toBe(10);
@@ -84,6 +115,7 @@ describe("ConwayLife", () => {
         onClick={f}
         animationDelay={50}
         alivePercent={30}
+        animationStepsCount={4}
       />
     );
     expect(wrapper.find(".line").length).toBe(5);
@@ -96,6 +128,7 @@ describe("ConwayLife", () => {
         onClick={f}
         animationDelay={50}
         alivePercent={30}
+        animationStepsCount={4}
       />
     );
     expect(wrapper.find(".line").length).toBe(8);
@@ -112,6 +145,7 @@ describe("ConwayLife", () => {
         onClick={onClick}
         animationDelay={50}
         alivePercent={30}
+        animationStepsCount={4}
       />
     );
     wrapper.find(".cell").first().simulate("click");

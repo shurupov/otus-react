@@ -18,10 +18,10 @@ export class ControlsForm extends React.Component<
   ControlsState
 > {
   public static readonly defaultState: ControlsState = {
-    fieldWidth: 80,
-    fieldHeight: 60,
+    fieldWidth: 50,
+    fieldHeight: 50,
     cellSize: 10,
-    animationDelay: 80,
+    animationDelay: 50,
     alivePercent: 30,
     animationStepsCount: 4,
   };

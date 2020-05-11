@@ -145,6 +145,7 @@ export class ConwayLife extends React.Component<
       >
         {this.state.cells.map((l, i) => (
           <div
+            key={"l-" + i.toString()}
             className="line"
             style={{
               clear: "both",
@@ -152,7 +153,7 @@ export class ConwayLife extends React.Component<
           >
             {l.map((c, j) => (
               <Cell
-                key={j.toString()}
+                key={"c-" + i.toString() + "-" + j.toString()}
                 {...c}
                 size={this.props.cellSize}
                 onClick={() => this.props.onClick(j)}
