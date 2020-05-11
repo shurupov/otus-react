@@ -1,5 +1,5 @@
 import React from "react";
-import { Line } from "./Line/Line";
+import {CellProps, Line} from "./Line/Line";
 
 interface ConwayLifeProps {
   fieldWidth: number;
@@ -11,7 +11,7 @@ interface ConwayLifeProps {
 }
 
 interface ConwayLifeState {
-  cells: Array<Array<boolean>>;
+  cells: Array<Array<CellProps>>;
 }
 
 export class ConwayLife extends React.Component<
@@ -24,12 +24,16 @@ export class ConwayLife extends React.Component<
     cells: this.initField(),
   };
 
-  initField(): Array<Array<boolean>> {
-    const cells: Array<Array<boolean>> = [];
+  initField(): Array<Array<CellProps>> {
+    const cells: Array<Array<CellProps>> = [];
     for (let i = 0; i < this.props.fieldHeight; i++) {
       cells[i] = [];
       for (let j = 0; j < this.props.fieldWidth; j++) {
-        cells[i][j] = Math.random() < this.props.alivePercent / 100;
+        cells[i][j] = {
+          alive: Math.random() < this.props.alivePercent / 100,
+          animated: false,
+          step: 0,
+        };
       }
     }
     return cells;
@@ -73,23 +77,29 @@ export class ConwayLife extends React.Component<
     }, this.props.animationDelay);
   };
 
-  process = (oldField: Array<Array<boolean>>) => {
-    const newField: Array<Array<boolean>> = [];
+  process = (oldField: Array<Array<CellProps>>) => {
+    const newField: Array<Array<CellProps>> = [];
     for (let i = 0; i < this.props.fieldHeight; i++) {
       newField[i] = [];
       for (let j = 0; j < this.props.fieldWidth; j++) {
-        newField[i][j] = this.getNextGeneration(oldField, i, j);
+        const newFieldAlive: boolean = this.getNextGeneration(oldField, i, j);
+        const oldFieldCell: CellProps = oldField[i][j];
+        newField[i][j] = {
+          alive: newFieldAlive,
+          step: newFieldAlive !== oldFieldCell.alive || !oldFieldCell.animated ?  0 : oldFieldCell.step + 1,
+          animated: newFieldAlive !== oldFieldCell.alive || (oldFieldCell.animated || oldFieldCell.step < 4),
+        };
       }
     }
     return newField;
   };
 
   getNextGeneration = (
-    oldField: Array<Array<boolean>>,
+    oldField: Array<Array<CellProps>>,
     i: number,
     j: number
-  ) => {
-    const currentCellLife = oldField[i][j];
+  ): boolean => {
+    const currentCellLife = oldField[i][j].alive;
     let countOfNearLives = 0;
     for (
       let i1 = i === 0 ? i : i - 1;
@@ -104,7 +114,7 @@ export class ConwayLife extends React.Component<
         if (i1 === i && j1 === j) {
           continue;
         }
-        if (oldField[i1][j1]) {
+        if (oldField[i1][j1].alive) {
           countOfNearLives++;
         }
       }

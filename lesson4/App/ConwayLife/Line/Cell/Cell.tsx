@@ -1,10 +1,12 @@
 import React, { CSSProperties } from "react";
 
 interface CellProps {
-  coloured: boolean;
+  alive: boolean;
   size: number;
   onClick: Function;
-  animationDelay: number;
+  stepsCount: number;
+  step: number;
+  animated: boolean;
 }
 
 interface CellState {
@@ -12,31 +14,26 @@ interface CellState {
   animated: boolean;
 }
 
-export class Cell extends React.Component<CellProps, CellState> {
+export class Cell extends React.Component<CellProps> {
   private lastColor: number;
   private readonly topColorValue: number = 255;
-  private readonly lastStepNumber: number = 4;
-  private timeoutId: NodeJS.Timeout | undefined;
-
-  state = {
-    step: 0,
-    animated: true,
-  };
 
   constructor(props: CellProps) {
     super(props);
-    this.lastColor = !props.coloured ? 0 : 255;
+    this.lastColor = !props.alive ? 0 : 255;
   }
 
   getColor(): string {
-    if (this.state.animated) {
-      if (!this.props.coloured) {
+    if (this.props.animated) {
+      if (!this.props.alive) {
         this.lastColor =
-          this.topColorValue * (this.state.step / this.lastStepNumber);
+          this.topColorValue * (this.props.step / this.props.stepsCount);
       } else {
         this.lastColor =
-          this.topColorValue * (1 - this.state.step / this.lastStepNumber);
+          this.topColorValue * (1 - this.props.step / this.props.stepsCount);
       }
+    } else {
+      this.lastColor = this.props.alive ? 0 : this.topColorValue;
     }
     return `rgb(${this.lastColor},${this.lastColor},${this.lastColor})`;
   }
@@ -67,39 +64,4 @@ export class Cell extends React.Component<CellProps, CellState> {
       />
     );
   }
-
-  componentDidUpdate(prevProps: Readonly<CellProps>): void {
-    this.clearTimeout();
-    this.timeoutId = setTimeout(() => {
-      this.tick(false, prevProps);
-    }, this.props.animationDelay);
-  }
-
-  private clearTimeout(): void {
-    if (this.timeoutId !== undefined) {
-      clearTimeout(this.timeoutId);
-    }
-  }
-
-  componentWillUnmount() {
-    this.clearTimeout();
-  }
-
-  componentDidMount(): void {
-    this.tick(true, this.props);
-  }
-
-  tick = (justMounted: boolean, prevProps: Readonly<CellProps>) => {
-    if (justMounted || prevProps.coloured != this.props.coloured) {
-      this.setState({
-        step: 1,
-        animated: true,
-      });
-    } else if (this.state.animated) {
-      this.setState({
-        step: this.state.step < this.lastStepNumber ? this.state.step + 1 : 0,
-        animated: this.state.step < this.lastStepNumber,
-      });
-    }
-  };
 }

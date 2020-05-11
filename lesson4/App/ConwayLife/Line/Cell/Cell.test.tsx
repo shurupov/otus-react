@@ -6,7 +6,7 @@ describe("Cell", () => {
   it("Render", () => {
     const wrapper = mount(
       <Cell
-        coloured={true}
+        alive={true}
         onClick={() => true}
         size={10}
         animationDelay={50}
@@ -24,7 +24,7 @@ describe("Cell", () => {
   it("click", () => {
     const onClick = jest.fn();
     const wrapper = mount(
-      <Cell coloured={true} onClick={onClick} size={10} animationDelay={50} />
+      <Cell alive={true} onClick={onClick} size={10} animationDelay={50} />
     );
     wrapper.simulate("click");
     expect(onClick).toHaveBeenCalled();

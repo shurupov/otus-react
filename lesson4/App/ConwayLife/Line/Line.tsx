@@ -2,10 +2,16 @@ import React from "react";
 import { Cell } from "./Cell/Cell";
 
 interface LineProps {
-  cells: Array<boolean>;
+  cells: Array<CellProps>;
   cellSize: number;
   onClick: Function;
   cellAnimationDelay: number;
+}
+
+export interface CellProps {
+  alive: boolean;
+  step: number;
+  animated: boolean;
 }
 
 export class Line extends React.Component<LineProps> {
@@ -29,10 +35,10 @@ export class Line extends React.Component<LineProps> {
         {this.props.cells.map((c, j) => (
           <Cell
             key={j.toString()}
-            coloured={c}
+            {...c}
             size={this.props.cellSize}
             onClick={() => this.props.onClick(j)}
-            animationDelay={this.props.cellAnimationDelay}
+            stepsCount={4}
           />
         ))}
       </div>

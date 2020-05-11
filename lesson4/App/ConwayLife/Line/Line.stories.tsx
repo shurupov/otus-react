@@ -2,7 +2,7 @@ import { Line } from "./Line";
 import React from "react";
 import { boolean, number, withKnobs } from "@storybook/addon-knobs";
 
-export default {
+/*export default {
   title: "Line of Cells",
   component: Line,
   decorators: [withKnobs],
@@ -33,4 +33,4 @@ export const customLine = () => (
     cellSize={number("cellSize", 20)}
     cellAnimationDelay={number("cellAnimationDelay", 50)}
   />
-);
+);*/

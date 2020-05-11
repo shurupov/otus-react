@@ -10,6 +10,7 @@ describe("ConwayLife", () => {
       fieldHeight: 4,
       onClick: () => true,
       animationDelay: 50,
+      alivePercent: 30,
     }); // <ConwayLife cellSize={10} fieldWidth={5} fieldHeight={5}/>;
     const oldField: Array<Array<boolean>> = [
       [false, true, false, true],
@@ -42,6 +43,7 @@ describe("ConwayLife", () => {
       fieldHeight: 4,
       onClick: () => true,
       animationDelay: 50,
+      alivePercent: 30,
     }); // <ConwayLife cellSize={10} fieldWidth={5} fieldHeight={5}/>;
     const oldField: Array<Array<boolean>> = [
       [false, true, false, true],
@@ -67,6 +69,7 @@ describe("ConwayLife", () => {
         cellSize={10}
         onClick={f}
         animationDelay={50}
+        alivePercent={30}
       />
     );
     expect(wrapper.find(".line").length).toBe(10);
@@ -79,6 +82,7 @@ describe("ConwayLife", () => {
         cellSize={10}
         onClick={f}
         animationDelay={50}
+        alivePercent={30}
       />
     );
     expect(wrapper.find(".line").length).toBe(5);
@@ -90,6 +94,7 @@ describe("ConwayLife", () => {
         cellSize={10}
         onClick={f}
         animationDelay={50}
+        alivePercent={30}
       />
     );
     expect(wrapper.find(".line").length).toBe(8);
@@ -105,6 +110,7 @@ describe("ConwayLife", () => {
         cellSize={10}
         onClick={onClick}
         animationDelay={50}
+        alivePercent={30}
       />
     );
     wrapper.find(".cell").first().simulate("click");
