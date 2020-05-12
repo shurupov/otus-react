@@ -100,7 +100,7 @@ export class ControlsForm extends React.Component<
         </label>
         <br />
         <label>
-          Количетсво шагов анимации:
+          Количество шагов анимации:
           <input
             type="number"
             value={this.state.animationStepsCount.toString()}
