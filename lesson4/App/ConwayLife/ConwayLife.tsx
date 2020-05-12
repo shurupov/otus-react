@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "@emotion/core";
 import React from "react";
 import { Cell, PoorCellProps } from "./Cell/Cell";
 
@@ -145,7 +147,7 @@ export class ConwayLife extends React.Component<
     return (
       <div
         className="conway-life"
-        style={{
+        css={{
           clear: "both",
         }}
       >
@@ -153,7 +155,7 @@ export class ConwayLife extends React.Component<
           <div
             key={"l-" + i.toString()}
             className="line"
-            style={{
+            css={{
               clear: "both",
             }}
           >
