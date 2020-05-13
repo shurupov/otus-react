@@ -1,5 +1,7 @@
-import React from "react";
-import { Line } from "./Line/Line";
+/** @jsx jsx */
+import { jsx } from "@emotion/core";
+import React, { ReactNode } from "react";
+import { Cell, PoorCellProps } from "./Cell/Cell";
 
 interface ConwayLifeProps {
   fieldWidth: number;
@@ -7,11 +9,12 @@ interface ConwayLifeProps {
   cellSize: number;
   onClick: Function;
   animationDelay: number;
+  animationStepsCount: number;
   alivePercent: number;
 }
 
 interface ConwayLifeState {
-  cells: Array<Array<boolean>>;
+  cells: Array<Array<PoorCellProps>>;
 }
 
 export class ConwayLife extends React.Component<
@@ -20,22 +23,20 @@ export class ConwayLife extends React.Component<
 > {
   private timeoutId: NodeJS.Timeout | undefined;
 
-  constructor(props: ConwayLifeProps) {
-    super(props);
-    this.state = {
-      cells: this.initField(),
-    };
-    this.process.bind(this);
-    this.tick.bind(this);
-    this.getNextGeneration.bind(this);
-  }
+  state = {
+    cells: this.initField(),
+  };
 
-  initField(): Array<Array<boolean>> {
-    const cells: Array<Array<boolean>> = [];
+  initField(): Array<Array<PoorCellProps>> {
+    const cells: Array<Array<PoorCellProps>> = [];
     for (let i = 0; i < this.props.fieldHeight; i++) {
       cells[i] = [];
       for (let j = 0; j < this.props.fieldWidth; j++) {
-        cells[i][j] = Math.random() < this.props.alivePercent / 100;
+        cells[i][j] = {
+          alive: Math.random() < this.props.alivePercent / 100,
+          animated: false,
+          step: 0,
+        };
       }
     }
     return cells;
@@ -67,7 +68,7 @@ export class ConwayLife extends React.Component<
     }
   }
 
-  public tick() {
+  tick = () => {
     this.setState((state) => {
       return {
         cells: this.process(state.cells),
@@ -77,25 +78,37 @@ export class ConwayLife extends React.Component<
     this.timeoutId = setTimeout(() => {
       this.tick();
     }, this.props.animationDelay);
-  }
+  };
 
-  process(oldField: Array<Array<boolean>>): Array<Array<boolean>> {
-    const newField: Array<Array<boolean>> = [];
+  process = (oldField: Array<Array<PoorCellProps>>) => {
+    const newField: Array<Array<PoorCellProps>> = [];
     for (let i = 0; i < this.props.fieldHeight; i++) {
       newField[i] = [];
       for (let j = 0; j < this.props.fieldWidth; j++) {
-        newField[i][j] = this.getNextGeneration(oldField, i, j);
+        const newFieldAlive: boolean = this.getNextGeneration(oldField, i, j);
+        const oldFieldCell: PoorCellProps = oldField[i][j];
+        newField[i][j] = {
+          alive: newFieldAlive,
+          step:
+            newFieldAlive !== oldFieldCell.alive || !oldFieldCell.animated
+              ? 0
+              : oldFieldCell.step + 1,
+          animated:
+            newFieldAlive !== oldFieldCell.alive ||
+            oldFieldCell.animated ||
+            oldFieldCell.step < this.props.animationStepsCount,
+        };
       }
     }
     return newField;
-  }
+  };
 
-  public getNextGeneration(
-    oldField: Array<Array<boolean>>,
+  getNextGeneration = (
+    oldField: Array<Array<PoorCellProps>>,
     i: number,
     j: number
-  ): boolean {
-    const currentCellLife = oldField[i][j];
+  ): boolean => {
+    const currentCellLife = oldField[i][j].alive;
     let countOfNearLives = 0;
     for (
       let i1 = i === 0 ? i : i - 1;
@@ -110,7 +123,7 @@ export class ConwayLife extends React.Component<
         if (i1 === i && j1 === j) {
           continue;
         }
-        if (oldField[i1][j1]) {
+        if (oldField[i1][j1].alive) {
           countOfNearLives++;
         }
       }
@@ -119,33 +132,34 @@ export class ConwayLife extends React.Component<
     if (currentCellLife) {
       return countOfNearLives > 1 && countOfNearLives < 4;
     } else return countOfNearLives === 3;
-  }
+  };
 
-  render():
-    | React.ReactElement
-    | string
-    | number
-    | {}
-    | React.ReactNodeArray
-    | React.ReactPortal
-    | boolean
-    | null
-    | undefined {
+  render(): ReactNode {
     return (
       <div
         className="conway-life"
-        style={{
+        css={{
           clear: "both",
         }}
       >
         {this.state.cells.map((l, i) => (
-          <Line
-            key={i.toString()}
-            cells={l}
-            cellSize={this.props.cellSize}
-            onClick={(j: number) => this.props.onClick(j, i)}
-            cellAnimationDelay={this.props.animationDelay}
-          />
+          <div
+            key={"l-" + i.toString()}
+            className="line"
+            css={{
+              clear: "both",
+            }}
+          >
+            {l.map((c, j) => (
+              <Cell
+                key={"c-" + i.toString() + "-" + j.toString()}
+                {...c}
+                size={this.props.cellSize}
+                onClick={() => this.props.onClick(j)}
+                stepsCount={this.props.animationStepsCount}
+              />
+            ))}
+          </div>
         ))}
       </div>
     );

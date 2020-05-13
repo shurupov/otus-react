@@ -6,16 +6,7 @@ import { ControlsFormik } from "./ControlsForm/ControlsFormik";
 const f = (x: number, y: number) => console.log(`(${x}, ${y})`);
 
 export class AppFormik extends React.Component<{}, ControlsState> {
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      cellSize: 10,
-      fieldWidth: 30,
-      fieldHeight: 30,
-      animationDelay: 500,
-      alivePercent: 30,
-    };
-  }
+  state = ControlsForm.defaultState;
 
   render() {
     return (

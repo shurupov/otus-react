@@ -6,10 +6,7 @@ export class ControlsFormik extends React.Component<
   ControlsProps,
   ControlsState
 > {
-  constructor(props: ControlsProps) {
-    super(props);
-    this.state = ControlsForm.defaultState;
-  }
+  state = ControlsForm.defaultState;
 
   render() {
     return (
@@ -42,6 +39,11 @@ export class ControlsFormik extends React.Component<
           <label>
             Процент живых клеток:
             <Field type="number" name="alivePercent" />
+          </label>
+          <br />
+          <label>
+            Количество шагов анимации:
+            <Field type="number" name="animationStepsCount" />
           </label>
           <br />
           <button type="submit">Обновить</button>

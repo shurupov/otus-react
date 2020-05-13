@@ -14,9 +14,11 @@ function f() {
 
 export const customCell = () => (
   <Cell
-    coloured={boolean("coloured", true)}
+    alive={boolean("alive", true)}
     size={number("size", 100)}
     onClick={f}
-    animationDelay={number("animationDelay", 100)}
+    step={number("step", 0)}
+    animated={boolean("animated", false)}
+    stepsCount={4}
   />
 );

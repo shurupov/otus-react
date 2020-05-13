@@ -16,6 +16,8 @@ export const customConway = () => (
     fieldHeight={number("field height", 30)}
     cellSize={number("cell size", 10)}
     onClick={f}
-    animationDelay={number("animation delay", 500)}
+    animationDelay={number("animation delay", 50)}
+    alivePercent={number("alive percent", 30)}
+    animationStepsCount={number("animation steps count", 4)}
   />
 );

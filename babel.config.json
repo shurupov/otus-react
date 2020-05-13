@@ -12,7 +12,8 @@
       }
     ],
     "@babel/preset-react",
-    "@babel/preset-typescript"
+    "@babel/preset-typescript",
+    "@emotion/babel-preset-css-prop"
   ],
-  "plugins": ["transform-class-properties"]
+  "plugins": ["transform-class-properties", "emotion"]
 }

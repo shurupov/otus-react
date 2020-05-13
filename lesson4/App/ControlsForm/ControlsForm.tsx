@@ -1,5 +1,4 @@
 import React from "react";
-import { css, jsx } from "@emotion/core";
 
 export interface ControlsProps {
   onSubmit: Function;
@@ -11,6 +10,7 @@ export interface ControlsState {
   cellSize: number;
   animationDelay: number;
   alivePercent: number;
+  animationStepsCount: number;
 }
 
 export class ControlsForm extends React.Component<
@@ -18,17 +18,15 @@ export class ControlsForm extends React.Component<
   ControlsState
 > {
   public static readonly defaultState: ControlsState = {
-    fieldWidth: 30,
-    fieldHeight: 30,
+    fieldWidth: 50,
+    fieldHeight: 50,
     cellSize: 10,
-    animationDelay: 2000,
+    animationDelay: 50,
     alivePercent: 30,
+    animationStepsCount: 4,
   };
 
-  constructor(props: ControlsProps) {
-    super(props);
-    this.state = ControlsForm.defaultState;
-  }
+  state = ControlsForm.defaultState;
 
   componentDidMount() {
     this.props.onSubmit(this.state);
@@ -37,23 +35,9 @@ export class ControlsForm extends React.Component<
   handleChange = (fieldName: string) => (event: React.FormEvent) => {
     const target = event.target as HTMLFormElement;
     const value: number = parseFloat(target.value);
-    switch (fieldName) {
-      case "width":
-        this.setState({ fieldWidth: value });
-        break;
-      case "height":
-        this.setState({ fieldHeight: value });
-        break;
-      case "cellSize":
-        this.setState({ cellSize: value });
-        break;
-      case "animationDelay":
-        this.setState({ animationDelay: value });
-        break;
-      case "alivePercent":
-        this.setState({ alivePercent: value });
-        break;
-    }
+    this.setState({
+      [fieldName as keyof ControlsState]: value,
+    } as any);
   };
 
   handleSubmit = (event: React.FormEvent) => {
@@ -75,7 +59,7 @@ export class ControlsForm extends React.Component<
           <input
             type="number"
             value={this.state.fieldWidth.toString()}
-            onChange={this.handleChange("width")}
+            onChange={this.handleChange("fieldWidth")}
           />
         </label>
         <br />
@@ -84,7 +68,7 @@ export class ControlsForm extends React.Component<
           <input
             type="number"
             value={this.state.fieldHeight.toString()}
-            onChange={this.handleChange("height")}
+            onChange={this.handleChange("fieldHeight")}
           />
         </label>
         <br />
@@ -112,6 +96,15 @@ export class ControlsForm extends React.Component<
             type="number"
             value={this.state.alivePercent.toString()}
             onChange={this.handleChange("alivePercent")}
+          />
+        </label>
+        <br />
+        <label>
+          Количество шагов анимации:
+          <input
+            type="number"
+            value={this.state.animationStepsCount.toString()}
+            onChange={this.handleChange("animationStepsCount")}
           />
         </label>
         <br />
