@@ -105,8 +105,8 @@ describe("ConwayLife", () => {
       />
     );
     expect(wrapper.find("div.line").length).toBe(10);
-    expect(wrapper.find("div.cell").length).toBe(100);
-    expect(wrapper.find("div.conway-life").length).toBe(1);
+    expect(wrapper.find("Cell").length).toBe(100);
+    expect(wrapper.find("ConwayLife").length).toBe(1);
     wrapper = mount(
       <ConwayLife
         fieldWidth={5}
@@ -119,7 +119,7 @@ describe("ConwayLife", () => {
       />
     );
     expect(wrapper.find("div.line").length).toBe(5);
-    expect(wrapper.find("div.cell").length).toBe(25);
+    expect(wrapper.find("Cell").length).toBe(25);
     wrapper = mount(
       <ConwayLife
         fieldWidth={6}
@@ -132,7 +132,7 @@ describe("ConwayLife", () => {
       />
     );
     expect(wrapper.find("div.line").length).toBe(8);
-    expect(wrapper.find("div.cell").length).toBe(48);
+    expect(wrapper.find("Cell").length).toBe(48);
   });
 
   it("click", () => {
@@ -148,7 +148,7 @@ describe("ConwayLife", () => {
         animationStepsCount={4}
       />
     );
-    wrapper.find("div.cell").first().simulate("click");
+    wrapper.find("Cell").first().simulate("click");
     expect(onClick).toHaveBeenCalled();
   });
 });
