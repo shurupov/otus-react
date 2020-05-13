@@ -5,10 +5,7 @@ import { ControlsForm, ControlsState } from "./ControlsForm/ControlsForm";
 const f = (x: number, y: number) => console.log(`(${x}, ${y})`);
 
 export class App extends React.Component<{}, ControlsState> {
-  constructor(props: {}) {
-    super(props);
-    this.state = ControlsForm.defaultState;
-  }
+  state = ControlsForm.defaultState;
 
   render() {
     return (

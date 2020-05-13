@@ -10,6 +10,7 @@ export interface ControlsState {
   cellSize: number;
   animationDelay: number;
   alivePercent: number;
+  animationStepsCount: number;
 }
 
 export class ControlsForm extends React.Component<
@@ -17,17 +18,15 @@ export class ControlsForm extends React.Component<
   ControlsState
 > {
   public static readonly defaultState: ControlsState = {
-    fieldWidth: 30,
-    fieldHeight: 30,
+    fieldWidth: 50,
+    fieldHeight: 50,
     cellSize: 10,
-    animationDelay: 2000,
+    animationDelay: 50,
     alivePercent: 30,
+    animationStepsCount: 4,
   };
 
-  constructor(props: ControlsProps) {
-    super(props);
-    this.state = ControlsForm.defaultState;
-  }
+  state = ControlsForm.defaultState;
 
   componentDidMount() {
     this.props.onSubmit(this.state);
@@ -97,6 +96,15 @@ export class ControlsForm extends React.Component<
             type="number"
             value={this.state.alivePercent.toString()}
             onChange={this.handleChange("alivePercent")}
+          />
+        </label>
+        <br />
+        <label>
+          Количество шагов анимации:
+          <input
+            type="number"
+            value={this.state.animationStepsCount.toString()}
+            onChange={this.handleChange("animationStepsCount")}
           />
         </label>
         <br />
