@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
-import React from "react";
+import React, { MouseEventHandler, ReactNode } from "react";
 
 interface CellProps {
   alive: boolean;
@@ -40,16 +40,7 @@ export class Cell extends React.Component<CellProps> {
     return `rgb(${this.lastColor},${this.lastColor},${this.lastColor})`;
   }
 
-  render():
-    | React.ReactElement
-    | string
-    | number
-    | {}
-    | React.ReactNodeArray
-    | React.ReactPortal
-    | boolean
-    | null
-    | undefined {
+  render(): ReactNode {
     return (
       <div
         css={{
@@ -61,7 +52,7 @@ export class Cell extends React.Component<CellProps> {
           backgroundColor: this.getColor(),
         }}
         className="cell"
-        onClick={() => this.props.onClick()}
+        onClick={this.props.onClick as MouseEventHandler}
       />
     );
   }

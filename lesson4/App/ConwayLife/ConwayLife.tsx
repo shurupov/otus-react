@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
-import React from "react";
+import React, { ReactNode } from "react";
 import { Cell, PoorCellProps } from "./Cell/Cell";
 
 interface ConwayLifeProps {
@@ -134,16 +134,7 @@ export class ConwayLife extends React.Component<
     } else return countOfNearLives === 3;
   };
 
-  render():
-    | React.ReactElement
-    | string
-    | number
-    | {}
-    | React.ReactNodeArray
-    | React.ReactPortal
-    | boolean
-    | null
-    | undefined {
+  render(): ReactNode {
     return (
       <div
         className="conway-life"
