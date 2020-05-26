@@ -3,6 +3,7 @@ import { Login } from "./Login/Login";
 import { Main } from "./Main/Main";
 
 interface AppState {
+  welcome: boolean;
   authenticated: boolean;
   username: string;
 }
@@ -11,6 +12,7 @@ export class App extends React.Component<never, AppState> {
   constructor(props: never) {
     super(props);
     this.state = {
+      welcome: false,
       authenticated: localStorage.getItem("authenticated") === "1",
       username: localStorage.getItem("username") || "",
     };
@@ -20,9 +22,16 @@ export class App extends React.Component<never, AppState> {
     localStorage.setItem("username", username);
     localStorage.setItem("authenticated", "1");
     this.setState({
+      welcome: true,
       authenticated: true,
       username: username,
     });
+
+    setTimeout(() => {
+      this.setState({
+        welcome: false,
+      });
+    }, 2000);
   };
 
   logout = () => {
@@ -35,6 +44,9 @@ export class App extends React.Component<never, AppState> {
   };
 
   render() {
+    if (this.state.welcome) {
+      return <div>Welcome, {this.state.username}</div>;
+    }
     return this.state.authenticated ? (
       <Main username={this.state.username} onLogout={this.logout} />
     ) : (
