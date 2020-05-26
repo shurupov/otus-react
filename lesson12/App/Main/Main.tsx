@@ -1,7 +1,17 @@
 import React from "react";
+import { BrowserRouter, Route } from "react-router-dom";
 
-export class Main extends React.Component {
+interface MainProps {
+  login: string;
+}
+
+export class Main extends React.Component<MainProps> {
   render() {
-    return "<div>Main</div>";
+    return (
+      <BrowserRouter>
+        <Route exact path="/" render={() => <div>root</div>} />
+        <Route path="/caption" render={() => <div>caption</div>} />
+      </BrowserRouter>
+    );
   }
 }

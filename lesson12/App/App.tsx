@@ -1,16 +1,35 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
 import { Login } from "./Login/Login";
 import { Main } from "./Main/Main";
 
-export class App extends React.Component {
+interface AppState {
+  authenticated: boolean;
+  username: string;
+}
+
+export class App extends React.Component<never, AppState> {
+  constructor(props: never) {
+    super(props);
+    this.state = {
+      authenticated: localStorage.getItem("authenticated") === "1",
+      username: localStorage.getItem("username") || "",
+    };
+  }
+
+  authenticate = (username: string) => {
+    localStorage.setItem("username", username);
+    localStorage.setItem("authenticated", "1");
+    this.setState({
+      authenticated: true,
+      username: username,
+    });
+  };
+
   render() {
-    return (
-      <BrowserRouter>
-        <Route exact path="/" component={Login} />
-        <Route path="/caption" render={() => <div>caption</div>} />
-        <Route path="/main" component={Main} />
-      </BrowserRouter>
+    return this.state.authenticated ? (
+      <Main login={this.state.username} />
+    ) : (
+      <Login onLogin={this.authenticate} />
     );
   }
 }
