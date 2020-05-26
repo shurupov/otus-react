@@ -31,7 +31,7 @@ export class App extends React.Component<never, AppState> {
       this.setState({
         welcome: false,
       });
-    }, 2000);
+    }, 1000);
   };
 
   logout = () => {
