@@ -25,9 +25,18 @@ export class App extends React.Component<never, AppState> {
     });
   };
 
+  logout = () => {
+    localStorage.removeItem("username");
+    localStorage.removeItem("authenticated");
+    this.setState({
+      authenticated: false,
+      username: "",
+    });
+  };
+
   render() {
     return this.state.authenticated ? (
-      <Main login={this.state.username} />
+      <Main username={this.state.username} onLogout={this.logout} />
     ) : (
       <Login onLogin={this.authenticate} />
     );
