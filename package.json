@@ -2,7 +2,7 @@
   "name": "otus-react",
   "version": "1.0.0",
   "description": "Otus React lessons",
-  "main": "lesson4/index.tsx",
+  "main": "lesson12/index.tsx",
   "scripts": {
     "calc": "npx ts-node lesson2/src/main/simpleCalculator.ts",
     "polish": "npx ts-node lesson2/src/main/polishNotation.ts",
@@ -55,6 +55,7 @@
     "@types/jest": "^25.1.4",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
+    "@types/react-router-dom": "^5.1.5",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
     "babel-jest": "^25.2.4",
@@ -91,7 +92,8 @@
     "formik": "^2.1.4",
     "loki": "^0.20.3",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0"
   },
   "loki": {
     "configurations": {
