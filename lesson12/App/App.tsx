@@ -9,14 +9,11 @@ interface AppState {
 }
 
 export class App extends React.Component<never, AppState> {
-  constructor(props: never) {
-    super(props);
-    this.state = {
-      welcome: false,
-      authenticated: localStorage.getItem("authenticated") === "1",
-      username: localStorage.getItem("username") || "",
-    };
-  }
+  state = {
+    welcome: false,
+    authenticated: localStorage.getItem("authenticated") === "1",
+    username: localStorage.getItem("username") || "",
+  };
 
   authenticate = (username: string) => {
     localStorage.setItem("username", username);
@@ -24,7 +21,7 @@ export class App extends React.Component<never, AppState> {
     this.setState({
       welcome: true,
       authenticated: true,
-      username: username,
+      username,
     });
 
     setTimeout(() => {

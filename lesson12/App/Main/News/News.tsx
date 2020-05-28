@@ -8,7 +8,7 @@ export class News extends React.Component {
       <div>
         <h1>News</h1>
         <Switch>
-          <Route exact path="/news/:newsid" component={NewsText} />
+          <Route path="/news/:newsid" component={NewsText} />
         </Switch>
       </div>
     );
