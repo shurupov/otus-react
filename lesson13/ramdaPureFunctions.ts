@@ -28,6 +28,8 @@ export const createQs = (qsObj: QsObj): string => {
 
 export const parseQs = (qs: string): QsObj => {
   const result: QsObj = {};
-  R.compose(R.forEach((s: string[]) => (result[s[0]] = s[1])))(R.map((s: string) => s.split("="))(R.split("&")(qs.substr(1))));
+  R.compose(R.forEach((s: string[]) => (result[s[0]] = s[1])))(
+    R.map((s: string) => s.split("="))(R.split("&")(qs.substr(1)))
+  );
   return result;
 };
