@@ -17,7 +17,7 @@ test("ramda getTopName", () => {
   expect(getTopName(teams)).toBe("Bears");
 });
 
-test("createQs", () => {
+test("ramda createQs", () => {
   const qsObj: QsObj = {
     page: "2",
     pageSize: "10",
@@ -30,7 +30,7 @@ test("createQs", () => {
   );
 });
 
-test("parseQs", () => {
+test("ramda parseQs", () => {
   const qs = "?page=2&pageSize=10&total=205&somethingElse=value";
 
   expect(parseQs(qs)).toEqual({
