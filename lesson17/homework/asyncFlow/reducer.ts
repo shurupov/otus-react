@@ -8,6 +8,7 @@ export const reducer: Reducer = (state = {}, action) => {
         loading: true,
         error: false,
         errorMessage: "",
+        person: null,
       };
     case "UPDATE_PERSON":
       return {
@@ -23,6 +24,7 @@ export const reducer: Reducer = (state = {}, action) => {
         error: true,
         errorMessage: (action.payload as Error).message,
         loading: false,
+        person: null,
       };
     default:
       return state;

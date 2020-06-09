@@ -8,6 +8,7 @@ describe("reducer unit tests", () => {
       loading: true,
       error: false,
       errorMessage: "",
+      person: null,
     });
   });
   it("UPDATE_PERSON", () => {
@@ -26,21 +27,24 @@ describe("reducer unit tests", () => {
     });
   });
   it("UPDATE_PERSON_ERROR", () => {
-    const { loading, error, errorMessage } = reducer(
+    const state = reducer(
       {},
       {
         type: "UPDATE_PERSON_ERROR",
         payload: new Error("Error message"),
       }
     );
-    expect(loading).toBe(false);
-    expect(error).toBe(true);
-    expect(errorMessage).toBe("Error message");
+    expect(state).toEqual({
+      loading: false,
+      error: true,
+      errorMessage: "Error message",
+      person: null,
+    });
   });
 });
 
 describe("reducer integration tests", () => {
-  let store: Store<unknown, Action>;
+  let store: Store<any, Action>;
 
   beforeEach(() => {
     store = createStore(reducer);
@@ -52,6 +56,7 @@ describe("reducer integration tests", () => {
       loading: true,
       error: false,
       errorMessage: "",
+      person: null,
     });
   });
   it("UPDATE_PERSON", () => {
