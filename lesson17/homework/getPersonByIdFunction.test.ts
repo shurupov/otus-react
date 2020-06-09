@@ -1,12 +1,12 @@
 import { createStore, Store } from "redux";
-import { getPersonByIdThunk } from "./getPersonByIdThunk";
+import { getPersonByIdFunction } from "./getPersonByIdFunction";
 import { reducer } from "./reducer";
 import { enableFetchMocks } from "jest-fetch-mock";
 
 enableFetchMocks();
 
 const store: Store = createStore(reducer);
-const getPersonById = getPersonByIdThunk(store);
+const getPersonById = getPersonByIdFunction(store);
 
 describe("getPersonById", () => {
   beforeEach(() => {
@@ -46,7 +46,7 @@ describe("getPersonById", () => {
       loading: true,
       error: false,
       errorMessage: "",
-      person: null
+      person: null,
     });
     await new Promise((r) => setTimeout(r, 200));
 
@@ -54,7 +54,7 @@ describe("getPersonById", () => {
       loading: false,
       error: true,
       errorMessage: "Error message",
-      person: null
+      person: null,
     });
   });
 });
