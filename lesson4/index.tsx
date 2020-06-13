@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { App } from "./App/App";
-import { AppFormik } from "./App/AppFormik";
+import { ConwayLifeApp } from "./App/ConwayLifeApp";
+import { ConwayLifeAppFormik } from "./App/ConwayLifeAppFormik";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<ConwayLifeApp />, document.getElementById("root"));
 // ReactDOM.render(<AppFormik />, document.getElementById("root"));

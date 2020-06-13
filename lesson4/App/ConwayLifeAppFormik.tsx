@@ -5,7 +5,7 @@ import { ControlsFormik } from "./ControlsForm/ControlsFormik";
 
 const f = (x: number, y: number) => console.log(`(${x}, ${y})`);
 
-export class AppFormik extends React.Component<{}, ControlsState> {
+export class ConwayLifeAppFormik extends React.Component<{}, ControlsState> {
   state = ControlsForm.defaultState;
 
   render() {
