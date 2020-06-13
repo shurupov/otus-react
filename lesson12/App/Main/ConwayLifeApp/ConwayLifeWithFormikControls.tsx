@@ -1,10 +1,14 @@
+import { ControlsForm, ControlsState } from "./ControlsForm/ControlsForm";
 import React from "react";
 import { ConwayLife } from "./ConwayLife/ConwayLife";
-import { ControlsForm, ControlsState } from "./ControlsForm/ControlsForm";
+import { ControlsFormik } from "./ControlsForm/ControlsFormik";
 
 const f = (x: number, y: number) => console.log(`(${x}, ${y})`);
 
-export class ConwayLifeApp extends React.Component<{}, ControlsState> {
+export class ConwayLifeWithFormikControls extends React.Component<
+  {},
+  ControlsState
+> {
   state = ControlsForm.defaultState;
 
   render() {
@@ -14,7 +18,7 @@ export class ConwayLifeApp extends React.Component<{}, ControlsState> {
           <ConwayLife {...this.state} onClick={f} />
         </div>
         <div>
-          <ControlsForm
+          <ControlsFormik
             onSubmit={(state: ControlsState) => this.setState(state)}
           />
         </div>

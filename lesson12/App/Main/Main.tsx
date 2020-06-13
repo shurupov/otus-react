@@ -3,7 +3,7 @@ import { jsx } from "@emotion/core";
 import React, { MouseEventHandler } from "react";
 import { BrowserRouter, Link, Route } from "react-router-dom";
 import { News } from "./News/News";
-import { ConwayLifeApp } from "./ConwayLifeApp/ConwayLifeApp";
+import { ConwayLifeWithControls } from "./ConwayLifeApp/ConwayLifeWithControls";
 
 interface MainProps {
   username: string;
@@ -38,7 +38,7 @@ export class Main extends React.Component<MainProps> {
 
             <Route exact path="/" render={() => <h1>Root</h1>} />
             <Route path="/news" component={News} />
-            <Route path="/life" component={ConwayLifeApp} />
+            <Route path="/life" component={ConwayLifeWithControls} />
           </BrowserRouter>
         </div>
       </div>
