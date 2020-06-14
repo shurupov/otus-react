@@ -28,7 +28,7 @@ export class ControlsForm extends React.Component<
     animationStepsCount: 4,
   };
 
-  private unsubscribe: Unsubscribe | undefined;
+  private unsubscribe!: Unsubscribe;
 
   state = ControlsForm.defaultState;
 
@@ -40,7 +40,7 @@ export class ControlsForm extends React.Component<
   }
 
   componentWillUnmount() {
-    (this.unsubscribe as Unsubscribe)();
+    this.unsubscribe();
   }
 
   handleChange = (fieldName: string) => (event: React.FormEvent) => {

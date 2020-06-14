@@ -11,7 +11,7 @@ interface ConwayLifeState {
 
 export class ConwayLife extends React.Component<never, ConwayLifeState> {
   private timeoutId: NodeJS.Timeout | undefined;
-  private unsubscribe: Unsubscribe;
+  private unsubscribe!: Unsubscribe;
 
   private fieldHeight = 0;
   private fieldWidth = 0;
