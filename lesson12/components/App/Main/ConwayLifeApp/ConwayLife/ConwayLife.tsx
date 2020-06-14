@@ -2,26 +2,20 @@
 import { jsx } from "@emotion/core";
 import React, { ReactNode } from "react";
 import { Cell, PoorCellProps } from "./Cell/Cell";
-
-interface ConwayLifeProps {
-  fieldWidth: number;
-  fieldHeight: number;
-  cellSize: number;
-  onClick: Function;
-  animationDelay: number;
-  animationStepsCount: number;
-  alivePercent: number;
-}
+import { store } from "store/store";
+import { Unsubscribe } from "redux";
 
 interface ConwayLifeState {
   cells: Array<Array<PoorCellProps>>;
 }
 
-export class ConwayLife extends React.Component<
-  ConwayLifeProps,
-  ConwayLifeState
-> {
+export class ConwayLife extends React.Component<never, ConwayLifeState> {
   private timeoutId: NodeJS.Timeout | undefined;
+  private unsubscribe: Unsubscribe;
+
+  private fieldHeight = 0;
+  private fieldWidth = 0;
+  private alivePercent = 0;
 
   state = {
     cells: this.initField(),
@@ -29,11 +23,11 @@ export class ConwayLife extends React.Component<
 
   initField(): Array<Array<PoorCellProps>> {
     const cells: Array<Array<PoorCellProps>> = [];
-    for (let i = 0; i < this.props.fieldHeight; i++) {
+    for (let i = 0; i < store.getState().fieldHeight; i++) {
       cells[i] = [];
-      for (let j = 0; j < this.props.fieldWidth; j++) {
+      for (let j = 0; j < store.getState().fieldWidth; j++) {
         cells[i][j] = {
-          alive: Math.random() < this.props.alivePercent / 100,
+          alive: Math.random() < store.getState().alivePercent / 100,
           animated: false,
           step: 0,
         };
@@ -42,24 +36,24 @@ export class ConwayLife extends React.Component<
     return cells;
   }
 
-  componentDidUpdate(prevProps: Readonly<ConwayLifeProps>): void {
-    if (
-      prevProps.fieldHeight !== this.props.fieldHeight ||
-      prevProps.fieldWidth !== this.props.fieldWidth ||
-      prevProps.alivePercent !== this.props.alivePercent
-    ) {
-      this.setState({
-        cells: this.initField(),
-      });
-    }
-  }
-
   componentDidMount(): void {
     this.tick();
+    this.unsubscribe = store.subscribe(() => {
+      if (
+        this.fieldHeight !== store.getState().fieldHeight ||
+        this.fieldWidth !== store.getState().fieldWidth ||
+        this.alivePercent !== store.getState().alivePercent
+      ) {
+        this.setState({
+          cells: this.initField(),
+        });
+      }
+    });
   }
 
   componentWillUnmount(): void {
     this.clearTimeout();
+    this.unsubscribe();
   }
 
   private clearTimeout(): void {
@@ -77,14 +71,14 @@ export class ConwayLife extends React.Component<
     this.clearTimeout();
     this.timeoutId = setTimeout(() => {
       this.tick();
-    }, this.props.animationDelay);
+    }, store.getState().animationDelay);
   };
 
   process = (oldField: Array<Array<PoorCellProps>>) => {
     const newField: Array<Array<PoorCellProps>> = [];
-    for (let i = 0; i < this.props.fieldHeight; i++) {
+    for (let i = 0; i < store.getState().fieldHeight; i++) {
       newField[i] = [];
-      for (let j = 0; j < this.props.fieldWidth; j++) {
+      for (let j = 0; j < store.getState().fieldWidth; j++) {
         const newFieldAlive: boolean = this.getNextGeneration(oldField, i, j);
         const oldFieldCell: PoorCellProps = oldField[i][j];
         newField[i][j] = {
@@ -96,7 +90,7 @@ export class ConwayLife extends React.Component<
           animated:
             newFieldAlive !== oldFieldCell.alive ||
             oldFieldCell.animated ||
-            oldFieldCell.step < this.props.animationStepsCount,
+            oldFieldCell.step < store.getState().animationStepsCount,
         };
       }
     }
@@ -154,9 +148,9 @@ export class ConwayLife extends React.Component<
               <Cell
                 key={"c-" + i.toString() + "-" + j.toString()}
                 {...c}
-                size={this.props.cellSize}
-                onClick={() => this.props.onClick(j)}
-                stepsCount={this.props.animationStepsCount}
+                size={store.getState().cellSize}
+                onClick={() => store.getState().onClick(j)}
+                stepsCount={store.getState().animationStepsCount}
               />
             ))}
           </div>

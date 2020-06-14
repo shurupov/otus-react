@@ -1,4 +1,6 @@
 import React from "react";
+import { store } from "store/store";
+import { Unsubscribe } from "redux";
 
 export interface ControlsProps {
   onSubmit: Function;
@@ -26,18 +28,34 @@ export class ControlsForm extends React.Component<
     animationStepsCount: 4,
   };
 
+  private unsubscribe: Unsubscribe | undefined;
+
   state = ControlsForm.defaultState;
 
   componentDidMount() {
     this.props.onSubmit(this.state);
+    this.unsubscribe = store.subscribe(() => {
+      this.setState(store.getState());
+    });
+  }
+
+  componentWillUnmount() {
+    (this.unsubscribe as Unsubscribe)();
   }
 
   handleChange = (fieldName: string) => (event: React.FormEvent) => {
     const target = event.target as HTMLFormElement;
+    if (target.value === "") {
+      return;
+    }
     const value: number = parseFloat(target.value);
-    this.setState({
-      [fieldName as keyof ControlsState]: value,
-    } as any);
+    store.dispatch({
+      type: "CHANGE_SETTING",
+      payload: {
+        field: fieldName as keyof ControlsState,
+        value,
+      },
+    });
   };
 
   handleSubmit = (event: React.FormEvent) => {
