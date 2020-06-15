@@ -1,39 +1,16 @@
 import React from "react";
-import { store } from "store/store";
+import { StoreState, store } from "store/store";
 import { Unsubscribe } from "redux";
 
 export interface ControlsProps {
   onSubmit: Function;
 }
 
-export interface ControlsState {
-  fieldWidth: number;
-  fieldHeight: number;
-  cellSize: number;
-  animationDelay: number;
-  alivePercent: number;
-  animationStepsCount: number;
-}
-
-export class ControlsForm extends React.Component<
-  ControlsProps,
-  ControlsState
-> {
-  public static readonly defaultState: ControlsState = {
-    fieldWidth: 50,
-    fieldHeight: 50,
-    cellSize: 10,
-    animationDelay: 50,
-    alivePercent: 30,
-    animationStepsCount: 4,
-  };
-
+export class ControlsForm extends React.Component<{}, StoreState> {
   private unsubscribe!: Unsubscribe;
-
-  state = ControlsForm.defaultState;
+  state = store.getState();
 
   componentDidMount() {
-    this.props.onSubmit(this.state);
     this.unsubscribe = store.subscribe(() => {
       this.setState(store.getState());
     });
@@ -52,21 +29,21 @@ export class ControlsForm extends React.Component<
     store.dispatch({
       type: "CHANGE_SETTING",
       payload: {
-        field: fieldName as keyof ControlsState,
+        field: fieldName as keyof StoreState,
         value,
       },
     });
   };
 
-  handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    this.props.onSubmit(this.state);
+  handleUpdateButtonClick = () => {
+    store.dispatch({
+      type: "INIT_FIELD",
+    });
   };
 
   render() {
     return (
       <form
-        onSubmit={this.handleSubmit}
         style={{
           clear: "both",
         }}
@@ -126,7 +103,7 @@ export class ControlsForm extends React.Component<
           />
         </label>
         <br />
-        <input type="submit" value="Обновить" />
+        <input type="button" value="Обновить" onClick={this.handleUpdateButtonClick} />
       </form>
     );
   }

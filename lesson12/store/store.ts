@@ -1,17 +1,27 @@
 import { createStore, Store } from "redux";
 import { reducer } from "store/reducer";
-import { ControlsState } from "components/App/Main/ConwayLifeApp/ControlsForm/ControlsForm";
 
-const defaultState: ControlsState = {
+export interface StoreState {
+  fieldWidth: number;
+  fieldHeight: number;
+  cellSize: number;
+  animationDelay: number;
+  alivePercent: number;
+  animationStepsCount: number;
+  reinitField: boolean;
+}
+
+export const defaultState: StoreState = {
   fieldWidth: 50,
   fieldHeight: 50,
   cellSize: 10,
   animationDelay: 50,
   alivePercent: 30,
   animationStepsCount: 4,
+  reinitField: false,
 };
 
-export const store: Store = createStore(
+export const store: Store<StoreState> = createStore(
   reducer,
   defaultState,
   // https://github.com/zalmoxisus/redux-devtools-extension

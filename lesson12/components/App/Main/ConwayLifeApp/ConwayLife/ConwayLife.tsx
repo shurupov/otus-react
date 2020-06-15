@@ -2,32 +2,32 @@
 import { jsx } from "@emotion/core";
 import React, { ReactNode } from "react";
 import { Cell, PoorCellProps } from "./Cell/Cell";
-import { store } from "store/store";
+import { defaultState, store, StoreState } from "store/store";
 import { Unsubscribe } from "redux";
 
 interface ConwayLifeState {
   cells: Array<Array<PoorCellProps>>;
 }
 
-export class ConwayLife extends React.Component<never, ConwayLifeState> {
-  private timeoutId: NodeJS.Timeout | undefined;
+export class ConwayLife extends React.Component<
+  {},
+  ConwayLifeState & StoreState
+> {
+  private timeoutId!: NodeJS.Timeout;
   private unsubscribe!: Unsubscribe;
 
-  private fieldHeight = 0;
-  private fieldWidth = 0;
-  private alivePercent = 0;
-
   state = {
-    cells: this.initField(),
+    ...defaultState,
+    cells: [],
   };
 
   initField(): Array<Array<PoorCellProps>> {
     const cells: Array<Array<PoorCellProps>> = [];
-    for (let i = 0; i < store.getState().fieldHeight; i++) {
+    for (let i = 0; i < this.state.fieldHeight; i++) {
       cells[i] = [];
-      for (let j = 0; j < store.getState().fieldWidth; j++) {
+      for (let j = 0; j < this.state.fieldWidth; j++) {
         cells[i][j] = {
-          alive: Math.random() < store.getState().alivePercent / 100,
+          alive: Math.random() < this.state.alivePercent / 100,
           animated: false,
           step: 0,
         };
@@ -37,15 +37,26 @@ export class ConwayLife extends React.Component<never, ConwayLifeState> {
   }
 
   componentDidMount(): void {
+    this.setState({ cells: this.initField() });
     this.tick();
     this.unsubscribe = store.subscribe(() => {
-      if (
-        this.fieldHeight !== store.getState().fieldHeight ||
-        this.fieldWidth !== store.getState().fieldWidth ||
-        this.alivePercent !== store.getState().alivePercent
-      ) {
+      if (store.getState().reinitField) {
+        this.setState(
+          {
+            ...store.getState(),
+          },
+          () => {
+            this.setState({
+              cells: this.initField(),
+            });
+          }
+        );
+        store.dispatch({
+          type: "INIT_FIELD_PERFORMED",
+        });
+      } else {
         this.setState({
-          cells: this.initField(),
+          ...store.getState(),
         });
       }
     });
@@ -71,14 +82,14 @@ export class ConwayLife extends React.Component<never, ConwayLifeState> {
     this.clearTimeout();
     this.timeoutId = setTimeout(() => {
       this.tick();
-    }, store.getState().animationDelay);
+    }, this.state.animationDelay);
   };
 
   process = (oldField: Array<Array<PoorCellProps>>) => {
     const newField: Array<Array<PoorCellProps>> = [];
-    for (let i = 0; i < store.getState().fieldHeight; i++) {
+    for (let i = 0; i < this.state.fieldHeight; i++) {
       newField[i] = [];
-      for (let j = 0; j < store.getState().fieldWidth; j++) {
+      for (let j = 0; j < this.state.fieldWidth; j++) {
         const newFieldAlive: boolean = this.getNextGeneration(oldField, i, j);
         const oldFieldCell: PoorCellProps = oldField[i][j];
         newField[i][j] = {
@@ -90,7 +101,7 @@ export class ConwayLife extends React.Component<never, ConwayLifeState> {
           animated:
             newFieldAlive !== oldFieldCell.alive ||
             oldFieldCell.animated ||
-            oldFieldCell.step < store.getState().animationStepsCount,
+            oldFieldCell.step < this.state.animationStepsCount,
         };
       }
     }
@@ -102,7 +113,7 @@ export class ConwayLife extends React.Component<never, ConwayLifeState> {
     i: number,
     j: number
   ): boolean => {
-    const currentCellLife = oldField[i][j].alive;
+    const currentCellLife = oldField[i][j] && oldField[i][j].alive;
     let countOfNearLives = 0;
     for (
       let i1 = i === 0 ? i : i - 1;
@@ -136,7 +147,7 @@ export class ConwayLife extends React.Component<never, ConwayLifeState> {
           clear: "both",
         }}
       >
-        {this.state.cells.map((l, i) => (
+        {this.state.cells.map((l: Array<PoorCellProps>, i) => (
           <div
             key={"l-" + i.toString()}
             className="line"
@@ -148,9 +159,8 @@ export class ConwayLife extends React.Component<never, ConwayLifeState> {
               <Cell
                 key={"c-" + i.toString() + "-" + j.toString()}
                 {...c}
-                size={store.getState().cellSize}
-                onClick={() => store.getState().onClick(j)}
-                stepsCount={store.getState().animationStepsCount}
+                size={this.state.cellSize}
+                stepsCount={this.state.animationStepsCount}
               />
             ))}
           </div>
