@@ -1,5 +1,6 @@
-import { createStore, Store } from "redux";
-import { defaultState, reducer } from "store/reducer";
+import { Store } from "redux";
+import { reducer } from "store/reducer";
+import { configureStore } from "@reduxjs/toolkit";
 
 export interface StoreState {
   fieldWidth: number;
@@ -11,10 +12,6 @@ export interface StoreState {
   reinitField: boolean;
 }
 
-export const store: Store<StoreState> = createStore(
+export const store: Store<StoreState> = configureStore({
   reducer,
-  defaultState,
-  // https://github.com/zalmoxisus/redux-devtools-extension
-  (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__()
-);
+});
