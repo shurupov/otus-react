@@ -1,6 +1,7 @@
 import React from "react";
 import { StoreState, store } from "store/store";
 import { Unsubscribe } from "redux";
+import { changeSetting, initField } from "store/actionCreators";
 
 export interface ControlsProps {
   onSubmit: Function;
@@ -26,19 +27,11 @@ export class ControlsForm extends React.Component<{}, StoreState> {
       return;
     }
     const value: number = parseFloat(target.value);
-    store.dispatch({
-      type: "CHANGE_SETTING",
-      payload: {
-        field: fieldName as keyof StoreState,
-        value,
-      },
-    });
+    store.dispatch(changeSetting(fieldName, value));
   };
 
   handleUpdateButtonClick = () => {
-    store.dispatch({
-      type: "INIT_FIELD",
-    });
+    store.dispatch(initField());
   };
 
   render() {
@@ -103,7 +96,11 @@ export class ControlsForm extends React.Component<{}, StoreState> {
           />
         </label>
         <br />
-        <input type="button" value="Обновить" onClick={this.handleUpdateButtonClick} />
+        <input
+          type="button"
+          value="Обновить"
+          onClick={this.handleUpdateButtonClick}
+        />
       </form>
     );
   }

@@ -4,6 +4,7 @@ import React, { ReactNode } from "react";
 import { Cell, PoorCellProps } from "./Cell/Cell";
 import { defaultState, store, StoreState } from "store/store";
 import { Unsubscribe } from "redux";
+import { initFieldPerformed } from "store/actionCreators";
 
 interface ConwayLifeState {
   cells: Array<Array<PoorCellProps>>;
@@ -51,9 +52,7 @@ export class ConwayLife extends React.Component<
             });
           }
         );
-        store.dispatch({
-          type: "INIT_FIELD_PERFORMED",
-        });
+        store.dispatch(initFieldPerformed());
       } else {
         this.setState({
           ...store.getState(),
