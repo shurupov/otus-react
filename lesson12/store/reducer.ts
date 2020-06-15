@@ -1,31 +1,56 @@
-import { AnyAction } from "redux";
 import { StoreState } from "store/store";
+import { createReducer } from "@reduxjs/toolkit";
+import { Reducer } from "redux";
 
-export const reducer = (state: StoreState, action: AnyAction) => {
-  switch (action.type) {
-    case "INIT_FIELD":
-      return {
-        ...state,
-        reinitField: true,
-      };
-    case "INIT_FIELD_PERFORMED":
-      return {
-        ...state,
-        reinitField: false,
-      };
-    case "CHANGE_SETTING":
-      if (!action.payload.value) {
-        return state;
-      }
-      return {
-        ...state,
-        [action.payload.field]: action.payload.value,
-        reinitField:
-          action.payload.field === "fieldHeight" ||
-          action.payload.field === "fieldWidth" ||
-          action.payload.field === "alivePercent",
-      };
-    default:
-      return state;
-  }
+export const actionTypes = {
+  INIT_FIELD: "INIT_FIELD",
+  INIT_FIELD_PERFORMED: "INIT_FIELD_PERFORMED",
+  CHANGE_SETTING: "CHANGE_SETTING",
 };
+
+export interface ConwayLifeAction {
+  type: string;
+  payload?: {
+    field: string;
+    value: number;
+  };
+}
+
+export const defaultState: StoreState = {
+  fieldWidth: 50,
+  fieldHeight: 50,
+  cellSize: 10,
+  animationDelay: 50,
+  alivePercent: 30,
+  animationStepsCount: 4,
+  reinitField: false,
+};
+
+export const reducer: Reducer<StoreState> = createReducer(defaultState, {
+  [actionTypes.INIT_FIELD]: (state: StoreState) => {
+    state.reinitField = true;
+    return state;
+  },
+  [actionTypes.INIT_FIELD_PERFORMED]: (state) => {
+    state.reinitField = false;
+    return state;
+  },
+  [actionTypes.CHANGE_SETTING]: (
+    state: StoreState,
+    action: ConwayLifeAction
+  ) => {
+    if (!action.payload || !action.payload.value) {
+      return state;
+    }
+    if (action.payload.field) {
+      const fieldName = action.payload.field;
+      state[fieldName] = action.payload.value;
+      state.reinitField =
+        fieldName === "fieldHeight" ||
+        fieldName === "fieldWidth" ||
+        fieldName === "alivePercent";
+      return state;
+    }
+    return state;
+  },
+});

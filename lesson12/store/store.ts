@@ -1,5 +1,5 @@
 import { createStore, Store } from "redux";
-import { reducer } from "store/reducer";
+import { defaultState, reducer } from "store/reducer";
 
 export interface StoreState {
   fieldWidth: number;
@@ -10,16 +10,6 @@ export interface StoreState {
   animationStepsCount: number;
   reinitField: boolean;
 }
-
-export const defaultState: StoreState = {
-  fieldWidth: 50,
-  fieldHeight: 50,
-  cellSize: 10,
-  animationDelay: 50,
-  alivePercent: 30,
-  animationStepsCount: 4,
-  reinitField: false,
-};
 
 export const store: Store<StoreState> = createStore(
   reducer,

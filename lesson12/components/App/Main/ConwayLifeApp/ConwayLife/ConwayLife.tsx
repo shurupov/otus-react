@@ -2,18 +2,16 @@
 import { jsx } from "@emotion/core";
 import React, { ReactNode } from "react";
 import { Cell, PoorCellProps } from "./Cell/Cell";
-import { defaultState, store, StoreState } from "store/store";
+import { store, StoreState } from "store/store";
 import { Unsubscribe } from "redux";
 import { initFieldPerformed } from "store/actionCreators";
+import { defaultState } from "store/reducer";
 
-interface ConwayLifeState {
+interface ConwayLifeState extends StoreState {
   cells: Array<Array<PoorCellProps>>;
 }
 
-export class ConwayLife extends React.Component<
-  {},
-  ConwayLifeState & StoreState
-> {
+export class ConwayLife extends React.Component<{}, ConwayLifeState> {
   private timeoutId!: NodeJS.Timeout;
   private unsubscribe!: Unsubscribe;
 

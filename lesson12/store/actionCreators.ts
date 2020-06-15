@@ -1,18 +1,20 @@
+import { actionTypes } from "store/reducer";
+
 export const initField = () => {
   return {
-    type: "INIT_FIELD",
+    type: actionTypes.INIT_FIELD,
   };
 };
 
 export const initFieldPerformed = () => {
   return {
-    type: "INIT_FIELD_PERFORMED",
+    type: actionTypes.INIT_FIELD_PERFORMED,
   };
 };
 
 export const changeSetting = (settingName: string, value: number) => {
   return {
-    type: "CHANGE_SETTING",
+    type: actionTypes.CHANGE_SETTING,
     payload: {
       field: settingName,
       value,

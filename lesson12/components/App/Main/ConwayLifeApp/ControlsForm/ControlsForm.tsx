@@ -3,10 +3,6 @@ import { StoreState, store } from "store/store";
 import { Unsubscribe } from "redux";
 import { changeSetting, initField } from "store/actionCreators";
 
-export interface ControlsProps {
-  onSubmit: Function;
-}
-
 export class ControlsForm extends React.Component<{}, StoreState> {
   private unsubscribe!: Unsubscribe;
   state = store.getState();
