@@ -2,31 +2,27 @@
 import { jsx } from "@emotion/core";
 import React, { ReactNode } from "react";
 import { Cell, PoorCellProps } from "./Cell/Cell";
-import { store, StoreState } from "store/store";
-import { Unsubscribe } from "redux";
-import { initFieldPerformed } from "store/actionCreators";
-import { defaultState } from "store/reducer";
+import { StoreState } from "store/store";
+import { connect } from "react-redux";
 
-interface ConwayLifeState extends StoreState {
+interface ConwayLifeState {
   cells: Array<Array<PoorCellProps>>;
 }
 
-export class ConwayLife extends React.Component<{}, ConwayLifeState> {
+export class ConwayLife extends React.Component<StoreState, ConwayLifeState> {
   private timeoutId!: NodeJS.Timeout;
-  private unsubscribe!: Unsubscribe;
 
   state = {
-    ...defaultState,
     cells: [],
   };
 
   initField(): Array<Array<PoorCellProps>> {
     const cells: Array<Array<PoorCellProps>> = [];
-    for (let i = 0; i < this.state.fieldHeight; i++) {
+    for (let i = 0; i < this.props.fieldHeight; i++) {
       cells[i] = [];
-      for (let j = 0; j < this.state.fieldWidth; j++) {
+      for (let j = 0; j < this.props.fieldWidth; j++) {
         cells[i][j] = {
-          alive: Math.random() < this.state.alivePercent / 100,
+          alive: Math.random() < this.props.alivePercent / 100,
           animated: false,
           step: 0,
         };
@@ -35,33 +31,20 @@ export class ConwayLife extends React.Component<{}, ConwayLifeState> {
     return cells;
   }
 
+  componentWillReceiveProps(nextProps: Readonly<StoreState>) {
+    console.log("ConwayLife updated");
+    if (nextProps.reinitField) {
+      this.setState({ cells: this.initField() });
+    }
+  }
+
   componentDidMount(): void {
     this.setState({ cells: this.initField() });
     this.tick();
-    this.unsubscribe = store.subscribe(() => {
-      if (store.getState().reinitField) {
-        this.setState(
-          {
-            ...store.getState(),
-          },
-          () => {
-            this.setState({
-              cells: this.initField(),
-            });
-          }
-        );
-        store.dispatch(initFieldPerformed());
-      } else {
-        this.setState({
-          ...store.getState(),
-        });
-      }
-    });
   }
 
   componentWillUnmount(): void {
     this.clearTimeout();
-    this.unsubscribe();
   }
 
   private clearTimeout(): void {
@@ -79,14 +62,14 @@ export class ConwayLife extends React.Component<{}, ConwayLifeState> {
     this.clearTimeout();
     this.timeoutId = setTimeout(() => {
       this.tick();
-    }, this.state.animationDelay);
+    }, this.props.animationDelay);
   };
 
   process = (oldField: Array<Array<PoorCellProps>>) => {
     const newField: Array<Array<PoorCellProps>> = [];
-    for (let i = 0; i < this.state.fieldHeight; i++) {
+    for (let i = 0; i < this.props.fieldHeight; i++) {
       newField[i] = [];
-      for (let j = 0; j < this.state.fieldWidth; j++) {
+      for (let j = 0; j < this.props.fieldWidth; j++) {
         const newFieldAlive: boolean = this.getNextGeneration(oldField, i, j);
         const oldFieldCell: PoorCellProps = oldField[i][j];
         newField[i][j] = {
@@ -98,7 +81,7 @@ export class ConwayLife extends React.Component<{}, ConwayLifeState> {
           animated:
             newFieldAlive !== oldFieldCell.alive ||
             oldFieldCell.animated ||
-            oldFieldCell.step < this.state.animationStepsCount,
+            oldFieldCell.step < this.props.animationStepsCount,
         };
       }
     }
@@ -156,8 +139,8 @@ export class ConwayLife extends React.Component<{}, ConwayLifeState> {
               <Cell
                 key={"c-" + i.toString() + "-" + j.toString()}
                 {...c}
-                size={this.state.cellSize}
-                stepsCount={this.state.animationStepsCount}
+                size={this.props.cellSize}
+                stepsCount={this.props.animationStepsCount}
               />
             ))}
           </div>
@@ -166,3 +149,10 @@ export class ConwayLife extends React.Component<{}, ConwayLifeState> {
     );
   }
 }
+
+const mapStateToProps = (state: StoreState) => {
+  console.log("mapStateToProps");
+  return state;
+};
+
+export const ConnectedConwayLife = connect(mapStateToProps)(ConwayLife);
