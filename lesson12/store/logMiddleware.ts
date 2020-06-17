@@ -6,14 +6,10 @@ src/lesson17/homework/thunk.ts
 +1 балл за свой thunk middleware и подключение в приложение
 +1 балл за тесты
 */
-import { createStore, applyMiddleware, Middleware } from "redux";
-import thunk from "redux-thunk";
-import { reducer } from "./reducer";
-
-// Note: this API requires redux@>=3.1.0
-const store = createStore(reducer, applyMiddleware(thunk));
+import { Middleware } from "redux";
 
 export const logMiddleware: Middleware = () => (next) => (action) => {
   console.log(action);
+  console.log("logMiddleware");
   return next(action);
 };

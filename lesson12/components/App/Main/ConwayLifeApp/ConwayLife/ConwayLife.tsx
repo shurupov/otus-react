@@ -32,7 +32,6 @@ export class ConwayLife extends React.Component<StoreState, ConwayLifeState> {
   }
 
   componentWillReceiveProps(nextProps: Readonly<StoreState>) {
-    console.log("ConwayLife updated");
     if (nextProps.reinitField) {
       this.setState({ cells: this.initField() });
     }
@@ -151,7 +150,6 @@ export class ConwayLife extends React.Component<StoreState, ConwayLifeState> {
 }
 
 const mapStateToProps = (state: StoreState) => {
-  console.log("mapStateToProps");
   return state;
 };
 

@@ -1,6 +1,7 @@
 import { Store } from "redux";
 import { reducer } from "store/reducer";
 import { configureStore } from "@reduxjs/toolkit";
+import { logMiddleware } from "store/logMiddleware";
 
 export interface StoreState {
   fieldWidth: number;
@@ -14,4 +15,5 @@ export interface StoreState {
 
 export const store: Store<StoreState> = configureStore({
   reducer,
+  middleware: [logMiddleware],
 });
