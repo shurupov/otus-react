@@ -14,12 +14,7 @@ probablity это число от 0 до 1
 import { Middleware } from "redux";
 
 export const probabilityMiddleware: Middleware = () => (next) => (action) => {
-  if (action.meta && action.meta.probability) {
-    if (Math.random() < action.meta.probability) {
-      return next(action);
-    } else {
-      return undefined;
-    }
+  if (Math.random() < action?.meta?.probability) {
+    return next(action);
   }
-  return next(action);
 };
