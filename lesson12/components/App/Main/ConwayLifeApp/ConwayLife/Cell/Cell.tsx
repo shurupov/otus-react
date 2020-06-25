@@ -1,13 +1,12 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
-import React, { MouseEventHandler, ReactNode } from "react";
+import React, { ReactNode } from "react";
 
 interface CellProps {
   alive: boolean;
   step: number;
   animated: boolean;
   size: number;
-  onClick: Function;
   stepsCount: number;
 }
 export interface PoorCellProps {
@@ -52,7 +51,6 @@ export class Cell extends React.Component<CellProps> {
           backgroundColor: this.getColor(),
         }}
         className="cell"
-        onClick={this.props.onClick as MouseEventHandler}
       />
     );
   }

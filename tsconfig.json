@@ -1,5 +1,11 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      //"@/*": ["lesson12/*"],
+      "components/*": ["lesson12/components/*"],
+      "store/*": ["lesson12/store/*"]
+    },
     "target": "es5",
     "module": "commonjs",
     "allowJs": true,

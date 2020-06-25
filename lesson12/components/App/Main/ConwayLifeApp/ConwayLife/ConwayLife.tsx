@@ -2,29 +2,18 @@
 import { jsx } from "@emotion/core";
 import React, { ReactNode } from "react";
 import { Cell, PoorCellProps } from "./Cell/Cell";
-
-interface ConwayLifeProps {
-  fieldWidth: number;
-  fieldHeight: number;
-  cellSize: number;
-  onClick: Function;
-  animationDelay: number;
-  animationStepsCount: number;
-  alivePercent: number;
-}
+import { StoreState } from "store/store";
+import { connect } from "react-redux";
 
 interface ConwayLifeState {
   cells: Array<Array<PoorCellProps>>;
 }
 
-export class ConwayLife extends React.Component<
-  ConwayLifeProps,
-  ConwayLifeState
-> {
-  private timeoutId: NodeJS.Timeout | undefined;
+export class ConwayLife extends React.Component<StoreState, ConwayLifeState> {
+  private timeoutId!: NodeJS.Timeout;
 
   state = {
-    cells: this.initField(),
+    cells: [],
   };
 
   initField(): Array<Array<PoorCellProps>> {
@@ -42,19 +31,14 @@ export class ConwayLife extends React.Component<
     return cells;
   }
 
-  componentDidUpdate(prevProps: Readonly<ConwayLifeProps>): void {
-    if (
-      prevProps.fieldHeight !== this.props.fieldHeight ||
-      prevProps.fieldWidth !== this.props.fieldWidth ||
-      prevProps.alivePercent !== this.props.alivePercent
-    ) {
-      this.setState({
-        cells: this.initField(),
-      });
+  componentWillReceiveProps(nextProps: Readonly<StoreState>) {
+    if (nextProps.reinitField) {
+      this.setState({ cells: this.initField() });
     }
   }
 
   componentDidMount(): void {
+    this.setState({ cells: this.initField() });
     this.tick();
   }
 
@@ -108,7 +92,7 @@ export class ConwayLife extends React.Component<
     i: number,
     j: number
   ): boolean => {
-    const currentCellLife = oldField[i][j].alive;
+    const currentCellLife = oldField[i][j] && oldField[i][j].alive;
     let countOfNearLives = 0;
     for (
       let i1 = i === 0 ? i : i - 1;
@@ -142,7 +126,7 @@ export class ConwayLife extends React.Component<
           clear: "both",
         }}
       >
-        {this.state.cells.map((l, i) => (
+        {this.state.cells.map((l: Array<PoorCellProps>, i) => (
           <div
             key={"l-" + i.toString()}
             className="line"
@@ -155,7 +139,6 @@ export class ConwayLife extends React.Component<
                 key={"c-" + i.toString() + "-" + j.toString()}
                 {...c}
                 size={this.props.cellSize}
-                onClick={() => this.props.onClick(j)}
                 stepsCount={this.props.animationStepsCount}
               />
             ))}
@@ -165,3 +148,9 @@ export class ConwayLife extends React.Component<
     );
   }
 }
+
+const mapStateToProps = (state: StoreState) => {
+  return state;
+};
+
+export const ConnectedConwayLife = connect(mapStateToProps)(ConwayLife);
