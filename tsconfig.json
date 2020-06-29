@@ -2,9 +2,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      //"@/*": ["lesson12/*"],
-      "components/*": ["lesson12/components/*"],
-      "store/*": ["lesson12/store/*"]
+      "components/*": ["src/components/*"],
+      "store/*": ["src/store/*"]
     },
     "target": "es5",
     "module": "commonjs",

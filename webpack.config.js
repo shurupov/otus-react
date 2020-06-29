@@ -3,14 +3,13 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: "./lesson12/index.tsx",
+  entry: "./src/index.tsx",
   devtool: "source-map",
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
     alias: {
-      "@": path.resolve(__dirname, "lesson12"),
-      store: path.resolve(__dirname, "lesson12/store"),
-      components: path.resolve(__dirname, "lesson12/components"),
+      store: path.resolve(__dirname, "src/store"),
+      components: path.resolve(__dirname, "src/components"),
     },
   },
   output: {
@@ -32,7 +31,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./lesson12/index.html",
+      template: "./src/index.html",
     }),
   ],
 };
