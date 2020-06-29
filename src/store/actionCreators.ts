@@ -1,4 +1,5 @@
 import { actionTypes } from "store/reducer";
+import {AnyAction} from "redux";
 
 export const initField = () => {
   return {
@@ -12,9 +13,16 @@ export const initFieldPerformed = () => {
   };
 };
 
-export const changeSetting = (settingName: string, value: number) => {
+export const changeSetting = (action: AnyAction) => {
   return {
+    ...action,
     type: actionTypes.CHANGE_SETTING,
+  };
+};
+
+export const sagaChangeSetting = (settingName: string, value: number) => {
+  return {
+    type: actionTypes.SAGA_CHANGE_SETTING,
     payload: {
       field: settingName,
       value,

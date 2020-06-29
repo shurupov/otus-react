@@ -1,7 +1,7 @@
 import React from "react";
 import { StoreState, store } from "store/store";
 import { Unsubscribe } from "redux";
-import { changeSetting, initField } from "store/actionCreators";
+import { initField, sagaChangeSetting } from "store/actionCreators";
 
 export class ControlsForm extends React.Component<{}, StoreState> {
   private unsubscribe!: Unsubscribe;
@@ -23,7 +23,7 @@ export class ControlsForm extends React.Component<{}, StoreState> {
       return;
     }
     const value: number = parseFloat(target.value);
-    store.dispatch(changeSetting(fieldName, value));
+    store.dispatch(sagaChangeSetting(fieldName, value));
   };
 
   handleUpdateButtonClick = () => {

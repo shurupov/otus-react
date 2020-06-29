@@ -6,6 +6,7 @@ export const actionTypes = {
   INIT_FIELD: "INIT_FIELD",
   INIT_FIELD_PERFORMED: "INIT_FIELD_PERFORMED",
   CHANGE_SETTING: "CHANGE_SETTING",
+  SAGA_CHANGE_SETTING: "SAGA_CHANGE_SETTING",
 };
 
 export interface ConwayLifeAction {
@@ -17,8 +18,8 @@ export interface ConwayLifeAction {
 }
 
 export const defaultState: StoreState = {
-  fieldWidth: 50,
-  fieldHeight: 50,
+  fieldWidth: 20,
+  fieldHeight: 20,
   cellSize: 10,
   animationDelay: 50,
   alivePercent: 30,
