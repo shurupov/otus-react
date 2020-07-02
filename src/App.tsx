@@ -1,6 +1,6 @@
 import React from "react";
-import { Login } from "./Login/Login";
-import { Main } from "./Main/Main";
+import { Login } from "components/Login/Login";
+import { Main } from "components/Main/Main";
 
 interface AppState {
   welcome: boolean;
@@ -8,7 +8,7 @@ interface AppState {
   username: string;
 }
 
-export class App extends React.Component<never, AppState> {
+export class App extends React.Component<{}, AppState> {
   state = {
     welcome: false,
     authenticated: localStorage.getItem("authenticated") === "1",
