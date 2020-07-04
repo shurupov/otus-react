@@ -1,5 +1,5 @@
 import { StoreState } from "store/store";
-import { createReducer } from "@reduxjs/toolkit";
+import { createReducer, PayloadAction } from "@reduxjs/toolkit";
 import { Reducer } from "redux";
 
 export const actionTypes = {
@@ -7,6 +7,8 @@ export const actionTypes = {
   INIT_FIELD_PERFORMED: "INIT_FIELD_PERFORMED",
   CHANGE_SETTING: "CHANGE_SETTING",
   SAGA_CHANGE_SETTING: "SAGA_CHANGE_SETTING",
+  USER_LOGIN: "USER_LOGIN",
+  USER_LOGOUT: "USER_LOGOUT",
 };
 
 export interface ConwayLifeAction {
@@ -25,6 +27,7 @@ export const defaultState: StoreState = {
   alivePercent: 30,
   animationStepsCount: 4,
   reinitField: false,
+  username: "",
 };
 
 export const reducer: Reducer<StoreState> = createReducer(defaultState, {
@@ -53,5 +56,21 @@ export const reducer: Reducer<StoreState> = createReducer(defaultState, {
       return state;
     }
     return state;
+  },
+  [actionTypes.USER_LOGIN]: (
+    state: StoreState,
+    action: PayloadAction<string>
+  ) => {
+    console.log("mapDispatchToProps login", action.payload);
+    return {
+      ...state,
+      username: action.payload,
+    };
+  },
+  [actionTypes.USER_LOGOUT]: (state: StoreState) => {
+    return {
+      ...state,
+      username: "",
+    };
   },
 });

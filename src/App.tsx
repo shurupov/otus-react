@@ -1,6 +1,9 @@
 import React from "react";
-import { Login } from "components/Login/Login";
-import { Main } from "components/Main/Main";
+import { store } from "store/store";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import { ConnectedHeader, Header } from "components/User/Header";
+import { ConnectedContent } from "components/User/Content";
 
 interface AppState {
   welcome: boolean;
@@ -15,39 +18,24 @@ export class App extends React.Component<{}, AppState> {
     username: localStorage.getItem("username") || "",
   };
 
-  authenticate = (username: string) => {
-    localStorage.setItem("username", username);
-    localStorage.setItem("authenticated", "1");
-    this.setState({
-      welcome: true,
-      authenticated: true,
-      username,
-    });
-
-    setTimeout(() => {
-      this.setState({
-        welcome: false,
-      });
-    }, 1000);
-  };
-
-  logout = () => {
-    localStorage.removeItem("username");
-    localStorage.removeItem("authenticated");
-    this.setState({
-      authenticated: false,
-      username: "",
-    });
-  };
-
   render() {
-    if (this.state.welcome) {
+    return (
+      <>
+        <Provider store={store}>
+          <BrowserRouter>
+            <ConnectedHeader />
+            <ConnectedContent />
+          </BrowserRouter>
+        </Provider>
+      </>
+    );
+    /*if (this.state.welcome) {
       return <div>Welcome, {this.state.username}</div>;
     }
     return this.state.authenticated ? (
       <Main username={this.state.username} onLogout={this.logout} />
     ) : (
       <Login onLogin={this.authenticate} />
-    );
+    );*/
   }
 }

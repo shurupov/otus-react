@@ -7,14 +7,14 @@ import { store } from "store/store";
 export class ConwayLifeWithControls extends React.Component {
   render() {
     return (
-      <Provider store={store}>
+      <>
         <div>
           <ControlsForm />
         </div>
         <div>
           <ConnectedConwayLife />
         </div>
-      </Provider>
+      </>
     );
   }
 }

@@ -1,8 +1,10 @@
 import React from "react";
 import { Field, Form, Formik } from "formik";
+import { Dispatch } from "redux";
+import {connect} from "react-redux";
 
 interface LoginProps {
-  onLogin: Function;
+  login: Function;
 }
 
 interface LoginFormValues {
@@ -15,7 +17,7 @@ export class Login extends React.Component<LoginProps> {
   };
 
   login = (values: LoginFormValues) => {
-    this.props.onLogin(values.username);
+    this.props.login(values.username);
   };
 
   render() {
@@ -35,3 +37,14 @@ export class Login extends React.Component<LoginProps> {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    login: (username: string) => {
+      console.log("mapDispatchToProps login", username);
+      dispatch({ type: "USER_LOGIN", payload: username });
+    },
+  };
+};
+
+export const ConnectedLogin = connect(null, mapDispatchToProps)(Login);

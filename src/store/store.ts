@@ -1,10 +1,12 @@
-import { Store } from "redux";
+import { applyMiddleware, createStore, Store } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { reducer } from "store/reducer";
 import { configureStore } from "@reduxjs/toolkit";
 import { watchSagaChangeSettings } from "store/sagas";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 export interface StoreState {
+  username: string;
   fieldWidth: number;
   fieldHeight: number;
   cellSize: number;
@@ -16,8 +18,11 @@ export interface StoreState {
 
 const sagaMiddleware = createSagaMiddleware();
 
-export const store: Store<StoreState> = configureStore({
+export const store: Store<StoreState> = createStore(
   reducer,
-  middleware: [sagaMiddleware],
-});
+  composeWithDevTools(
+    applyMiddleware(sagaMiddleware)
+    // other store enhancers if any
+  )
+);
 sagaMiddleware.run(watchSagaChangeSettings);
