@@ -8,15 +8,10 @@ export default {
   decorators: [withKnobs],
 };
 
-function f() {
-  console.log("clicked");
-}
-
 export const customCell = () => (
   <Cell
     alive={boolean("alive", true)}
     size={number("size", 100)}
-    onClick={f}
     step={number("step", 0)}
     animated={boolean("animated", false)}
     stepsCount={4}

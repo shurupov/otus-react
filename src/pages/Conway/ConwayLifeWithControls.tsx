@@ -1,8 +1,6 @@
 import React from "react";
-import { ConnectedConwayLife } from "./ConwayLife/ConwayLife";
-import { ControlsForm } from "./ControlsForm/ControlsForm";
-import { Provider } from "react-redux";
-import { store } from "store/store";
+import { ConnectedConwayLife } from "smart/ConwayLife/ConwayLife";
+import { ControlsForm } from "smart/ControlsForm/ControlsForm";
 
 export class ConwayLifeWithControls extends React.Component {
   render() {

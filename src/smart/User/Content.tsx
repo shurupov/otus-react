@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, Route, Switch, Redirect } from "react-router-dom";
 import { News } from "pages/News/News";
-import { ConwayLifeWithControls } from "components/Main/ConwayLifeApp/ConwayLifeWithControls";
+import { ConwayLifeWithControls } from "pages/Conway/ConwayLifeWithControls";
 import { jsx } from "@emotion/core";
 import { ConnectedLogin } from "./Login";
 import { StoreState } from "store/store";
