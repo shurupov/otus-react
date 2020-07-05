@@ -1,15 +1,11 @@
 import { StoreState } from "store/store";
-import { createReducer, PayloadAction } from "@reduxjs/toolkit";
+import {
+  combineReducers,
+  createReducer,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 import { Reducer } from "redux";
-
-export const actionTypes = {
-  INIT_FIELD: "INIT_FIELD",
-  INIT_FIELD_PERFORMED: "INIT_FIELD_PERFORMED",
-  CHANGE_SETTING: "CHANGE_SETTING",
-  SAGA_CHANGE_SETTING: "SAGA_CHANGE_SETTING",
-  USER_LOGIN: "USER_LOGIN",
-  USER_LOGOUT: "USER_LOGOUT",
-};
+import { loginSlice } from "smart/User/Login";
 
 export interface ConwayLifeAction {
   type: string;
@@ -33,7 +29,11 @@ export const defaultState: StoreState = {
   username: "",
 };
 
-export const reducer: Reducer<StoreState> = createReducer(defaultState, {
+
+export const reducer = combineReducers({
+  user: loginSlice.reducer,
+});
+/*export const reducer: Reducer<StoreState> = createReducer(defaultState, {
   [actionTypes.INIT_FIELD]: (state: StoreState) => {
     state.conwaySettings.reinitField = true;
     return state;
@@ -76,3 +76,4 @@ export const reducer: Reducer<StoreState> = createReducer(defaultState, {
     };
   },
 });
+*/

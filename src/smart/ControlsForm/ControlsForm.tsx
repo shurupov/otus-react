@@ -3,6 +3,9 @@ import { StoreState, store, ConwaySettings } from "store/store";
 import { Dispatch, Unsubscribe } from "redux";
 import { initField, sagaChangeSetting } from "store/actionCreators";
 import { connect } from "react-redux";
+import { createSlice } from "@reduxjs/toolkit";
+import { ConwayLifeAction } from "store/reducer";
+import {actionTypes} from "store/actioTypes";
 
 interface ControlsFormProps extends ConwaySettings {
   changeSetting: Function;
@@ -122,3 +125,47 @@ export const ConnectedControlsForm = connect(
   mapStateToProps,
   mapDispatchToProps
 )(ControlsForm);
+
+export const controlFormSlice = createSlice({
+  name: "conway",
+  initialState: {
+    conwaySettings: {
+      fieldWidth: 20,
+      fieldHeight: 20,
+      cellSize: 10,
+      animationDelay: 50,
+      alivePercent: 30,
+      animationStepsCount: 4,
+      reinitField: false,
+      initialized: false,
+    },
+  },
+  reducers: {
+    [actionTypes.INIT_FIELD]: (state: StoreState) => {
+      state.conwaySettings.reinitField = true;
+      return state;
+    },
+    [actionTypes.INIT_FIELD_PERFORMED]: (state) => {
+      state.conwaySettings.reinitField = false;
+      return state;
+    },
+    [actionTypes.CHANGE_SETTING]: (
+      state: StoreState,
+      action: ConwayLifeAction
+    ) => {
+      if (!action.payload || !action.payload.value) {
+        return state;
+      }
+      if (action.payload.field) {
+        const fieldName = action.payload.field;
+        state.conwaySettings[fieldName] = action.payload.value;
+        state.conwaySettings.reinitField =
+          fieldName === "fieldHeight" ||
+          fieldName === "fieldWidth" ||
+          fieldName === "alivePercent";
+        return state;
+      }
+      return state;
+    },
+  },
+});

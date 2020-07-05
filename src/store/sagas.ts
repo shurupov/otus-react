@@ -1,7 +1,7 @@
 import { takeEvery, call, put } from "redux-saga/effects";
-import { actionTypes } from "store/reducer";
 import { AnyAction } from "redux";
 import { changeSetting } from "store/actionCreators";
+import { actionTypes } from "store/actioTypes";
 
 export function* workerSagaChangeSettings(action: AnyAction) {
   const data = yield call(changeSetting, action);

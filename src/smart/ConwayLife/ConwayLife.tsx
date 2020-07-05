@@ -5,7 +5,7 @@ import { Cell, PoorCellProps } from "./Cell/Cell";
 import { ConwaySettings, StoreState } from "store/store";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { actionTypes } from "store/reducer";
+import {actionTypes} from "store/actioTypes";
 
 interface ConwayLifeState {
   cells: Array<Array<PoorCellProps>>;

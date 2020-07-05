@@ -1,5 +1,5 @@
-import { actionTypes } from "store/reducer";
 import { AnyAction } from "redux";
+import { actionTypes } from "store/actioTypes";
 
 export const initField = () => {
   return {
