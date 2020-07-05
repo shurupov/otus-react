@@ -28,6 +28,7 @@ export const defaultState: StoreState = {
     alivePercent: 30,
     animationStepsCount: 4,
     reinitField: false,
+    initialized: false,
   },
   username: "",
 };

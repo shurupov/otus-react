@@ -4,13 +4,19 @@ import React, { ReactNode } from "react";
 import { Cell, PoorCellProps } from "./Cell/Cell";
 import { ConwaySettings, StoreState } from "store/store";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { actionTypes } from "store/reducer";
 
 interface ConwayLifeState {
   cells: Array<Array<PoorCellProps>>;
 }
 
+interface ConwayLifeProps extends ConwaySettings {
+  updated: Function;
+}
+
 export class ConwayLife extends React.Component<
-  ConwaySettings,
+  ConwayLifeProps,
   ConwayLifeState
 > {
   private timeoutId!: NodeJS.Timeout;
@@ -31,6 +37,7 @@ export class ConwayLife extends React.Component<
         };
       }
     }
+    this.props.updated();
     return cells;
   }
 
@@ -166,4 +173,15 @@ const mapStateToProps = (state: StoreState) => {
   return state.conwaySettings;
 };
 
-export const ConnectedConwayLife = connect(mapStateToProps)(ConwayLife);
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    updated: () => {
+      dispatch({ type: actionTypes.INIT_FIELD_PERFORMED });
+    },
+  };
+};
+
+export const ConnectedConwayLife = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ConwayLife);

@@ -8,16 +8,14 @@ export default {
   decorators: [withKnobs],
 };
 
-const f = (x: number, y: number) => console.log(`(${x}, ${y})`);
-
 export const customConway = () => (
   <ConwayLife
     fieldWidth={number("field width", 30)}
     fieldHeight={number("field height", 30)}
     cellSize={number("cell size", 10)}
-    onClick={f}
     animationDelay={number("animation delay", 50)}
     alivePercent={number("alive percent", 30)}
     animationStepsCount={number("animation steps count", 4)}
+    reinitField
   />
 );
