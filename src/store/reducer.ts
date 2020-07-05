@@ -20,23 +20,25 @@ export interface ConwayLifeAction {
 }
 
 export const defaultState: StoreState = {
-  fieldWidth: 20,
-  fieldHeight: 20,
-  cellSize: 10,
-  animationDelay: 50,
-  alivePercent: 30,
-  animationStepsCount: 4,
-  reinitField: false,
+  conwaySettings: {
+    fieldWidth: 20,
+    fieldHeight: 20,
+    cellSize: 10,
+    animationDelay: 50,
+    alivePercent: 30,
+    animationStepsCount: 4,
+    reinitField: false,
+  },
   username: "",
 };
 
 export const reducer: Reducer<StoreState> = createReducer(defaultState, {
   [actionTypes.INIT_FIELD]: (state: StoreState) => {
-    state.reinitField = true;
+    state.conwaySettings.reinitField = true;
     return state;
   },
   [actionTypes.INIT_FIELD_PERFORMED]: (state) => {
-    state.reinitField = false;
+    state.conwaySettings.reinitField = false;
     return state;
   },
   [actionTypes.CHANGE_SETTING]: (
@@ -48,8 +50,8 @@ export const reducer: Reducer<StoreState> = createReducer(defaultState, {
     }
     if (action.payload.field) {
       const fieldName = action.payload.field;
-      state[fieldName] = action.payload.value;
-      state.reinitField =
+      state.conwaySettings[fieldName] = action.payload.value;
+      state.conwaySettings.reinitField =
         fieldName === "fieldHeight" ||
         fieldName === "fieldWidth" ||
         fieldName === "alivePercent";

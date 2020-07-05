@@ -1,9 +1,18 @@
-import React from "react";
-import { StoreState, store } from "store/store";
-import { Unsubscribe } from "redux";
+import React, { MouseEventHandler } from "react";
+import { StoreState, store, ConwaySettings } from "store/store";
+import { Dispatch, Unsubscribe } from "redux";
 import { initField, sagaChangeSetting } from "store/actionCreators";
+import { connect } from "react-redux";
 
-export class ControlsForm extends React.Component<{}, StoreState> {
+interface ControlsFormProps extends ConwaySettings {
+  changeSetting: Function;
+  update: MouseEventHandler;
+}
+
+export class ControlsForm extends React.Component<
+  ControlsFormProps,
+  StoreState
+> {
   private unsubscribe!: Unsubscribe;
   state = store.getState();
 
@@ -23,11 +32,7 @@ export class ControlsForm extends React.Component<{}, StoreState> {
       return;
     }
     const value: number = parseFloat(target.value);
-    store.dispatch(sagaChangeSetting(fieldName, value));
-  };
-
-  handleUpdateButtonClick = () => {
-    store.dispatch(initField());
+    this.props.changeSetting(fieldName, value);
   };
 
   render() {
@@ -42,7 +47,7 @@ export class ControlsForm extends React.Component<{}, StoreState> {
           По горизонтали:
           <input
             type="number"
-            value={this.state.fieldWidth.toString()}
+            value={this.props.fieldWidth.toString()}
             onChange={this.handleChange("fieldWidth")}
           />
         </label>
@@ -51,7 +56,7 @@ export class ControlsForm extends React.Component<{}, StoreState> {
           По вертикали:
           <input
             type="number"
-            value={this.state.fieldHeight.toString()}
+            value={this.props.fieldHeight.toString()}
             onChange={this.handleChange("fieldHeight")}
           />
         </label>
@@ -60,7 +65,7 @@ export class ControlsForm extends React.Component<{}, StoreState> {
           Размер клетки:
           <input
             type="number"
-            value={this.state.cellSize.toString()}
+            value={this.props.cellSize.toString()}
             onChange={this.handleChange("cellSize")}
           />
         </label>
@@ -69,7 +74,7 @@ export class ControlsForm extends React.Component<{}, StoreState> {
           Задержка анимации:
           <input
             type="number"
-            value={this.state.animationDelay.toString()}
+            value={this.props.animationDelay.toString()}
             onChange={this.handleChange("animationDelay")}
           />
         </label>
@@ -78,7 +83,7 @@ export class ControlsForm extends React.Component<{}, StoreState> {
           Процент живых клеток:
           <input
             type="number"
-            value={this.state.alivePercent.toString()}
+            value={this.props.alivePercent.toString()}
             onChange={this.handleChange("alivePercent")}
           />
         </label>
@@ -87,17 +92,33 @@ export class ControlsForm extends React.Component<{}, StoreState> {
           Количество шагов анимации:
           <input
             type="number"
-            value={this.state.animationStepsCount.toString()}
+            value={this.props.animationStepsCount.toString()}
             onChange={this.handleChange("animationStepsCount")}
           />
         </label>
         <br />
-        <input
-          type="button"
-          value="Обновить"
-          onClick={this.handleUpdateButtonClick}
-        />
+        <input type="button" value="Обновить" onClick={this.props.update} />
       </form>
     );
   }
 }
+
+const mapStateToProps = (state: StoreState): ConwaySettings => {
+  return state.conwaySettings;
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    changeSetting: (fieldName: string, value: number) => {
+      dispatch(sagaChangeSetting(fieldName, value));
+    },
+    update: () => {
+      dispatch(initField());
+    },
+  };
+};
+
+export const ConnectedControlsForm = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ControlsForm);

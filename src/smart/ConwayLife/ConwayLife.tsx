@@ -2,14 +2,17 @@
 import { jsx } from "@emotion/core";
 import React, { ReactNode } from "react";
 import { Cell, PoorCellProps } from "./Cell/Cell";
-import { StoreState } from "store/store";
+import { ConwaySettings, StoreState } from "store/store";
 import { connect } from "react-redux";
 
 interface ConwayLifeState {
   cells: Array<Array<PoorCellProps>>;
 }
 
-export class ConwayLife extends React.Component<StoreState, ConwayLifeState> {
+export class ConwayLife extends React.Component<
+  ConwaySettings,
+  ConwayLifeState
+> {
   private timeoutId!: NodeJS.Timeout;
 
   state = {
@@ -31,7 +34,7 @@ export class ConwayLife extends React.Component<StoreState, ConwayLifeState> {
     return cells;
   }
 
-  componentWillReceiveProps(nextProps: Readonly<StoreState>) {
+  componentWillReceiveProps(nextProps: Readonly<ConwaySettings>) {
     if (nextProps.reinitField) {
       this.setState({ cells: this.initField() });
     }
@@ -150,7 +153,7 @@ export class ConwayLife extends React.Component<StoreState, ConwayLifeState> {
 }
 
 const mapStateToProps = (state: StoreState) => {
-  return state;
+  return state.conwaySettings;
 };
 
 export const ConnectedConwayLife = connect(mapStateToProps)(ConwayLife);

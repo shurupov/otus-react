@@ -10,8 +10,6 @@ interface HeaderProps {
 
 export class Header extends React.Component<HeaderProps> {
   render() {
-    console.log(this.props);
-
     if (this.props.username) {
       return (
         <label>
