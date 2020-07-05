@@ -1,7 +1,7 @@
 import React from "react";
 import { Field, Form, Formik } from "formik";
 import { Dispatch } from "redux";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 interface LoginProps {
   login: Function;
@@ -41,7 +41,6 @@ export class Login extends React.Component<LoginProps> {
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     login: (username: string) => {
-      console.log("mapDispatchToProps login", username);
       dispatch({ type: "USER_LOGIN", payload: username });
     },
   };

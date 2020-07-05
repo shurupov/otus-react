@@ -2,8 +2,8 @@ import React from "react";
 import { store } from "store/store";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { ConnectedHeader, Header } from "components/User/Header";
-import { ConnectedContent } from "components/User/Content";
+import { ConnectedHeader } from "smart/User/Header";
+import { ConnectedContent } from "smart/User/Content";
 
 interface AppState {
   welcome: boolean;
@@ -29,13 +29,5 @@ export class App extends React.Component<{}, AppState> {
         </Provider>
       </>
     );
-    /*if (this.state.welcome) {
-      return <div>Welcome, {this.state.username}</div>;
-    }
-    return this.state.authenticated ? (
-      <Main username={this.state.username} onLogout={this.logout} />
-    ) : (
-      <Login onLogin={this.authenticate} />
-    );*/
   }
 }

@@ -61,7 +61,6 @@ export const reducer: Reducer<StoreState> = createReducer(defaultState, {
     state: StoreState,
     action: PayloadAction<string>
   ) => {
-    console.log("mapDispatchToProps login", action.payload);
     return {
       ...state,
       username: action.payload,
