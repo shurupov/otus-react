@@ -1,7 +1,8 @@
 import React, { MouseEventHandler } from "react";
-import { StoreState } from "store/store";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { loginSlice } from "smart/User/Login";
+import { StoreState } from "store/reducer";
 
 interface HeaderProps {
   username: string;
@@ -22,16 +23,16 @@ export class Header extends React.Component<HeaderProps> {
   }
 }
 
-const mapStateToProps = ({ username }: StoreState) => {
+const mapStateToProps = ({ user }: StoreState) => {
   return {
-    username,
+    username: user.username,
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     logout: () => {
-      dispatch({ type: "USER_LOGOUT" });
+      dispatch(loginSlice.actions.logout());
     },
   };
 };

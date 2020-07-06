@@ -1,23 +1,16 @@
 import React, { MouseEventHandler } from "react";
 import { StoreState, store, ConwaySettings } from "store/store";
 import { Dispatch, Unsubscribe } from "redux";
-import { initField, sagaChangeSetting } from "store/actionCreators";
 import { connect } from "react-redux";
 import { createSlice } from "@reduxjs/toolkit";
-import { ConwayLifeAction } from "store/reducer";
-import {actionTypes} from "store/actioTypes";
 
 interface ControlsFormProps extends ConwaySettings {
   changeSetting: Function;
   update: MouseEventHandler;
 }
 
-export class ControlsForm extends React.Component<
-  ControlsFormProps,
-  StoreState
-> {
+export class ControlsForm extends React.Component<ControlsFormProps> {
   private unsubscribe!: Unsubscribe;
-  state = store.getState();
 
   componentDidMount() {
     this.unsubscribe = store.subscribe(() => {
@@ -106,60 +99,35 @@ export class ControlsForm extends React.Component<
   }
 }
 
-const mapStateToProps = (state: StoreState): ConwaySettings => {
-  return state.conwaySettings;
-};
-
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  return {
-    changeSetting: (fieldName: string, value: number) => {
-      dispatch(sagaChangeSetting(fieldName, value));
-    },
-    update: () => {
-      dispatch(initField());
-    },
-  };
-};
-
-export const ConnectedControlsForm = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ControlsForm);
-
-export const controlFormSlice = createSlice({
+export const conwaySlice = createSlice({
   name: "conway",
   initialState: {
-    conwaySettings: {
-      fieldWidth: 20,
-      fieldHeight: 20,
-      cellSize: 10,
-      animationDelay: 50,
-      alivePercent: 30,
-      animationStepsCount: 4,
-      reinitField: false,
-      initialized: false,
-    },
+    fieldWidth: 20,
+    fieldHeight: 20,
+    cellSize: 10,
+    animationDelay: 50,
+    alivePercent: 30,
+    animationStepsCount: 4,
+    reinitField: false,
+    initialized: false,
   },
   reducers: {
-    [actionTypes.INIT_FIELD]: (state: StoreState) => {
-      state.conwaySettings.reinitField = true;
+    initField: (state) => {
+      state.reinitField = true;
       return state;
     },
-    [actionTypes.INIT_FIELD_PERFORMED]: (state) => {
-      state.conwaySettings.reinitField = false;
+    updated: (state) => {
+      state.reinitField = false;
       return state;
     },
-    [actionTypes.CHANGE_SETTING]: (
-      state: StoreState,
-      action: ConwayLifeAction
-    ) => {
+    changeSetting: (state, action) => {
       if (!action.payload || !action.payload.value) {
         return state;
       }
       if (action.payload.field) {
         const fieldName = action.payload.field;
-        state.conwaySettings[fieldName] = action.payload.value;
-        state.conwaySettings.reinitField =
+        state[fieldName] = action.payload.value;
+        state.reinitField =
           fieldName === "fieldHeight" ||
           fieldName === "fieldWidth" ||
           fieldName === "alivePercent";
@@ -169,3 +137,23 @@ export const controlFormSlice = createSlice({
     },
   },
 });
+
+const mapStateToProps = ({ conway }: StoreState) => {
+  return conway;
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    changeSetting: (fieldName: string, value: number) => {
+      dispatch(conwaySlice.actions.changeSetting({ field: fieldName, value }));
+    },
+    update: () => {
+      dispatch(conwaySlice.actions.initField());
+    },
+  };
+};
+
+export const ConnectedControlsForm = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ControlsForm);

@@ -5,7 +5,7 @@ import { Cell, PoorCellProps } from "./Cell/Cell";
 import { ConwaySettings, StoreState } from "store/store";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import {actionTypes} from "store/actioTypes";
+import { conwaySlice } from "smart/ControlsForm/ControlsForm";
 
 interface ConwayLifeState {
   cells: Array<Array<PoorCellProps>>;
@@ -169,14 +169,14 @@ export class ConwayLife extends React.Component<
   }
 }
 
-const mapStateToProps = (state: StoreState) => {
-  return state.conwaySettings;
+const mapStateToProps = ({ conway }: StoreState) => {
+  return conway;
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     updated: () => {
-      dispatch({ type: actionTypes.INIT_FIELD_PERFORMED });
+      dispatch(conwaySlice.actions.updated());
     },
   };
 };

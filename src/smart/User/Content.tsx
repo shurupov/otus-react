@@ -2,7 +2,6 @@ import React from "react";
 import { Link, Route, Switch, Redirect } from "react-router-dom";
 import { News } from "pages/News/News";
 import { ConwayLifeWithControls } from "pages/Conway/ConwayLifeWithControls";
-import { jsx } from "@emotion/core";
 import { ConnectedLogin } from "./Login";
 import { StoreState } from "store/store";
 import { connect } from "react-redux";
@@ -50,9 +49,9 @@ export class Content extends React.Component<ContentProps> {
   }
 }
 
-const mapStateToProps = ({ username }: StoreState) => {
+const mapStateToProps = ({ user }: StoreState) => {
   return {
-    username,
+    username: user.username,
   };
 };
 
