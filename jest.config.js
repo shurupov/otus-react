@@ -9,5 +9,7 @@ module.exports = {
   moduleNameMapper: {
     "^store/(.*)$": "<rootDir>/src/store/$1",
     "^components/(.*)$": "<rootDir>/src/components/$1",
+    "^pages/(.*)$": "<rootDir>/src/pages/$1",
+    "^smart/(.*)$": "<rootDir>/src/smart/$1",
   },
 };
