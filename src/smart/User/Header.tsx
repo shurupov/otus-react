@@ -1,8 +1,8 @@
 import React, { MouseEventHandler } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { loginSlice } from "smart/User/Login";
 import { StoreState } from "store/reducer";
+import {loginSlice} from "smart/User/slice";
 
 interface HeaderProps {
   username: string;

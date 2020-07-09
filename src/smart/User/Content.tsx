@@ -3,8 +3,8 @@ import { Link, Route, Switch, Redirect } from "react-router-dom";
 import { News } from "pages/News/News";
 import { ConwayLifeWithControls } from "pages/Conway/ConwayLifeWithControls";
 import { ConnectedLogin } from "./Login";
-import { StoreState } from "store/store";
 import { connect } from "react-redux";
+import { StoreState } from "store/reducer";
 
 interface ContentProps {
   username: string;

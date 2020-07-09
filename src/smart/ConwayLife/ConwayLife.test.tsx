@@ -38,7 +38,7 @@ describe("ConwayLife", () => {
       alivePercent: 30,
       animationStepsCount: 4,
       reinitField: false,
-      initialized: false
+      initialized: false,
     }); // <ConwayLife cellSize={10} fieldWidth={5} fieldHeight={5}/>;
     const oldField: Array<Array<PoorCellProps>> = booleanArrayToPoorCells([
       [false, true, false, true],
@@ -74,7 +74,7 @@ describe("ConwayLife", () => {
       fieldHeight: 4,
       animationDelay: 50,
       alivePercent: 30,
-      animationStepsCount: 4
+      animationStepsCount: 4,
     }); // <ConwayLife cellSize={10} fieldWidth={5} fieldHeight={5}/>;
     const oldField: Array<Array<boolean>> = [
       [false, true, false, true],

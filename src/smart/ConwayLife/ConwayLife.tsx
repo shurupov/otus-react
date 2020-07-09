@@ -2,10 +2,11 @@
 import { jsx } from "@emotion/core";
 import React, { ReactNode } from "react";
 import { Cell, PoorCellProps } from "./Cell/Cell";
-import { ConwaySettings, StoreState } from "store/store";
+import { ConwaySettings } from "store/store";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { conwaySlice } from "smart/ControlsForm/ControlsForm";
+import { StoreState } from "store/reducer";
+import { conwaySlice } from "smart/ConwayLife/slice";
 
 interface ConwayLifeState {
   cells: Array<Array<PoorCellProps>>;

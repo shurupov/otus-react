@@ -1,6 +1,6 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import { loginSlice } from "smart/User/Login";
-import { conwaySlice } from "smart/ControlsForm/ControlsForm";
+import { loginSlice } from "smart/User/slice";
+import { conwaySlice } from "smart/ConwayLife/slice";
 
 export const reducer = combineReducers({
   user: loginSlice.reducer,
