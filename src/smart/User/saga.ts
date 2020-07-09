@@ -15,7 +15,7 @@ export const sagaLoginAction = (username: string) => {
 };
 
 export async function fetchUser(username: string) {
-  await setTimeout(() => {}, 500);
+  await new Promise((r) => setTimeout(r, 500));
   return username;
 }
 
@@ -35,7 +35,7 @@ export const sagaLogoutAction = () => {
 };
 
 export async function clearSession() {
-  await setTimeout(() => {}, 500);
+  await new Promise((r) => setTimeout(r, 500));
 }
 
 export function* workerSagaLogout() {
