@@ -2,7 +2,7 @@ import React from "react";
 import { Field, Form, Formik } from "formik";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { loginSlice } from "smart/User/slice";
 
 interface LoginProps {
   login: Function;
@@ -39,27 +39,6 @@ export class Login extends React.Component<LoginProps> {
   }
 }
 
-export const loginSlice = createSlice({
-  name: "user",
-  initialState: {
-    username: "",
-  },
-  reducers: {
-    login: (state, action: PayloadAction<string>) => {
-      console.log(action);
-      return {
-        ...state,
-        username: action.payload,
-      };
-    },
-    logout: (state) => {
-      return {
-        ...state,
-        username: "",
-      };
-    },
-  },
-});
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     login: (username: string) => {
