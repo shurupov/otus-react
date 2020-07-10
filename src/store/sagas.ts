@@ -6,7 +6,7 @@ import { changeSetting } from "store/actionCreators";
 export function* workerSagaChangeSettings(action: AnyAction) {
   const data = yield call(
     changeSetting,
-    action.payload.settingName,
+    action.payload.field,
     action.payload.value
   );
   yield put(data);
