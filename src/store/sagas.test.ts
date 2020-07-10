@@ -12,7 +12,7 @@ test("sagas", () => {
     ...action1,
     type: actionTypes.CHANGE_SETTING,
   };
-  const saga1 = workerSagaChangeSettings(changeSetting("someField", 2));
+  const saga1 = workerSagaChangeSettings(sagaChangeSetting("someField", 2));
   const next1 = saga1.next();
   expect(next1).toEqual({
     value: call(changeSetting, "someField", 2),
@@ -20,7 +20,7 @@ test("sagas", () => {
   });
   const next2 = saga1.next(action2);
   expect(next2).toEqual({
-    value: put(sagaChangeSetting("someField", 2)),
+    value: put(changeSetting("someField", 2)),
     done: false,
   });
   const next3 = saga1.next();
