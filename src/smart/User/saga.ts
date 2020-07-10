@@ -15,6 +15,10 @@ export const sagaLoginAction = (username: string) => {
 };
 
 export async function fetchUser(username: string) {
+  //await new Promise((r) => setTimeout(r, 500));
+  /*(async function() {
+
+  })();*/
   await new Promise((r) => setTimeout(r, 500));
   return username;
 }

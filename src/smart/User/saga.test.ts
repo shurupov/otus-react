@@ -13,7 +13,7 @@ describe("User saga", () => {
     testSaga(workerSagaLogin, sagaLoginAction("Bob"))
       .next()
       .call(fetchUser, "Bob")
-      .next()
+      .next("Bob")
       .put(loginSlice.actions.login("Bob"))
       .next()
       .isDone();
@@ -22,7 +22,7 @@ describe("User saga", () => {
     testSaga(workerSagaLogout)
       .next()
       .call(clearSession)
-      .next()
+      .next(clearSession())
       .put(loginSlice.actions.logout())
       .next()
       .isDone();
