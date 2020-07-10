@@ -4,7 +4,11 @@ import { AnyAction } from "redux";
 import { changeSetting } from "store/actionCreators";
 
 export function* workerSagaChangeSettings(action: AnyAction) {
-  const data = yield call(changeSetting, action);
+  const data = yield call(
+    changeSetting,
+    action.payload.settingName,
+    action.payload.value
+  );
   yield put(data);
 }
 

@@ -1,6 +1,6 @@
 import { workerSagaChangeSettings } from "store/sagas";
 import { actionTypes } from "store/reducer";
-import { changeSetting } from "store/actionCreators";
+import { changeSetting, sagaChangeSetting } from "store/actionCreators";
 import { call, put } from "redux-saga/effects";
 
 test("sagas", () => {
@@ -12,11 +12,17 @@ test("sagas", () => {
     ...action1,
     type: actionTypes.CHANGE_SETTING,
   };
-  const saga1 = workerSagaChangeSettings(action1);
+  const saga1 = workerSagaChangeSettings(changeSetting("someField", 2));
   const next1 = saga1.next();
-  expect(next1).toEqual({ value: call(changeSetting, action1), done: false });
+  expect(next1).toEqual({
+    value: call(changeSetting, "someField", 2),
+    done: false,
+  });
   const next2 = saga1.next(action2);
-  expect(next2).toEqual({ value: put(action2), done: false });
+  expect(next2).toEqual({
+    value: put(sagaChangeSetting("someField", 2)),
+    done: false,
+  });
   const next3 = saga1.next();
   expect(next3).toEqual({ value: undefined, done: true });
 });

@@ -13,18 +13,21 @@ export const initFieldPerformed = () => {
   };
 };
 
-export const changeSetting = (action: AnyAction) => {
+export const changeSetting = (field: string, value: number) => {
   return {
-    ...action,
     type: actionTypes.CHANGE_SETTING,
+    payload: {
+      field,
+      value,
+    },
   };
 };
 
-export const sagaChangeSetting = (settingName: string, value: number) => {
+export const sagaChangeSetting = (field: string, value: number) => {
   return {
     type: actionTypes.SAGA_CHANGE_SETTING,
     payload: {
-      field: settingName,
+      field,
       value,
     },
   };
