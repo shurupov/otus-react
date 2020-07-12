@@ -11,7 +11,10 @@ import { reducer, StoreState } from "store/reducer";
 
 const initialState: StoreState = {
   user: {
+    id: null,
     username: "",
+    first: "",
+    last: "",
   },
   conway: {
     fieldWidth: 20,
@@ -30,15 +33,20 @@ describe("User saga", () => {
     testSaga(workerSagaLogin, sagaLoginAction("Bob"))
       .next()
       .call(fetchUser, "Bob")
-      .next("Bob")
-      .put(loginSlice.actions.login("Bob"))
+      .next({})
+      .put(loginSlice.actions.login({}))
       .next()
       .isDone();
   });
   it("Login saga integration test", () => {
     const expectedFinalStoreState = {
       ...initialState,
-      user: { username: "Bob" },
+      user: {
+        id: 5,
+        username: "Bob",
+        first: "Bob",
+        last: "Lastname",
+      },
     };
     return expectSaga(workerSagaLogin, sagaLoginAction("Bob"))
       .withReducer(reducer, { ...initialState })
@@ -57,7 +65,12 @@ describe("User saga", () => {
   it("Logout saga integration test", () => {
     const logoutInitialState = {
       ...initialState,
-      user: { username: "Tom Hanks" },
+      user: {
+        id: null,
+        username: "Tom Hanks",
+        first: "Tom Hanks",
+        last: "Lastname",
+      },
     };
     return expectSaga(workerSagaLogout)
       .withReducer(reducer, { ...logoutInitialState })

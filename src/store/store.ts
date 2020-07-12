@@ -16,7 +16,10 @@ export interface ConwaySettings {
 }
 
 export interface UserStore {
+  id: number | null;
   username: string;
+  first: string;
+  last: string;
 }
 
 const sagaMiddleware = createSagaMiddleware();

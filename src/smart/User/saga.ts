@@ -15,17 +15,18 @@ export const sagaLoginAction = (username: string) => {
 };
 
 export async function fetchUser(username: string) {
-  //await new Promise((r) => setTimeout(r, 500));
-  /*(async function() {
-
-  })();*/
   await new Promise((r) => setTimeout(r, 50));
-  return username;
+  return {
+    id: 5,
+    username,
+    first: username,
+    last: "Lastname",
+  };
 }
 
 export function* workerSagaLogin(action: AnyAction) {
-  const username = yield call(fetchUser, action.payload);
-  yield put(loginSlice.actions.login(username));
+  const user = yield call(fetchUser, action.payload);
+  yield put(loginSlice.actions.login(user));
 }
 
 export function* watchSagaLogin() {

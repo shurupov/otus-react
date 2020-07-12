@@ -1,21 +1,26 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { UserStore } from "store/store";
 
 export const loginSlice = createSlice({
   name: "user",
   initialState: {
+    id: null,
     username: "",
+    first: "",
+    last: "",
   },
   reducers: {
-    login: (state, action: PayloadAction<string>) => {
+    login: (state, action) => {
       return {
-        ...state,
-        username: action.payload,
+        ...action.payload,
       };
     },
-    logout: (state) => {
+    logout: () => {
       return {
-        ...state,
+        id: null,
         username: "",
+        first: "",
+        last: "",
       };
     },
   },
