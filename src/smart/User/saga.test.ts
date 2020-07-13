@@ -16,7 +16,7 @@ const initialState: StoreState = {
     first: "",
     last: "",
   },
-  conway: {
+  conwaySettings: {
     fieldWidth: 20,
     fieldHeight: 20,
     cellSize: 10,

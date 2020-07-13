@@ -2,8 +2,8 @@ import React, { MouseEventHandler } from "react";
 import { store, ConwaySettings } from "store/store";
 import { Dispatch, Unsubscribe } from "redux";
 import { connect } from "react-redux";
-import { conwaySlice } from "smart/ConwayLife/slice";
 import { StoreState } from "store/reducer";
+import { changeSetting, reinit } from "smart/ConwayLife/saga";
 
 interface ControlsFormProps extends ConwaySettings {
   changeSetting: Function;
@@ -100,17 +100,17 @@ export class ControlsForm extends React.Component<ControlsFormProps> {
   }
 }
 
-const mapStateToProps = ({ conway }: StoreState) => {
-  return conway;
+const mapStateToProps = ({ conwaySettings }: StoreState) => {
+  return conwaySettings;
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     changeSetting: (fieldName: string, value: number) => {
-      dispatch(conwaySlice.actions.changeSetting({ field: fieldName, value }));
+      dispatch(changeSetting(fieldName, value));
     },
     update: () => {
-      dispatch(conwaySlice.actions.initField());
+      dispatch(reinit());
     },
   };
 };

@@ -3,6 +3,12 @@ import { reducer } from "store/reducer";
 import { composeWithDevTools } from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
 import { watchSagaLogin, watchSagaLogout } from "smart/User/saga";
+import {
+  reinit,
+  watchSagaChangeSetting,
+  watchSagaInit,
+  watchSagaUpdate,
+} from "smart/ConwayLife/saga";
 
 export interface ConwaySettings {
   fieldWidth: number;
@@ -30,3 +36,7 @@ export const store: Store = createStore(
 );
 sagaMiddleware.run(watchSagaLogin);
 sagaMiddleware.run(watchSagaLogout);
+sagaMiddleware.run(watchSagaUpdate);
+sagaMiddleware.run(watchSagaInit);
+sagaMiddleware.run(watchSagaChangeSetting);
+store.dispatch(reinit());
