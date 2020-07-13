@@ -4,7 +4,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
 import { watchSagaLogin, watchSagaLogout } from "smart/User/saga";
 import {
-  reinit,
+  reinitAction,
   watchSagaChangeSetting,
   watchSagaInit,
   watchSagaUpdate,
@@ -39,4 +39,4 @@ sagaMiddleware.run(watchSagaLogout);
 sagaMiddleware.run(watchSagaUpdate);
 sagaMiddleware.run(watchSagaInit);
 sagaMiddleware.run(watchSagaChangeSetting);
-store.dispatch(reinit());
+store.dispatch(reinitAction());

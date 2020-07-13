@@ -10,6 +10,7 @@ import { testSaga, expectSaga } from "redux-saga-test-plan";
 import { reducer, StoreState } from "store/reducer";
 
 const initialState: StoreState = {
+  conwayField: [],
   user: {
     id: null,
     username: "",

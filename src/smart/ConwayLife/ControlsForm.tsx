@@ -3,7 +3,7 @@ import { store, ConwaySettings } from "store/store";
 import { Dispatch, Unsubscribe } from "redux";
 import { connect } from "react-redux";
 import { StoreState } from "store/reducer";
-import { changeSetting, reinit } from "smart/ConwayLife/saga";
+import { changeSettingAction, reinitAction } from "smart/ConwayLife/saga";
 
 interface ControlsFormProps extends ConwaySettings {
   changeSetting: Function;
@@ -107,10 +107,10 @@ const mapStateToProps = ({ conwaySettings }: StoreState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     changeSetting: (fieldName: string, value: number) => {
-      dispatch(changeSetting(fieldName, value));
+      dispatch(changeSettingAction(fieldName, value));
     },
     update: () => {
-      dispatch(reinit());
+      dispatch(reinitAction());
     },
   };
 };

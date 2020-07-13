@@ -6,7 +6,7 @@ import { ConwaySettings } from "store/store";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { StoreState } from "store/reducer";
-import { update } from "smart/ConwayLife/saga";
+import { updateAction } from "smart/ConwayLife/saga";
 
 interface ConwayLifeProps {
   conwayField: Array<Array<PoorCellProps>>;
@@ -80,7 +80,7 @@ const mapStateToProps = (state: StoreState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     update: () => {
-      dispatch(update());
+      dispatch(updateAction());
     },
   };
 };

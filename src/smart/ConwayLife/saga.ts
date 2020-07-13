@@ -11,7 +11,9 @@ const conwaySagaActionTypes = {
   CHANGE_SETTING: "saga/conway/changeSetting",
 };
 
-const initField = (settings: ConwaySettings): Array<Array<PoorCellProps>> => {
+export const initField = (
+  settings: ConwaySettings
+): Array<Array<PoorCellProps>> => {
   const cells: Array<Array<PoorCellProps>> = [];
   for (let i = 0; i < settings.fieldHeight; i++) {
     cells[i] = [];
@@ -23,7 +25,6 @@ const initField = (settings: ConwaySettings): Array<Array<PoorCellProps>> => {
       };
     }
   }
-  //settings.updated();
   return cells;
 };
 
@@ -58,7 +59,7 @@ const getNextGeneration = (
   } else return countOfNearLives === 3;
 };
 
-const process = (
+export const process = (
   oldField: Array<Array<PoorCellProps>>,
   settings: ConwaySettings
 ): Array<Array<PoorCellProps>> => {
@@ -91,19 +92,19 @@ const process = (
   return newField;
 };
 
-export const update = () => {
+export const updateAction = () => {
   return {
     type: conwaySagaActionTypes.UPDATE,
   };
 };
 
-export const reinit = () => {
+export const reinitAction = () => {
   return {
     type: conwaySagaActionTypes.REINIT,
   };
 };
 
-export const changeSetting = (field: string, value: number) => {
+export const changeSettingAction = (field: string, value: number) => {
   return {
     type: conwaySagaActionTypes.CHANGE_SETTING,
     payload: {
@@ -113,11 +114,11 @@ export const changeSetting = (field: string, value: number) => {
   };
 };
 
-const settingsSelector = (state: StoreState) => state.conwaySettings;
+export const settingsSelector = (state: StoreState) => state.conwaySettings;
 
-const fieldSelector = (state: StoreState) => state.conwayField;
+export const fieldSelector = (state: StoreState) => state.conwayField;
 
-function* workerSagaUpdate() {
+export function* workerSagaUpdate() {
   const settings = yield select(settingsSelector);
   const field = yield select(fieldSelector);
   const updatedField = yield call(process, field, settings);
@@ -128,7 +129,7 @@ export function* watchSagaUpdate() {
   yield takeEvery(conwaySagaActionTypes.UPDATE, workerSagaUpdate);
 }
 
-function* workerSagaInit() {
+export function* workerSagaInit() {
   const settings = yield select(settingsSelector);
   const updatedField = yield call(initField, settings);
   yield put(conwayFieldSlice.actions.update(updatedField));
@@ -138,7 +139,7 @@ export function* watchSagaInit() {
   yield takeEvery(conwaySagaActionTypes.REINIT, workerSagaInit);
 }
 
-function* workerSagaChangeSetting(action: AnyAction) {
+export function* workerSagaChangeSetting(action: AnyAction) {
   yield put(
     conwaySettingsSlice.actions.changeSetting({
       field: action.payload.field,
@@ -151,7 +152,7 @@ function* workerSagaChangeSetting(action: AnyAction) {
     field === "fieldWidth" ||
     field === "alivePercent";
   if (toUpdate) {
-    yield put(reinit());
+    yield put(reinitAction());
   }
 }
 
