@@ -115,7 +115,7 @@ describe("Conway saga", () => {
       });
   });
 
-  it("Conway init changeSetting test with reinit", () => {
+  it("Conway changeSetting test with reinit unit test", () => {
     testSaga(workerSagaChangeSetting, changeSettingAction("fieldHeight", 15))
       .next()
       .put(
@@ -130,7 +130,20 @@ describe("Conway saga", () => {
       .isDone();
   });
 
-  it("Conway init changeSetting test without reinit", () => {
+  it("Conway changeSetting integration test", () => {
+    return expectSaga(
+      workerSagaChangeSetting,
+      changeSettingAction("fieldHeight", 15)
+    )
+      .withReducer(reducer, { ...initialState })
+      .run(500)
+      .then((result) => {
+        const state: StoreState = result.storeState;
+        expect(state.conwaySettings.fieldHeight).toBe(15);
+      });
+  });
+
+  it("Conway unit changeSetting test without reinit", () => {
     testSaga(workerSagaChangeSetting, changeSettingAction("cellSize", 15))
       .next()
       .put(
