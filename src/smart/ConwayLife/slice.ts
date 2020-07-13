@@ -9,18 +9,8 @@ export const conwaySettingsSlice = createSlice({
     animationDelay: 50,
     alivePercent: 30,
     animationStepsCount: 4,
-    reinitField: false,
-    initialized: false,
   },
   reducers: {
-    initField: (state) => {
-      state.reinitField = true;
-      return state;
-    },
-    updated: (state) => {
-      state.reinitField = false;
-      return state;
-    },
     changeSetting: (state, action) => {
       if (action.payload.field && action.payload.value) {
         const fieldName = action.payload.field;

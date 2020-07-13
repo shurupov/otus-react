@@ -17,8 +17,6 @@ export interface ConwaySettings {
   animationDelay: number;
   alivePercent: number;
   animationStepsCount: number;
-  reinitField: boolean;
-  initialized: boolean;
 }
 
 export interface UserStore {
