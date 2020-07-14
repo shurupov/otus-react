@@ -9,19 +9,17 @@ interface HeaderProps {
   logout: MouseEventHandler;
 }
 
-export class Header extends React.Component<HeaderProps> {
-  render() {
-    if (this.props.username) {
-      return (
-        <label>
-          Welcome, {this.props.username}&nbsp;
-          <button onClick={this.props.logout}>Logout</button>
-        </label>
-      );
-    }
-    return null;
+export const Header = (props: HeaderProps) => {
+  if (props.username) {
+    return (
+      <label>
+        Welcome, {props.username}&nbsp;
+        <button onClick={props.logout}>Logout</button>
+      </label>
+    );
   }
-}
+  return null;
+};
 
 const mapStateToProps = ({ user }: StoreState) => {
   return {
