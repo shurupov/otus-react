@@ -1,6 +1,6 @@
 import React, { MouseEventHandler } from "react";
 import { StoreState, store, ConwaySettings } from "store/store";
-import { Dispatch, Unsubscribe } from "redux";
+import { bindActionCreators, Dispatch, Unsubscribe } from "redux";
 import { initField, sagaChangeSetting } from "store/actionCreators";
 import { connect } from "react-redux";
 
@@ -108,14 +108,13 @@ const mapStateToProps = (state: StoreState): ConwaySettings => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
-  return {
-    changeSetting: (fieldName: string, value: number) => {
-      dispatch(sagaChangeSetting(fieldName, value));
+  return bindActionCreators(
+    {
+      changeSetting: sagaChangeSetting,
+      update: initField,
     },
-    update: () => {
-      dispatch(initField());
-    },
-  };
+    dispatch
+  );
 };
 
 export const ConnectedControlsForm = connect(
