@@ -7,6 +7,10 @@ const userSagaActionTypes = {
   LOGOUT: "saga/user/logout",
 };
 
+async function delay(time: number) {
+  await new Promise((r) => setTimeout(r, time));
+}
+
 export const sagaLoginAction = (username: string) => {
   return {
     type: userSagaActionTypes.LOGIN,
@@ -15,7 +19,7 @@ export const sagaLoginAction = (username: string) => {
 };
 
 export async function fetchUser(username: string) {
-  await new Promise((r) => setTimeout(r, 50));
+  await delay(50);
   return {
     id: 5,
     username,
@@ -40,7 +44,7 @@ export const sagaLogoutAction = () => {
 };
 
 export async function clearSession() {
-  await new Promise((r) => setTimeout(r, 50));
+  await delay(50);
 }
 
 export function* workerSagaLogout() {
