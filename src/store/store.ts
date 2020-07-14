@@ -10,22 +10,6 @@ import {
   watchSagaUpdate,
 } from "smart/ConwayLife/saga";
 
-export interface ConwaySettings {
-  fieldWidth: number;
-  fieldHeight: number;
-  cellSize: number;
-  animationDelay: number;
-  alivePercent: number;
-  animationStepsCount: number;
-}
-
-export interface UserStore {
-  id: number | null;
-  username: string;
-  first: string;
-  last: string;
-}
-
 const sagaMiddleware = createSagaMiddleware();
 
 export const store: Store = createStore(

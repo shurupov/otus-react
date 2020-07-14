@@ -1,5 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export interface ConwaySettings {
+  fieldWidth: number;
+  fieldHeight: number;
+  cellSize: number;
+  animationDelay: number;
+  alivePercent: number;
+  animationStepsCount: number;
+}
+
 export const conwaySettingsSlice = createSlice({
   name: "conwaySettings",
   initialState: {
