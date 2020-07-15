@@ -1,5 +1,11 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { UserStore } from "store/store";
+import { createSlice } from "@reduxjs/toolkit";
+
+export interface UserStore {
+  id: number | null;
+  username: string;
+  first: string;
+  last: string;
+}
 
 export const loginSlice = createSlice({
   name: "user",

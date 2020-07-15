@@ -2,20 +2,24 @@ import { AnyAction } from "redux";
 import { loginSlice } from "smart/User/slice";
 import { call, put, takeEvery } from "redux-saga/effects";
 
-export const sagaActionTypes = {
-  SAGA_LOGIN: "saga/user/login",
-  SAGA_LOGOUT: "saga/user/logout",
+const userSagaActionTypes = {
+  LOGIN: "saga/user/login",
+  LOGOUT: "saga/user/logout",
 };
+
+async function delay(time: number) {
+  await new Promise((r) => setTimeout(r, time));
+}
 
 export const sagaLoginAction = (username: string) => {
   return {
-    type: sagaActionTypes.SAGA_LOGIN,
+    type: userSagaActionTypes.LOGIN,
     payload: username,
   };
 };
 
 export async function fetchUser(username: string) {
-  await new Promise((r) => setTimeout(r, 50));
+  await delay(50);
   return {
     id: 5,
     username,
@@ -30,17 +34,17 @@ export function* workerSagaLogin(action: AnyAction) {
 }
 
 export function* watchSagaLogin() {
-  yield takeEvery(sagaActionTypes.SAGA_LOGIN, workerSagaLogin);
+  yield takeEvery(userSagaActionTypes.LOGIN, workerSagaLogin);
 }
 
 export const sagaLogoutAction = () => {
   return {
-    type: sagaActionTypes.SAGA_LOGOUT,
+    type: userSagaActionTypes.LOGOUT,
   };
 };
 
 export async function clearSession() {
-  await new Promise((r) => setTimeout(r, 50));
+  await delay(50);
 }
 
 export function* workerSagaLogout() {
@@ -49,5 +53,5 @@ export function* workerSagaLogout() {
 }
 
 export function* watchSagaLogout() {
-  yield takeEvery(sagaActionTypes.SAGA_LOGOUT, workerSagaLogout);
+  yield takeEvery(userSagaActionTypes.LOGOUT, workerSagaLogout);
 }

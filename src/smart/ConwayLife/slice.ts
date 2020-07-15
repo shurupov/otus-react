@@ -1,7 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const conwaySlice = createSlice({
-  name: "conway",
+export interface ConwaySettings {
+  fieldWidth: number;
+  fieldHeight: number;
+  cellSize: number;
+  animationDelay: number;
+  alivePercent: number;
+  animationStepsCount: number;
+}
+
+export const conwaySettingsSlice = createSlice({
+  name: "conwaySettings",
   initialState: {
     fieldWidth: 20,
     fieldHeight: 20,
@@ -9,32 +18,27 @@ export const conwaySlice = createSlice({
     animationDelay: 50,
     alivePercent: 30,
     animationStepsCount: 4,
-    reinitField: false,
-    initialized: false,
   },
   reducers: {
-    initField: (state) => {
-      state.reinitField = true;
-      return state;
-    },
-    updated: (state) => {
-      state.reinitField = false;
-      return state;
-    },
     changeSetting: (state, action) => {
-      if (!action.payload || !action.payload.value) {
-        return state;
-      }
-      if (action.payload.field) {
+      if (action.payload.field && action.payload.value) {
         const fieldName = action.payload.field;
-        state[fieldName] = action.payload.value;
-        state.reinitField =
-          fieldName === "fieldHeight" ||
-          fieldName === "fieldWidth" ||
-          fieldName === "alivePercent";
-        return state;
+        return {
+          ...state,
+          [fieldName]: action.payload.value,
+        };
       }
       return state;
+    },
+  },
+});
+
+export const conwayFieldSlice = createSlice({
+  name: "conwayField",
+  initialState: [],
+  reducers: {
+    update: (state, action) => {
+      return action.payload;
     },
   },
 });

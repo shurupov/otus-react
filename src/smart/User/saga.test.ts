@@ -9,27 +9,25 @@ import { loginSlice } from "smart/User/slice";
 import { testSaga, expectSaga } from "redux-saga-test-plan";
 import { reducer, StoreState } from "store/reducer";
 
-type DeepPartial<T> = {
-  [P in keyof T]?: T[P] extends Array<infer U>
-    ? Array<DeepPartial<U>>
-    : T[P] extends ReadonlyArray<infer U>
-    ? ReadonlyArray<DeepPartial<U>>
-    : DeepPartial<T[P]>;
-};
-
-// https://gist.github.com/navix/6c25c15e0a2d3cd0e5bce999e0086fc9
-export function castPartialTo<T>(param: DeepPartial<T>): T {
-  return (param as unknown) as T;
-}
-
-const initialState: StoreState = castPartialTo<StoreState>({
+const initialState: StoreState = {
+  conwayField: [],
   user: {
     id: null,
     username: "",
     first: "",
     last: "",
   },
-});
+  conwaySettings: {
+    fieldWidth: 20,
+    fieldHeight: 20,
+    cellSize: 10,
+    animationDelay: 50,
+    alivePercent: 30,
+    animationStepsCount: 4,
+    reinitField: false,
+    initialized: false,
+  },
+};
 
 describe("User saga", () => {
   it("Login saga unit test", () => {
@@ -42,18 +40,19 @@ describe("User saga", () => {
       .isDone();
   });
   it("Login saga integration test", () => {
+    const expectedFinalStoreState = {
+      ...initialState,
+      user: {
+        id: 5,
+        username: "Bob",
+        first: "Bob",
+        last: "Lastname",
+      },
+    };
     return expectSaga(workerSagaLogin, sagaLoginAction("Bob"))
       .withReducer(reducer, { ...initialState })
-      .run()
-      .then((result) => {
-        const state: StoreState = result.storeState;
-        expect(state.user).toEqual({
-          id: 5,
-          username: "Bob",
-          first: "Bob",
-          last: "Lastname",
-        });
-      });
+      .hasFinalState(expectedFinalStoreState)
+      .run();
   });
   it("Logout saga unit test", () => {
     testSaga(workerSagaLogout)
@@ -76,10 +75,7 @@ describe("User saga", () => {
     };
     return expectSaga(workerSagaLogout)
       .withReducer(reducer, { ...logoutInitialState })
-      .run()
-      .then((result) => {
-        const state: StoreState = result.storeState;
-        expect(state.user).toEqual(initialState.user);
-      });
+      .hasFinalState(initialState)
+      .run();
   });
 });
