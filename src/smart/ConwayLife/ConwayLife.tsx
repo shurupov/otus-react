@@ -2,11 +2,11 @@
 import { jsx } from "@emotion/core";
 import React from "react";
 import { Cell, PoorCellProps } from "./Cell/Cell";
-import { ConwaySettings } from "store/store";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { StoreState } from "store/reducer";
 import { updateAction } from "smart/ConwayLife/saga";
+import { ConwaySettings } from "smart/ConwayLife/slice";
 
 interface ConwayLifeProps {
   conwayField: Array<Array<PoorCellProps>>;
@@ -70,12 +70,10 @@ export class ConwayLife extends React.Component<ConwayLifeProps> {
   }
 }
 
-const mapStateToProps = (state: StoreState) => {
-  return {
-    conwaySettings: state.conwaySettings,
-    conwayField: state.conwayField,
-  };
-};
+const mapStateToProps = ({ conwaySettings, conwayField }: StoreState) => ({
+  conwaySettings,
+  conwayField,
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {

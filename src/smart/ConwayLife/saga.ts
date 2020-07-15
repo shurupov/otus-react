@@ -1,8 +1,11 @@
 import { PoorCellProps } from "smart/ConwayLife/Cell/Cell";
-import { ConwaySettings } from "store/store";
 import { call, put, takeEvery, select } from "redux-saga/effects";
 import { StoreState } from "store/reducer";
-import { conwayFieldSlice, conwaySettingsSlice } from "smart/ConwayLife/slice";
+import {
+  conwayFieldSlice,
+  ConwaySettings,
+  conwaySettingsSlice,
+} from "smart/ConwayLife/slice";
 import { AnyAction } from "redux";
 
 const conwaySagaActionTypes = {
@@ -33,22 +36,20 @@ const getNextGeneration = (
   i: number,
   j: number
 ): boolean => {
-  const currentCellLife = oldField[i] && oldField[i][j] && oldField[i][j].alive;
+  const currentCellLife = oldField?.[i]?.[j]?.alive;
   let countOfNearLives = 0;
-  for (
-    let i1 = i === 0 ? i : i - 1;
-    i1 <= (i === oldField.length - 1 ? i : i + 1);
-    i1++
-  ) {
-    for (
-      let j1 = j === 0 ? j : j - 1;
-      j1 <= (j === (oldField[i1] && oldField[i1].length - 1) ? j : j + 1);
-      j1++
-    ) {
+  const topLineNumber = i === 0 ? i : i - 1;
+  const bottomLineNumber = i === oldField.length - 1 ? i : i + 1;
+  const leftColumnNumber = j === 0 ? j : j - 1;
+  const rightColumnNumber =
+    j === (oldField?.[0] && oldField[0].length - 1) ? j : j + 1;
+
+  for (let i1 = topLineNumber; i1 <= bottomLineNumber; i1++) {
+    for (let j1 = leftColumnNumber; j1 <= rightColumnNumber; j1++) {
       if (i1 === i && j1 === j) {
         continue;
       }
-      if (oldField[i1] && oldField[i1][j1]?.alive) {
+      if (oldField?.[i1]?.[j1]?.alive) {
         countOfNearLives++;
       }
     }
