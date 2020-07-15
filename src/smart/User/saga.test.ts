@@ -17,6 +17,7 @@ type DeepPartial<T> = {
     : DeepPartial<T[P]>;
 };
 
+// https://gist.github.com/navix/6c25c15e0a2d3cd0e5bce999e0086fc9
 export function castPartialTo<T>(param: DeepPartial<T>): T {
   return (param as unknown) as T;
 }
