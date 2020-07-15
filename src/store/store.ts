@@ -1,8 +1,8 @@
 import { applyMiddleware, createStore, Store } from "redux";
-import createSagaMiddleware from "redux-saga";
 import { reducer } from "store/reducer";
-import { watchSagaChangeSettings } from "store/sagas";
 import { composeWithDevTools } from "redux-devtools-extension";
+import createSagaMiddleware from "redux-saga";
+import { watchSagaLogin, watchSagaLogout } from "smart/User/saga";
 
 export interface ConwaySettings {
   fieldWidth: number;
@@ -15,18 +15,18 @@ export interface ConwaySettings {
   initialized: boolean;
 }
 
-export interface StoreState {
-  conwaySettings: ConwaySettings;
+export interface UserStore {
+  id: number | null;
   username: string;
+  first: string;
+  last: string;
 }
 
 const sagaMiddleware = createSagaMiddleware();
 
-export const store: Store<StoreState> = createStore(
+export const store: Store = createStore(
   reducer,
-  composeWithDevTools(
-    applyMiddleware(sagaMiddleware)
-    // other store enhancers if any
-  )
+  composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
-sagaMiddleware.run(watchSagaChangeSettings);
+sagaMiddleware.run(watchSagaLogin);
+sagaMiddleware.run(watchSagaLogout);

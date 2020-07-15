@@ -2,10 +2,11 @@
 import { jsx } from "@emotion/core";
 import React, { ReactNode } from "react";
 import { Cell, PoorCellProps } from "./Cell/Cell";
-import { ConwaySettings, StoreState } from "store/store";
+import { ConwaySettings } from "store/store";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { actionTypes } from "store/reducer";
+import { StoreState } from "store/reducer";
+import { conwaySlice } from "smart/ConwayLife/slice";
 
 interface ConwayLifeState {
   cells: Array<Array<PoorCellProps>>;
@@ -169,14 +170,14 @@ export class ConwayLife extends React.Component<
   }
 }
 
-const mapStateToProps = (state: StoreState) => {
-  return state.conwaySettings;
+const mapStateToProps = ({ conway }: StoreState) => {
+  return conway;
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     updated: () => {
-      dispatch({ type: actionTypes.INIT_FIELD_PERFORMED });
+      dispatch(conwaySlice.actions.updated());
     },
   };
 };

@@ -1,31 +1,16 @@
 import React, { MouseEventHandler } from "react";
-import { StoreState, store, ConwaySettings } from "store/store";
-import { bindActionCreators, Dispatch, Unsubscribe } from "redux";
-import { initField, sagaChangeSetting } from "store/actionCreators";
+import { ConwaySettings } from "store/store";
+import { Dispatch } from "redux";
 import { connect } from "react-redux";
+import { conwaySlice } from "smart/ConwayLife/slice";
+import { StoreState } from "store/reducer";
 
 interface ControlsFormProps extends ConwaySettings {
   changeSetting: Function;
   update: MouseEventHandler;
 }
 
-export class ControlsForm extends React.Component<
-  ControlsFormProps,
-  StoreState
-> {
-  private unsubscribe!: Unsubscribe;
-  state = store.getState();
-
-  componentDidMount() {
-    this.unsubscribe = store.subscribe(() => {
-      this.setState(store.getState());
-    });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
+export class ControlsForm extends React.Component<ControlsFormProps> {
   handleChange = (fieldName: string) => (event: React.FormEvent) => {
     const target = event.target as HTMLFormElement;
     if (target.value === "") {
@@ -103,18 +88,19 @@ export class ControlsForm extends React.Component<
   }
 }
 
-const mapStateToProps = (state: StoreState): ConwaySettings => {
-  return state.conwaySettings;
+const mapStateToProps = ({ conway }: StoreState) => {
+  return conway;
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
-  return bindActionCreators(
-    {
-      changeSetting: sagaChangeSetting,
-      update: initField,
+  return {
+    changeSetting: (fieldName: string, value: number) => {
+      dispatch(conwaySlice.actions.changeSetting({ field: fieldName, value }));
     },
-    dispatch
-  );
+    update: () => {
+      dispatch(conwaySlice.actions.initField());
+    },
+  };
 };
 
 export const ConnectedControlsForm = connect(
