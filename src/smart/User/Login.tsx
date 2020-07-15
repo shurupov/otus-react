@@ -2,7 +2,7 @@ import React from "react";
 import { Field, Form, Formik } from "formik";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import { loginSlice } from "smart/User/slice";
+import { sagaLoginAction } from "smart/User/saga";
 
 interface LoginProps {
   login: Function;
@@ -42,7 +42,7 @@ export class Login extends React.Component<LoginProps> {
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     login: (username: string) => {
-      dispatch(loginSlice.actions.login(username));
+      dispatch(sagaLoginAction(username));
     },
   };
 };

@@ -2,7 +2,7 @@ import React, { MouseEventHandler } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { StoreState } from "store/reducer";
-import {loginSlice} from "smart/User/slice";
+import { sagaLogoutAction } from "smart/User/saga";
 
 interface HeaderProps {
   username: string;
@@ -30,7 +30,7 @@ const mapStateToProps = ({ user }: StoreState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     logout: () => {
-      dispatch(loginSlice.actions.logout());
+      dispatch(sagaLogoutAction());
     },
   };
 };

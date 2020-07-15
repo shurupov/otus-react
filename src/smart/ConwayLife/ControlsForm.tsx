@@ -1,6 +1,6 @@
 import React, { MouseEventHandler } from "react";
-import { store, ConwaySettings } from "store/store";
-import { Dispatch, Unsubscribe } from "redux";
+import { ConwaySettings } from "store/store";
+import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { conwaySlice } from "smart/ConwayLife/slice";
 import { StoreState } from "store/reducer";
@@ -11,18 +11,6 @@ interface ControlsFormProps extends ConwaySettings {
 }
 
 export class ControlsForm extends React.Component<ControlsFormProps> {
-  private unsubscribe!: Unsubscribe;
-
-  componentDidMount() {
-    this.unsubscribe = store.subscribe(() => {
-      this.setState(store.getState());
-    });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
   handleChange = (fieldName: string) => (event: React.FormEvent) => {
     const target = event.target as HTMLFormElement;
     if (target.value === "") {
