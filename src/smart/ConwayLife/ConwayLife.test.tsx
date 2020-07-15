@@ -30,13 +30,15 @@ function poorCellArrayToBooleans(
 describe("ConwayLife", () => {
   it("getNextGeneration", () => {
     const conwayLife: ConwayLife = new ConwayLife({
+      updated: () => {},
       cellSize: 10,
       fieldWidth: 4,
       fieldHeight: 4,
-      onClick: () => true,
       animationDelay: 50,
       alivePercent: 30,
       animationStepsCount: 4,
+      reinitField: false,
+      initialized: false,
     }); // <ConwayLife cellSize={10} fieldWidth={5} fieldHeight={5}/>;
     const oldField: Array<Array<PoorCellProps>> = booleanArrayToPoorCells([
       [false, true, false, true],
@@ -64,10 +66,12 @@ describe("ConwayLife", () => {
 
   it("process", () => {
     const conwayLife: ConwayLife = new ConwayLife({
+      initialized: false,
+      updated: () => {},
+      reinitField: false,
       cellSize: 10,
       fieldWidth: 4,
       fieldHeight: 4,
-      onClick: () => true,
       animationDelay: 50,
       alivePercent: 30,
       animationStepsCount: 4,
@@ -98,10 +102,12 @@ describe("ConwayLife", () => {
         fieldWidth={10}
         fieldHeight={10}
         cellSize={10}
-        onClick={f}
         animationDelay={50}
         alivePercent={30}
         animationStepsCount={4}
+        reinitField
+        initialized
+        updated={() => {}}
       />
     );
     expect(wrapper.find("div.line").length).toBe(10);
@@ -112,10 +118,10 @@ describe("ConwayLife", () => {
         fieldWidth={5}
         fieldHeight={5}
         cellSize={10}
-        onClick={f}
         animationDelay={50}
         alivePercent={30}
         animationStepsCount={4}
+        reinitField
       />
     );
     expect(wrapper.find("div.line").length).toBe(5);
@@ -125,10 +131,10 @@ describe("ConwayLife", () => {
         fieldWidth={6}
         fieldHeight={8}
         cellSize={10}
-        onClick={f}
         animationDelay={50}
         alivePercent={30}
         animationStepsCount={4}
+        reinitField
       />
     );
     expect(wrapper.find("div.line").length).toBe(8);
@@ -142,10 +148,10 @@ describe("ConwayLife", () => {
         fieldWidth={10}
         fieldHeight={10}
         cellSize={10}
-        onClick={onClick}
         animationDelay={50}
         alivePercent={30}
         animationStepsCount={4}
+        reinitField
       />
     );
     wrapper.find("Cell").first().simulate("click");

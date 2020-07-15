@@ -1,10 +1,10 @@
-import { Store } from "redux";
-import createSagaMiddleware from "redux-saga";
+import { applyMiddleware, createStore, Store } from "redux";
 import { reducer } from "store/reducer";
-import { configureStore } from "@reduxjs/toolkit";
-import { watchSagaChangeSettings } from "store/sagas";
+import { composeWithDevTools } from "redux-devtools-extension";
+import createSagaMiddleware from "redux-saga";
+import { watchSagaLogin, watchSagaLogout } from "smart/User/saga";
 
-export interface StoreState {
+export interface ConwaySettings {
   fieldWidth: number;
   fieldHeight: number;
   cellSize: number;
@@ -12,12 +12,21 @@ export interface StoreState {
   alivePercent: number;
   animationStepsCount: number;
   reinitField: boolean;
+  initialized: boolean;
+}
+
+export interface UserStore {
+  id: number | null;
+  username: string;
+  first: string;
+  last: string;
 }
 
 const sagaMiddleware = createSagaMiddleware();
 
-export const store: Store<StoreState> = configureStore({
+export const store: Store = createStore(
   reducer,
-  middleware: [sagaMiddleware],
-});
-sagaMiddleware.run(watchSagaChangeSettings);
+  composeWithDevTools(applyMiddleware(sagaMiddleware))
+);
+sagaMiddleware.run(watchSagaLogin);
+sagaMiddleware.run(watchSagaLogout);

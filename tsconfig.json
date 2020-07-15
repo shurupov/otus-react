@@ -3,7 +3,9 @@
     "baseUrl": ".",
     "paths": {
       "components/*": ["src/components/*"],
-      "store/*": ["src/store/*"]
+      "store/*": ["src/store/*"],
+      "pages/*": ["src/pages/*"],
+      "smart/*": ["src/smart/*"]
     },
     "target": "es5",
     "module": "commonjs",

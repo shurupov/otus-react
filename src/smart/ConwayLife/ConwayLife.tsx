@@ -2,14 +2,24 @@
 import { jsx } from "@emotion/core";
 import React, { ReactNode } from "react";
 import { Cell, PoorCellProps } from "./Cell/Cell";
-import { StoreState } from "store/store";
+import { ConwaySettings } from "store/store";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { StoreState } from "store/reducer";
+import { conwaySlice } from "smart/ConwayLife/slice";
 
 interface ConwayLifeState {
   cells: Array<Array<PoorCellProps>>;
 }
 
-export class ConwayLife extends React.Component<StoreState, ConwayLifeState> {
+interface ConwayLifeProps extends ConwaySettings {
+  updated: Function;
+}
+
+export class ConwayLife extends React.Component<
+  ConwayLifeProps,
+  ConwayLifeState
+> {
   private timeoutId!: NodeJS.Timeout;
 
   state = {
@@ -28,13 +38,16 @@ export class ConwayLife extends React.Component<StoreState, ConwayLifeState> {
         };
       }
     }
+    this.props.updated();
     return cells;
   }
 
-  componentWillReceiveProps(nextProps: Readonly<StoreState>) {
+  componentWillReceiveProps(nextProps: Readonly<ConwaySettings>) {
+    this.clearTimeout();
     if (nextProps.reinitField) {
       this.setState({ cells: this.initField() });
     }
+    this.tick();
   }
 
   componentDidMount(): void {
@@ -70,7 +83,14 @@ export class ConwayLife extends React.Component<StoreState, ConwayLifeState> {
       newField[i] = [];
       for (let j = 0; j < this.props.fieldWidth; j++) {
         const newFieldAlive: boolean = this.getNextGeneration(oldField, i, j);
-        const oldFieldCell: PoorCellProps = oldField[i][j];
+        const oldFieldCell: PoorCellProps =
+          i > oldField.length - 1 || j > oldField[i].length - 1
+            ? {
+                alive: false,
+                step: 0,
+                animated: false,
+              }
+            : oldField[i][j];
         newField[i][j] = {
           alive: newFieldAlive,
           step:
@@ -92,7 +112,8 @@ export class ConwayLife extends React.Component<StoreState, ConwayLifeState> {
     i: number,
     j: number
   ): boolean => {
-    const currentCellLife = oldField[i][j] && oldField[i][j].alive;
+    const currentCellLife =
+      oldField[i] && oldField[i][j] && oldField[i][j].alive;
     let countOfNearLives = 0;
     for (
       let i1 = i === 0 ? i : i - 1;
@@ -101,13 +122,13 @@ export class ConwayLife extends React.Component<StoreState, ConwayLifeState> {
     ) {
       for (
         let j1 = j === 0 ? j : j - 1;
-        j1 <= (j === oldField[i1].length - 1 ? j : j + 1);
+        j1 <= (j === (oldField[i1] && oldField[i1].length - 1) ? j : j + 1);
         j1++
       ) {
         if (i1 === i && j1 === j) {
           continue;
         }
-        if (oldField[i1][j1].alive) {
+        if (oldField[i1] && oldField[i1][j1]?.alive) {
           countOfNearLives++;
         }
       }
@@ -149,8 +170,19 @@ export class ConwayLife extends React.Component<StoreState, ConwayLifeState> {
   }
 }
 
-const mapStateToProps = (state: StoreState) => {
-  return state;
+const mapStateToProps = ({ conway }: StoreState) => {
+  return conway;
 };
 
-export const ConnectedConwayLife = connect(mapStateToProps)(ConwayLife);
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    updated: () => {
+      dispatch(conwaySlice.actions.updated());
+    },
+  };
+};
+
+export const ConnectedConwayLife = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ConwayLife);
