@@ -140,19 +140,17 @@ export function* watchSagaInit() {
   yield takeEvery(conwaySagaActionTypes.REINIT, workerSagaInit);
 }
 
-export function* workerSagaChangeSetting(action: AnyAction) {
+export function* workerSagaChangeSetting({
+  payload: { field, value },
+}: AnyAction) {
   yield put(
     conwaySettingsSlice.actions.changeSetting({
-      field: action.payload.field,
-      value: action.payload.value,
+      field,
+      value,
     })
   );
-  const field = action.payload.field;
-  const toUpdate =
-    field === "fieldHeight" ||
-    field === "fieldWidth" ||
-    field === "alivePercent";
-  if (toUpdate) {
+  const fieldsToUpdate = ["fieldHeight", "fieldWidth", "alivePercent"];
+  if (fieldsToUpdate.includes(field)) {
     yield put(reinitAction());
   }
 }
