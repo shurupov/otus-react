@@ -11,40 +11,35 @@ interface ContentProps {
 }
 
 export const Content = (props: ContentProps) => {
-  if (props.username) {
-    return (
-      <div
-        css={{
-          marginTop: 5,
-          borderTop: "4px gray solid",
-        }}
-      >
-        <Link to="/">Top</Link>
-        <br />
-        <Link to="/life">Conway Life</Link>
-        <br />
-        <Link to="/news">News</Link>
-        <br />
-        <Link to="/news/1">Text 1</Link>
-        <br />
-        <Link to="/news/2">Text 2</Link>
-        <br />
+  return (
+    <div
+      css={{
+        marginTop: 5,
+        borderTop: "4px gray solid",
+      }}
+    >
+      <Link to="/">Top</Link>
+      {props.username ? (
+        <>
+          <br />
+          <Link to="/life">Conway Life</Link>
+        </>
+      ) : null}
+      <br />
+      <Link to="/news">News</Link>
+      <br />
+      <Link to="/news/1">Text 1</Link>
+      <br />
+      <Link to="/news/2">Text 2</Link>
+      <br />
 
-        <Route exact path="/" render={() => <h1>Root</h1>} />
-        <Route path="/news" component={News} />
+      <Route exact path="/" render={() => <h1>Root</h1>} />
+      <Route path="/news" component={News} />
+      {props.username ? (
         <Route path="/life" component={ConwayLifeWithControls} />
-      </div>
-    );
-  } else {
-    return (
-      <Switch>
-        <Route exact path="/login" component={ConnectedLogin} />
-        <Route path="/*">
-          <Redirect to="/login" />
-        </Route>
-      </Switch>
-    );
-  }
+      ) : null}
+    </div>
+  );
 };
 
 const mapStateToProps = ({ user }: StoreState) => {
