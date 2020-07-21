@@ -4,6 +4,8 @@ import React from "react";
 
 export default function news1() {
   return (
-    <StaticApp page={NewsText} props={{ match: { params: { newsid: 1 } } }} />
+    <StaticApp
+      renderComponent={() => <NewsText match={{ params: { newsid: 1 } }} />}
+    />
   );
 }

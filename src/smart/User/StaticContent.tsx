@@ -2,14 +2,11 @@ import React from "react";
 import Link from "next/link";
 
 export interface StaticContentProps {
-  page: React.Component;
-  props?: unknown;
+  renderComponent: Function;
 }
 
 export class StaticContent extends React.Component<StaticContentProps> {
   render() {
-    const PageComponent: React.Component = this.props.page;
-
     return (
       <div
         css={{
@@ -34,7 +31,7 @@ export class StaticContent extends React.Component<StaticContentProps> {
         </Link>
         <br />
 
-        <PageComponent {...this.props.props} />
+        {this.props.renderComponent()}
       </div>
     );
   }
