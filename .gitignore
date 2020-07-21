@@ -1,4 +1,5 @@
 /.idea
+/.next
 /node_modules
 /lib
 /dist
@@ -7,3 +8,4 @@
 /storybook-static/
 /ssr-express/package-lock.json
 /ssr-express/node_modules/
+/next-env.d.ts

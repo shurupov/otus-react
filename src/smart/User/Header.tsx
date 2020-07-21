@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { StoreState } from "store/reducer";
 import { sagaLogoutAction } from "smart/User/saga";
-import { Redirect, Route, Switch } from "react-router-dom";
 import { ConnectedLogin } from "smart/User/Login";
 
 interface HeaderProps {
