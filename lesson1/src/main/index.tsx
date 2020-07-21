@@ -1,4 +1,4 @@
-require("./sum");
+import { sum } from "./sum";
 
 function component(): Node {
   const element = document.createElement("div");
