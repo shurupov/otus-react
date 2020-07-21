@@ -3,9 +3,14 @@ import { Provider } from "react-redux";
 import { store } from "store/store";
 import { ConnectedHeader } from "smart/User/Header";
 import { App } from "./App";
-import { StaticContent, StaticContentProps } from "smart/User/StaticContent";
+import { StaticRouter } from "react-router-dom";
+import { ConnectedContent } from "smart/User/Content";
 
-export class StaticApp extends React.Component<StaticContentProps> {
+interface StaticAppProps {
+  uri: string;
+}
+
+export class StaticApp extends React.Component<StaticAppProps> {
   state = {
     loaded: false,
   };
@@ -20,8 +25,10 @@ export class StaticApp extends React.Component<StaticContentProps> {
     } else {
       return (
         <Provider store={store}>
-          <ConnectedHeader />
-          <StaticContent {...this.props} />
+          <StaticRouter location={this.props.uri}>
+            <ConnectedHeader />
+            <ConnectedContent />
+          </StaticRouter>
         </Provider>
       );
     }
