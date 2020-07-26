@@ -1,6 +1,7 @@
 import { AnyAction } from "redux";
 import { loginSlice } from "smart/User/slice";
 import { call, put, takeEvery } from "redux-saga/effects";
+import { reinitAction } from "smart/ConwayLife/saga";
 
 const userSagaActionTypes = {
   LOGIN: "saga/user/login",
@@ -31,6 +32,7 @@ export async function fetchUser(username: string) {
 export function* workerSagaLogin(action: AnyAction) {
   const user = yield call(fetchUser, action.payload);
   yield put(loginSlice.actions.login(user));
+  yield put(reinitAction());
 }
 
 export function* watchSagaLogin() {
