@@ -2,17 +2,44 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "components/*": ["src/components/*"],
-      "store/*": ["src/store/*"],
-      "pages/*": ["src/pages/*"],
-      "smart/*": ["src/smart/*"]
+      "components/*": [
+        "src/components/*"
+      ],
+      "store/*": [
+        "src/store/*"
+      ],
+      "pages/*": [
+        "src/pages/*"
+      ],
+      "smart/*": [
+        "src/smart/*"
+      ]
     },
     "target": "es5",
-    "module": "commonjs",
+    "module": "esnext",
     "allowJs": true,
-    "jsx": "react",
+    "jsx": "preserve",
     "sourceMap": true,
     "strict": true,
-    "esModuleInterop": true
-  }
+    "esModuleInterop": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ]
 }

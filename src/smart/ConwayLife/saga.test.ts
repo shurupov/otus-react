@@ -180,6 +180,12 @@ describe("Conway saga", () => {
       .isDone();
   });
 
+  it("Conway unit changeSetting test with negative value", () => {
+    testSaga(workerSagaChangeSetting, changeSettingAction("cellSize", -10))
+      .next()
+      .isDone();
+  });
+
   it("compareWithPrevious", () => {
     const cells = boolArrayToCellArray([
       [true, true, false],

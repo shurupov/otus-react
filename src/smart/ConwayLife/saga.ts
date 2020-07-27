@@ -187,6 +187,9 @@ export function* watchSagaInit() {
 export function* workerSagaChangeSetting({
   payload: { field, value },
 }: AnyAction) {
+  if (value < 0) {
+    return;
+  }
   yield put(
     conwaySettingsSlice.actions.changeSetting({
       field,
