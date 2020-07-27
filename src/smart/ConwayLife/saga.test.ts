@@ -155,4 +155,10 @@ describe("Conway saga", () => {
       .next()
       .isDone();
   });
+
+  it("Conway unit changeSetting test with negative value", () => {
+    testSaga(workerSagaChangeSetting, changeSettingAction("cellSize", -10))
+      .next()
+      .isDone();
+  });
 });
