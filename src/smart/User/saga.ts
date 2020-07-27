@@ -74,6 +74,7 @@ export function* workerSagaRestoreSession() {
   const user = yield call(restoreSession);
   if (user) {
     yield put(loginSlice.actions.login(user));
+    yield put(reinitAction());
   }
 }
 
