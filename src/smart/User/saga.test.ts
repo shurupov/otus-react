@@ -10,6 +10,7 @@ import {
 import { loginSlice } from "smart/User/slice";
 import { testSaga, expectSaga } from "redux-saga-test-plan";
 import { reducer, StoreState } from "store/reducer";
+import { reinitAction } from "smart/ConwayLife/saga";
 
 const initialState: StoreState = {
   conwayField: [],
@@ -64,6 +65,8 @@ describe("User saga", () => {
       .call(saveSession, "Bob")
       .next({})
       .put(loginSlice.actions.login({}))
+      .next()
+      .put(reinitAction())
       .next()
       .isDone();
   });

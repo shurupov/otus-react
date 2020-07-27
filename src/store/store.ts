@@ -9,7 +9,6 @@ import {
   watchSagaRestoreSession,
 } from "smart/User/saga";
 import {
-  reinitAction,
   watchSagaChangeSetting,
   watchSagaInit,
   watchSagaUpdate,
@@ -28,4 +27,3 @@ sagaMiddleware.run(watchSagaUpdate);
 sagaMiddleware.run(watchSagaInit);
 sagaMiddleware.run(watchSagaChangeSetting);
 store.dispatch(sagaRestoreSessionAction());
-store.dispatch(reinitAction());
