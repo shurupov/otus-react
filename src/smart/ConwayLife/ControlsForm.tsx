@@ -1,9 +1,9 @@
 import React, { MouseEventHandler } from "react";
-import { ConwaySettings } from "store/store";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { StoreState } from "store/reducer";
 import { changeSettingAction, reinitAction } from "smart/ConwayLife/saga";
+import { ConwaySettings } from "smart/ConwayLife/slice";
 
 interface ControlsFormProps extends ConwaySettings {
   changeSetting: Function;
