@@ -1,9 +1,11 @@
 import {
   clearSession,
-  fetchUser,
+  saveSession,
   sagaLoginAction,
   workerSagaLogin,
   workerSagaLogout,
+  restoreSession,
+  workerSagaRestoreSession,
 } from "smart/User/saga";
 import { loginSlice } from "smart/User/slice";
 import { testSaga, expectSaga } from "redux-saga-test-plan";
@@ -24,16 +26,42 @@ const initialState: StoreState = {
     animationDelay: 50,
     alivePercent: 30,
     animationStepsCount: 4,
-    reinitField: false,
-    initialized: false,
   },
 };
 
 describe("User saga", () => {
+  it("Restore saga unit test", () => {
+    testSaga(workerSagaRestoreSession)
+      .next()
+      .call(restoreSession)
+      .next({})
+      .put(loginSlice.actions.login({}))
+      .next()
+      .isDone();
+  });
+  it("Restore saga integration test", () => {
+    const bob = {
+      id: 5,
+      username: "Bob",
+      first: "Bob",
+      last: "Lastname",
+    };
+    localStorage.setItem("user", JSON.stringify(bob));
+    const expectedFinalStoreState = {
+      ...initialState,
+      user: {
+        ...bob,
+      },
+    };
+    return expectSaga(workerSagaRestoreSession)
+      .withReducer(reducer, { ...initialState })
+      .hasFinalState(expectedFinalStoreState)
+      .run();
+  });
   it("Login saga unit test", () => {
     testSaga(workerSagaLogin, sagaLoginAction("Bob"))
       .next()
-      .call(fetchUser, "Bob")
+      .call(saveSession, "Bob")
       .next({})
       .put(loginSlice.actions.login({}))
       .next()
