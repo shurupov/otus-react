@@ -9,6 +9,9 @@ import {
   workerSagaChangeSetting,
   changeSettingAction,
   reinitAction,
+  previous,
+  compareWithPrevious,
+  fieldsEqual,
 } from "smart/ConwayLife/saga";
 import { conwayFieldSlice, conwaySettingsSlice } from "smart/ConwayLife/slice";
 import { reducer, StoreState } from "store/reducer";
@@ -31,6 +34,27 @@ const initialState: StoreState = {
     animationStepsCount: 4,
   },
 };
+
+function boolToCell(alive: boolean): PoorCellProps {
+  return {
+    alive,
+    step: 0,
+    animated: true,
+  };
+}
+
+function boolArrayToCellArray(
+  boolsTable: Array<Array<boolean>>
+): Array<Array<PoorCellProps>> {
+  const result: Array<Array<PoorCellProps>> = [];
+  for (let i = 0; i < boolsTable.length; i++) {
+    result[i] = [];
+    for (let j = 0; j < boolsTable[i].length; j++) {
+      result[i][j] = boolToCell(boolsTable[i][j]);
+    }
+  }
+  return result;
+}
 
 describe("Conway saga", () => {
   it("Conway init unit test", () => {
@@ -160,5 +184,27 @@ describe("Conway saga", () => {
     testSaga(workerSagaChangeSetting, changeSettingAction("cellSize", -10))
       .next()
       .isDone();
+  });
+
+  it("compareWithPrevious", () => {
+    const cells = boolArrayToCellArray([
+      [true, true, false],
+      [true, false, true],
+      [false, false, false],
+    ]);
+    while (previous.length) {
+      previous.pop();
+    }
+    previous.push(cells);
+    expect(compareWithPrevious(cells)).toBe(true);
+  });
+
+  it("fieldsEqual", () => {
+    const cells = boolArrayToCellArray([
+      [true, true, false],
+      [true, false, true],
+      [false, false, false],
+    ]);
+    expect(fieldsEqual(cells, cells)).toBe(true);
   });
 });
