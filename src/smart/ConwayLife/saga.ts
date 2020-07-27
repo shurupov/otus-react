@@ -80,13 +80,15 @@ export const process = (
       newField[i][j] = {
         alive: newFieldAlive,
         step:
-          newFieldAlive !== oldFieldCell.alive || !oldFieldCell.animated
+          newFieldAlive !== oldFieldCell.alive ||
+          !oldFieldCell.animated ||
+          oldFieldCell.step > settings.animationStepsCount
             ? 0
             : oldFieldCell.step + 1,
         animated:
           newFieldAlive !== oldFieldCell.alive ||
-          oldFieldCell.animated ||
-          oldFieldCell.step < settings.animationStepsCount,
+          (oldFieldCell.animated &&
+            oldFieldCell.step < settings.animationStepsCount),
       };
     }
   }
@@ -119,11 +121,53 @@ export const settingsSelector = (state: StoreState) => state.conwaySettings;
 
 export const fieldSelector = (state: StoreState) => state.conwayField;
 
+export const previous: Array<Array<Array<PoorCellProps>>> = [];
+
+function cellsEqual(cell1: PoorCellProps, cell2: PoorCellProps) {
+  return cell1.alive === cell2.alive;
+}
+
+export function fieldsEqual(
+  field1: Array<Array<PoorCellProps>>,
+  field2: Array<Array<PoorCellProps>>
+) {
+  if (field1.length !== field2.length) {
+    return false;
+  }
+  for (let i = 0; i < field1.length; i++) {
+    if (field1[i].length !== field2[i].length) {
+      return false;
+    }
+    for (let j = 0; j < field1[i].length; j++) {
+      if (!cellsEqual(field1[i][j], field2[i][j])) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+export function compareWithPrevious(field: Array<Array<PoorCellProps>>) {
+  for (const state of previous) {
+    if (fieldsEqual(state, field)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 export function* workerSagaUpdate() {
   const settings = yield select(settingsSelector);
   const field = yield select(fieldSelector);
   const updatedField = yield call(process, field, settings);
-  yield put(conwayFieldSlice.actions.update(updatedField));
+
+  if (!compareWithPrevious(updatedField)) {
+    yield put(conwayFieldSlice.actions.update(updatedField));
+    previous.push(field);
+    if (previous.length > 3) {
+      previous.shift();
+    }
+  }
 }
 
 export function* watchSagaUpdate() {
