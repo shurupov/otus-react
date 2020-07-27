@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { StoreState } from "store/reducer";
 import { sagaLogoutAction } from "smart/User/saga";
+import { ConnectedLogin } from "smart/User/Login";
 
 interface HeaderProps {
   username: string;
@@ -18,7 +19,7 @@ export const Header = (props: HeaderProps) => {
       </label>
     );
   }
-  return null;
+  return <ConnectedLogin />;
 };
 
 const mapStateToProps = ({ user }: StoreState) => {
