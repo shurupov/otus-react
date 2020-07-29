@@ -38,6 +38,8 @@ describe("User saga", () => {
       .next({})
       .put(loginSlice.actions.login({}))
       .next()
+      .put(reinitAction())
+      .next()
       .isDone();
   });
   it("Restore saga integration test", () => {

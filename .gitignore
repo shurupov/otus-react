@@ -9,3 +9,4 @@
 /ssr-express/package-lock.json
 /ssr-express/node_modules/
 /next-env.d.ts
+/coverage
