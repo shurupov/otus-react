@@ -15,7 +15,7 @@ interface ConwayLifeProps {
 }
 
 export class ConwayLife extends React.Component<ConwayLifeProps> {
-  private timeoutId!: NodeJS.Timeout;
+  private timeoutId!: number;
 
   componentDidMount(): void {
     this.tick();

@@ -3,10 +3,13 @@
 /node_modules
 /lib
 /dist
-/npm-debug.log
+/*.log
 /package-lock.json
 /storybook-static/
 /ssr-express/package-lock.json
 /ssr-express/node_modules/
 /next-env.d.ts
 /coverage
+# stryker temp files
+.stryker-tmp
+/reports
