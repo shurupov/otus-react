@@ -24,7 +24,7 @@ export const originalTeamToExpectedTeam = (
 };
 
 // Задание 2
-export type SomeArray = Array<number | string>;
+export type SomeArray = ReadonlyArray<number | string>;
 
 export const originalArrayToExpectedArray = (
   originalArray: SomeArray

@@ -12,4 +12,13 @@ module.exports = {
     "^pages/(.*)$": "<rootDir>/src/pages/$1",
     "^smart/(.*)$": "<rootDir>/src/smart/$1",
   },
+  testPathIgnorePatterns: ["e2e"],
+  coverageThreshold: {
+    global: {
+      branches: 75,
+      functions: 75,
+      lines: 75,
+      statements: -85,
+    },
+  },
 };

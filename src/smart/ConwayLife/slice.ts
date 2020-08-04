@@ -35,7 +35,15 @@ export const conwaySettingsSlice = createSlice({
 
 export const conwayFieldSlice = createSlice({
   name: "conwayField",
-  initialState: [],
+  initialState: [
+    [
+      {
+        alive: false,
+        step: 0,
+        animated: false,
+      },
+    ],
+  ],
   reducers: {
     update: (state, action) => {
       return action.payload;
