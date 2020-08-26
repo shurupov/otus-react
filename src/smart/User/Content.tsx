@@ -5,6 +5,7 @@ import { ConwayLifeWithControls } from "pages/Conway/ConwayLifeWithControls";
 import { connect } from "react-redux";
 import { StoreState } from "store/reducer";
 import { NewsText } from "pages/News/NewsText/NewsText";
+import { Continents } from "pages/Continents";
 
 interface ContentProps {
   username: string;
@@ -32,10 +33,13 @@ export const Content = (props: ContentProps) => {
       <br />
       <Link to="/news/2">Text 2</Link>
       <br />
+      <Link to="/continents">Continents and Countries</Link>
+      <br />
 
       <Route exact path="/" render={() => <h1>Root</h1>} />
       <Route exact path="/news/:newsid" component={NewsText} />
       <Route exact path="/news" component={News} />
+      <Route path="/continents" component={Continents} />
       {props.username ? (
         <Route path="/life" component={ConwayLifeWithControls} />
       ) : null}

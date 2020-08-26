@@ -102,12 +102,14 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "@apollo/client": "^3.1.2",
     "@emotion/babel-preset-css-prop": "^10.0.27",
     "@emotion/core": "^10.0.28",
     "@reduxjs/toolkit": "^1.4.0",
     "@storybook/addon-storysource": "^5.3.18",
     "@types/ramda": "^0.27.6",
     "formik": "^2.1.4",
+    "graphql": "^15.3.0",
     "loki": "^0.20.3",
     "next": "^9.4.4",
     "ramda": "^0.27.0",
